@@ -50,12 +50,14 @@
             android:id="@+id/bt_iniciar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bt1" />
+            android:text="@string/bt1"
+            android:onClick="onClickIniciar"/>
 
         <Button
             android:id="@+id/bt_volver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bt2" />
+            android:text="@string/bt2"
+            android:onClick="onClickVolver"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
