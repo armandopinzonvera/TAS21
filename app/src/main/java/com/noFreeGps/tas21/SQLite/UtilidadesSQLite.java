@@ -17,19 +17,19 @@ public class UtilidadesSQLite  {
 
     //////////  tabla transecto  /////////////
 
-    public static final String TABLA_TRANSECTO = "tabla_proyecto";
+    public static final String TABLA_TRANSECTO = "tabla_transecto";
     public static final String ID_TRANSECTO = "id_transecto";
     public static final String FK_TRACK = "fk_track";
 
     public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
             +TABLA_TRANSECTO+" ("
-            +ID_TRANSECTO+" VARCHAR(20) PRIMARY KEY, "
-            +FK_TRACK+" VARCHAR(20) )";
+            +ID_TRANSECTO+" TEXT PRIMARY KEY, "
+            +FK_TRACK+" TEXT )";
 
     //////////  tabla track  /////////////
 
-    public static final String TABLA_TRACK = "tabla_proyecto";
-    public static final String ID_TRACK = "id_transecto";
+    public static final String TABLA_TRACK = "tabla_track";
+    public static final String ID_TRACK = "id_track";
     public static final String FECHA = "fecha";
     public static final String HORA = "hora";
     public static final String LONGITUD = "longitud";
@@ -40,13 +40,13 @@ public class UtilidadesSQLite  {
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
-            +ID_TRACK+" VARCHAR(20) PRIMARY KEY, "
+            +ID_TRACK+" TEXT PRIMARY KEY, "
             +FECHA+" DATE, "
             +HORA+" TIME, "
             +LONGITUD+" INTEGER, "
             +LATITUD+" INTEGER, "
             +ALTURA+"  INTEGER, "
-            +ESPECIE+" VARCHAR(20), "
+            +ESPECIE+" TEXT, "
             +DENSIDAD+" INT )";
 
 }

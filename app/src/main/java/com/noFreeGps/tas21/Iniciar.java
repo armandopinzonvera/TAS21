@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+ package com.noFreeGps.tas21;
 //This class just take the project's information
 // and send it to activity VistaTransecto or return
 // to the past View
@@ -58,19 +58,18 @@ public class Iniciar extends AppCompatActivity  {
 
         String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
                 +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+", "+UtilidadesSQLite.FK_TRANSECTO+") "
-        +" VALUES ('"+et_nombreProyecto.getText().toString()+"', '"+et_IdTransecto.getText().toString()+"')";
-
+                +" VALUES ('"+et_nombreProyecto.getText().toString()+"', '"+et_IdTransecto.getText().toString()+"')";
         ddbb.execSQL(insert);
+        String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
+                +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "
+                +" VALUES ('"+et_IdTransecto.getText().toString()+"', '"+0+"')";
 
-        et_nombreProyecto.setText("");
-
-
-
-
-       /* String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO+
-                "("+UtilidadesSQLite.ID_TRANSECTO+") VALUES('"+ et_IdTransecto.getText().toString()+"')";
         ddbb.execSQL(insert2);
-*/
+        et_nombreProyecto.setText("");
+        et_IdTransecto.setText("");
+
+
+
 
 
         /*Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
