@@ -5,13 +5,18 @@
 
     <!--Activity Main-->
     <string name="bt_iniciar">Iniciar</string>
+
     <!--Activity Iniciar-->
     <string name="tv1">Informacion del Proyecto</string>
     <string name="et1">Nombre del Proyecto</string>
     <string name="et2">ID transecto</string>
     <string name="bt1">Iniciar</string>
     <string name="bt2">volver</string>
+
     <!--Activity VistaTransecto-->
     <string name="enviar">Enviar</string>
     <string name="terminar">Terminar</string>
+    <string name="latitud">Lat:</string>
+    <string name="logitud">Lon:</string>
+
 </resources>
