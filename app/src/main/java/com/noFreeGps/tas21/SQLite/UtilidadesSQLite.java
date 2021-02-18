@@ -2,6 +2,8 @@ package com.noFreeGps.tas21.SQLite;
 
 public class UtilidadesSQLite  {
 
+
+    public static final String DDBB_NAME="DDBB_tas";
     //////////  tabla proyecto  /////////////
 
     public static final String TABLA_PROYECTO = "tabla_proyecto";
@@ -10,8 +12,8 @@ public class UtilidadesSQLite  {
 
     public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
             +TABLA_PROYECTO+" ("
-            +NOMBRE_PROYECTO+" VARCHAR(20) PRIMARY KEY, "
-            +FK_TRANSECTO+" VARCHAR(20) )";
+            +NOMBRE_PROYECTO+" TEXT, "
+            +FK_TRANSECTO+" TEXT )";
 
     //////////  tabla transecto  /////////////
 
@@ -41,9 +43,9 @@ public class UtilidadesSQLite  {
             +ID_TRACK+" VARCHAR(20) PRIMARY KEY, "
             +FECHA+" DATE, "
             +HORA+" TIME, "
-            +LONGITUD+" INT, "
-            +LATITUD+" INT, "
-            +ALTURA+" INT, "
+            +LONGITUD+" INTEGER, "
+            +LATITUD+" INTEGER, "
+            +ALTURA+"  INTEGER, "
             +ESPECIE+" VARCHAR(20), "
             +DENSIDAD+" INT )";
 
