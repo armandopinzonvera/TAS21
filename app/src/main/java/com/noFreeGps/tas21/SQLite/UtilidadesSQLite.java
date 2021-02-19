@@ -4,16 +4,7 @@ public class UtilidadesSQLite  {
 
 
     public static final String DDBB_NAME="DDBB_tas";
-    //////////  tabla proyecto  /////////////
 
-    public static final String TABLA_PROYECTO = "tabla_proyecto";
-    public static final String NOMBRE_PROYECTO = "nombre_proyecto";
-    public static final String FK_TRANSECTO = "fk_transecto";
-
-    public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
-            +TABLA_PROYECTO+" ("
-            +NOMBRE_PROYECTO+" TEXT, "
-            +FK_TRANSECTO+" TEXT )";
 
     //////////  tabla transecto  /////////////
 
@@ -25,6 +16,20 @@ public class UtilidadesSQLite  {
             +TABLA_TRANSECTO+" ("
             +ID_TRANSECTO+" TEXT PRIMARY KEY, "
             +FK_TRACK+" TEXT )";
+
+
+    //////////  tabla proyecto  /////////////
+
+    public static final String TABLA_PROYECTO = "tabla_proyecto";
+    public static final String NOMBRE_PROYECTO = "nombre_proyecto";
+    public static final String FK_TRANSECTO = "fk_transecto";
+
+
+    public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
+            +TABLA_PROYECTO+" ("
+            +NOMBRE_PROYECTO+" TEXT, "
+            +FK_TRANSECTO+" TEXT, FOREIGN KEY("+FK_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") )";
+
 
     //////////  tabla track  /////////////
 

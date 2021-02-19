@@ -14,10 +14,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-            db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
             db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRANSECTO);
-           /* db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);*/
+            db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
+            db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
     }
 
     @Override
@@ -25,6 +24,6 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
             db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_PROYECTO);
             db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRANSECTO);
-            /*db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRACK);*/
+            db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRACK);
     }
 }

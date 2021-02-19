@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bt_Iniciar;
+    Button bt_Iniciar, bt_continuar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bt_Iniciar = findViewById(R.id.bt_iniciar);
+        bt_continuar = findViewById(R.id.bt_continuar);
 
         bt_Iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,7 +26,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        bt_continuar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Continuar.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
