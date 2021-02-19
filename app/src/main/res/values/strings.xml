@@ -23,5 +23,6 @@
     <string name="consultar">Consultar Proyecto</string>
     <string name="buscar">Buscar</string>
     <string name="continuar">continuar</string>
+    <string name="limpiar">Limpiar</string>
 
 </resources>

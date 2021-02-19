@@ -62,6 +62,13 @@
             android:onClick="buscar"/>
 
         <Button
+            android:id="@+id/bt_limpiar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/limpiar"
+            android:onClick="limpiar"/>
+
+        <Button
             android:id="@+id/bt_continuar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
