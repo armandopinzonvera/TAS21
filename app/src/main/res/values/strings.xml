@@ -19,4 +19,9 @@
     <string name="latitud">Lat:</string>
     <string name="logitud">Lon:</string>
 
+    <!--Activity Continuar-->
+    <string name="consultar">Consultar Proyecto</string>
+    <string name="buscar">Buscar</string>
+    <string name="continuar">continuar</string>
+
 </resources>
