@@ -10,8 +10,8 @@
     tools:context=".VistaTransecto">
 
     <LinearLayout
-        android:layout_width="299dp"
-        android:layout_height="585dp"
+        android:layout_width="300dp"
+        android:layout_height="424dp"
         android:layout_margin="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
@@ -28,16 +28,17 @@
             android:id="@+id/tv_nombreProyecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/et1"
             android:textAlignment="center"
-            android:textSize="12sp" />
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_idTransecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/et2"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="12sp" />
 
         <LinearLayout
@@ -168,9 +169,10 @@
                 android:id="@+id/button3"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:background="#E81717"
+                android:background="@color/blue_grey"
                 android:onClick="terminar"
-                android:text="@string/terminar" />
+                android:text="@string/terminar"
+                android:textColorLink="@color/purple_200" />
 
         </LinearLayout>
 
@@ -178,7 +180,7 @@
             android:id="@+id/fragment"
             android:name="com.noFreeGps.tas21.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="318dp" />
+            android:layout_height="131dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

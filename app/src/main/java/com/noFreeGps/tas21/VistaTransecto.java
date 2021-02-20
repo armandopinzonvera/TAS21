@@ -16,9 +16,9 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 public class VistaTransecto extends AppCompatActivity {
 
-    TextView tv_lat, tv_long;
+    TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    ConexionSQLite conexionSQLite;
+    //ConexionSQLite conexionSQLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,14 @@ public class VistaTransecto extends AppCompatActivity {
         tv_long = findViewById(R.id.tv_lon);
         et_especie = findViewById(R.id.et_especie);
         et_cantidad = findViewById(R.id.et_cantidad);
+        tv_idTransecto = findViewById(R.id.tv_idTransecto);
+        tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
 
 
+       String data1 = getIntent().getStringExtra("extra_1");
+        tv_nombreProyecto.setText("Proyecto: "+ data1);
+        String data2 = getIntent().getStringExtra("extra_2");
+        tv_idTransecto.setText("transecto: " + data2);
     }
 
     ////////////////////////////////////
