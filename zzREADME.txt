@@ -10,3 +10,8 @@ iniciar -- VistaTransecto >>
 VistaTransecto -- **MapFragment**ServiceLocation**SQLite
 > la clase Iniciar Arranca el Servicio de localizacion
 > la clase VistaTransecto Inicia la conexion a la BBDD
+
+
+
+2. Brach SQLite
+ Con la BBDD funcinando, con ingreso de la informacion del proyecto

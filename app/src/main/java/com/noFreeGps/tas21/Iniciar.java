@@ -1,4 +1,4 @@
- package com.noFreeGps.tas21;
+package com.noFreeGps.tas21;
 //This class just take the project's information
 // and send it to activity VistaTransecto or return
 // to the past View
@@ -6,25 +6,16 @@
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.noFreeGps.tas21.SQLite.ConexionSQLite;
-import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 public class Iniciar extends AppCompatActivity  {
 
-    public static final String EXTRA_NOMBRE_PROYECTO = "extraNombreProyecto";
-    public static final String EXTRA_ID_TRANSECTO = "extraIdTransecto";
-
     EditText et_nombreProyecto, et_IdTransecto;
+    Button bt_iniciar, bt_volver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,85 +24,57 @@ public class Iniciar extends AppCompatActivity  {
 
         et_nombreProyecto = findViewById(R.id.et_nombreProyecto);
         et_IdTransecto = findViewById(R.id.et_idTransecto);
+        bt_iniciar = findViewById(R.id.bt_iniciar);
+        bt_volver = findViewById(R.id.bt_volver);
 
-
-    }
-    ////////////////////////////////////
-    /////   Validar EditText  /////////
-    ///////////////////////////////////
-    public String validar(){
-
-        String validacion ="bien";
-        String campo1 = et_nombreProyecto.getText().toString();
-        String campo2 = et_IdTransecto.getText().toString();
-        if(campo1.isEmpty() || campo2.isEmpty()){
-            validacion = "vacio";
-        }else if (campo1.equals(campo2)){
-           validacion = "iguales";
-        } else if (campo1.length() > 10 || campo2.length() > 10){
-        validacion = "largo";
-        }
-    return validacion;
+        bt_iniciar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                iniciar();
+            }
+        });
+        bt_volver.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                volver();
+            }
+        });
     }
     ///////////////////////////////////
     //////  Functionality Buttons  ////
     ///////////////////////////////////
-
-    public void onClickvolver(View view) {
+    private void volver() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+
     }
-    public void onClickIniciar(View view) {
-       switch (validar()){
-           case "vacio":
-               Toast.makeText(this, "No pueden estar vacios", Toast.LENGTH_LONG).show();
-              break;
-           case "iguales":
-               Toast.makeText(this, "No pueden ser iguales", Toast.LENGTH_LONG).show();
-               et_IdTransecto.setText("");
-               break;
-           case "largo":
-               Toast.makeText(this, "no pueden ser tan grandes", Toast.LENGTH_LONG).show();
-               et_nombreProyecto.setText("");
-               et_IdTransecto.setText("");
-               break;
-           default:   iniciarProyecto();
-       }
+    private void iniciar() {
+
+        startLocationService();
 
     }
 
-    /////////////////////////////////////////
-    ///// * enviar Datos proyecto a BBDD ////
-     ///// *pasar a VistaTransecto    //////
-    // /// *enviar extras info-Proyecto a vista transecto //////
+    ///////////////////////////////////
+    ///// Permiso Localizacion ////////
+    ////////////////////////////////
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+    ////////////////////////////////
+    ///// enviar Datos proyecto ////
+    ///// Iniciar Localizacion /////
+    ///// pasar a VistaTransecto ////////
     /////////////////////////////////////////////////////////////
 
-    public void iniciarProyecto() {
+    private void startLocationService() {
 
-        ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
-        SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
-
-        String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
-                +" ( " +UtilidadesSQLite.ID_TRANSECTO+") "
-                +" VALUES ('"+et_IdTransecto.getText().toString()+"')";
-        ddbb.execSQL(insert2);
-
-        String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
-                +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+") "
-                +" VALUES ('"+et_nombreProyecto.getText().toString()+"')";
-        ddbb.execSQL(insert);
-
-        enviarDatos();
-        et_nombreProyecto.setText("");
-        et_IdTransecto.setText("");
-        ddbb.close();
-    }
-
-    private void enviarDatos() {
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
-        intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
-        intent.putExtra("extra_2", et_IdTransecto.getText().toString());
         startActivity(intent);
     }
+
 
 }
