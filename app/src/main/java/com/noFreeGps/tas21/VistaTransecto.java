@@ -79,14 +79,6 @@ public class VistaTransecto extends AppCompatActivity {
     private void enviarInformacion() {
         ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
-/*        String[] parametros = {et_especie.getText().toString()};
-        ContentValues values = new ContentValues();
-        values.put(UtilidadesSQLite.ESPECIE, et_especie.getText().toString());
-        values.put(UtilidadesSQLite.DENSIDAD, et_cantidad.getText().toString());
-
-        ddbb.update(UtilidadesSQLite.TABLA_TRACK, values, UtilidadesSQLite.ESPECIE+"=?", parametros );
-        Toast.makeText(this, "include", Toast.LENGTH_SHORT).show();
-        ddbb.close();*/
 
         String insert1 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRACK
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
