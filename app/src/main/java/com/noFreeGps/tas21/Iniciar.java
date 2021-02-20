@@ -47,10 +47,8 @@ public class Iniciar extends AppCompatActivity  {
         } else if (campo1.length() > 10 || campo2.length() > 10){
         validacion = "largo";
         }
-
     return validacion;
     }
-
     ///////////////////////////////////
     //////  Functionality Buttons  ////
     ///////////////////////////////////
@@ -87,21 +85,32 @@ public class Iniciar extends AppCompatActivity  {
 
         ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
-
+/*
         String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
                 +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "
                 +" VALUES ('"+et_IdTransecto.getText().toString()+"', '"+0+"')";
+        ddbb.execSQL(insert2);*/
+
+        String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
+                +" ( " +UtilidadesSQLite.ID_TRANSECTO+") "
+                +" VALUES ('"+et_IdTransecto.getText().toString()+"')";
         ddbb.execSQL(insert2);
 
-        String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
+
+       /* String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
                 +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+", "+UtilidadesSQLite.FK_TRANSECTO+") "
                 +" VALUES ('"+et_nombreProyecto.getText().toString()+"', '"+et_IdTransecto.getText().toString()+"')";
+        ddbb.execSQL(insert);*/
+        String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
+                +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+") "
+                +" VALUES ('"+et_nombreProyecto.getText().toString()+"')";
         ddbb.execSQL(insert);
 
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
 
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+        ddbb.close();
         startActivity(intent);
 
     }

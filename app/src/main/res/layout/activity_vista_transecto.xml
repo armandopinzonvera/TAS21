@@ -10,8 +10,8 @@
     tools:context=".VistaTransecto">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="299dp"
+        android:layout_height="585dp"
         android:layout_margin="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
@@ -39,12 +39,6 @@
             android:text="@string/et2"
             android:textAlignment="center"
             android:textSize="12sp" />
-
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.noFreeGps.tas21.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="276dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +82,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView"
@@ -167,17 +161,24 @@
                 android:id="@+id/bt_enviar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/enviar"
-                android:onClick="enviar"/>
+                android:onClick="enviar"
+                android:text="@string/enviar" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="#E81717"
-                android:text="@string/terminar"
-                android:onClick="terminar"/>
+                android:onClick="terminar"
+                android:text="@string/terminar" />
+
         </LinearLayout>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.noFreeGps.tas21.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="318dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
