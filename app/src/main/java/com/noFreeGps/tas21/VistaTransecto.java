@@ -20,7 +20,6 @@ public class VistaTransecto extends AppCompatActivity {
 
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    FragmentTransaction fragmentTransaction;
     Fragment fragment_mapa;
 
     @Override
@@ -42,8 +41,8 @@ public class VistaTransecto extends AppCompatActivity {
         tv_idTransecto.setText("transecto: " + data2);
 
         fragment_mapa = new MapFragment();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.marco_fragment, fragment_mapa).commit();
     }
 
     ////////////////////////////////////
