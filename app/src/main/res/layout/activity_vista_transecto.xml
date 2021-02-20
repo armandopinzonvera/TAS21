@@ -176,11 +176,11 @@
 
         </LinearLayout>
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.noFreeGps.tas21.MapFragment"
+        <FrameLayout
+            android:id="@+id/marco_fragment"
             android:layout_width="match_parent"
-            android:layout_height="131dp" />
+            android:layout_height="match_parent"/>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

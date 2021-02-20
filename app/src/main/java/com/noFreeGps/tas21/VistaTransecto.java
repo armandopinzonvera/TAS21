@@ -1,6 +1,8 @@
 package com.noFreeGps.tas21;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -18,7 +20,8 @@ public class VistaTransecto extends AppCompatActivity {
 
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    //ConexionSQLite conexionSQLite;
+    FragmentTransaction fragmentTransaction;
+    Fragment fragment_mapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,10 @@ public class VistaTransecto extends AppCompatActivity {
         tv_nombreProyecto.setText("Proyecto: "+ data1);
         String data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
+
+        fragment_mapa = new MapFragment();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
     }
 
     ////////////////////////////////////
@@ -90,9 +97,6 @@ public class VistaTransecto extends AppCompatActivity {
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
                 +" VALUES ('"+et_especie.getText().toString()+"', '"+et_cantidad.getText().toString()+"')";
         ddbb.execSQL(insert1);
-
-        et_especie.setText("");
-        et_cantidad.setText("");
 
     }
 
