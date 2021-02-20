@@ -10,8 +10,8 @@
     tools:context=".VistaTransecto">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="424dp"
         android:layout_margin="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
@@ -28,23 +28,18 @@
             android:id="@+id/tv_nombreProyecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/et1"
             android:textAlignment="center"
-            android:textSize="12sp" />
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_idTransecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/et2"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="12sp" />
-
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.noFreeGps.tas21.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="276dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,11 +48,11 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="1dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
-                android:text="lat:" />
+                android:text="@string/latitud" />
 
             <TextView
                 android:id="@+id/tv_lat"
@@ -68,14 +63,14 @@
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="wrap_content"
+                android:layout_width="12dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="lon:" />
+                android:text="@string/logitud" />
 
             <TextView
                 android:id="@+id/tv_lon"
-                android:layout_width="119dp"
+                android:layout_width="106dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="00000" />
@@ -88,7 +83,50 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+            </LinearLayout>
         </ScrollView>
 
         <LinearLayout
@@ -97,7 +135,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/et_especie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -106,7 +144,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/editTextNumber2"
+                android:id="@+id/et_cantidad"
                 android:layout_width="67dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -124,15 +162,25 @@
                 android:id="@+id/bt_enviar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="enviar"
                 android:text="@string/enviar" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:background="#E81717"
-                android:text="@string/terminar" />
+                android:background="@color/blue_grey"
+                android:onClick="terminar"
+                android:text="@string/terminar"
+                android:textColorLink="@color/purple_200" />
+
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/marco_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
