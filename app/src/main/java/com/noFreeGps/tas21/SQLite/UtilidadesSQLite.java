@@ -15,7 +15,7 @@ public class UtilidadesSQLite  {
     public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
             +TABLA_TRANSECTO+" ("
             +ID_TRANSECTO+" TEXT PRIMARY KEY, "
-            +FK_TRACK+" TEXT )";
+            +FK_TRACK+" INTEGER )";
 
 
     //////////  tabla proyecto  /////////////
@@ -45,13 +45,13 @@ public class UtilidadesSQLite  {
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
-            +ID_TRACK+" TEXT PRIMARY KEY, "
+            +ID_TRACK+" INTEGER PRIMARY KEY AUTOINCREMENT, "
             +FECHA+" DATE, "
             +HORA+" TIME, "
             +LONGITUD+" INTEGER, "
             +LATITUD+" INTEGER, "
             +ALTURA+"  INTEGER, "
             +ESPECIE+" TEXT, "
-            +DENSIDAD+" INT )";
+            +DENSIDAD+" INTEGER )";
 
 }

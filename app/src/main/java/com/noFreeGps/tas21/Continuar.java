@@ -39,7 +39,8 @@ public class Continuar extends AppCompatActivity {
         String[] campos = {UtilidadesSQLite.FK_TRANSECTO};
 
         try {
-            Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?", parametros, null, null, null );
+            Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?",
+                    parametros, null, null, null );
             cursor.moveToFirst();
             tv_c_transecto.setText(cursor.getString(0));
 
