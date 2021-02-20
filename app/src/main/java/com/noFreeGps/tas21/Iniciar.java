@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,9 @@ import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 public class Iniciar extends AppCompatActivity  {
+
+    public static final String EXTRA_NOMBRE_PROYECTO = "extraNombreProyecto";
+    public static final String EXTRA_ID_TRANSECTO = "extraIdTransecto";
 
     EditText et_nombreProyecto, et_IdTransecto;
 
@@ -78,41 +82,36 @@ public class Iniciar extends AppCompatActivity  {
 
     /////////////////////////////////////////
     ///// * enviar Datos proyecto a BBDD ////
-     ///// *pasar a VistaTransecto       ////////
+     ///// *pasar a VistaTransecto    //////
+    // /// *enviar extras info-Proyecto a vista transecto //////
     /////////////////////////////////////////////////////////////
 
     public void iniciarProyecto() {
 
         ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
-/*
-        String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
-                +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "
-                +" VALUES ('"+et_IdTransecto.getText().toString()+"', '"+0+"')";
-        ddbb.execSQL(insert2);*/
 
         String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
                 +" ( " +UtilidadesSQLite.ID_TRANSECTO+") "
                 +" VALUES ('"+et_IdTransecto.getText().toString()+"')";
         ddbb.execSQL(insert2);
 
-
-       /* String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
-                +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+", "+UtilidadesSQLite.FK_TRANSECTO+") "
-                +" VALUES ('"+et_nombreProyecto.getText().toString()+"', '"+et_IdTransecto.getText().toString()+"')";
-        ddbb.execSQL(insert);*/
         String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
                 +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+") "
                 +" VALUES ('"+et_nombreProyecto.getText().toString()+"')";
         ddbb.execSQL(insert);
 
+        enviarDatos();
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
-
-        Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         ddbb.close();
-        startActivity(intent);
+    }
 
+    private void enviarDatos() {
+        Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+        intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
+        intent.putExtra("extra_2", et_IdTransecto.getText().toString());
+        startActivity(intent);
     }
 
 }
