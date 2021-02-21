@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ public class Continuar extends AppCompatActivity {
         conexionSQLite = new ConexionSQLite(getApplicationContext(), UtilidadesSQLite.DDBB_NAME, null, 1 );
 
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
-        tv_c_transecto = findViewById(R.id.tv_c_transecto);
+        tv_c_transecto = findViewById(R.id.tv_c_transectos);
         tv_c_sumaTransecto = findViewById(R.id.tv_c_sumaTransecto);
 
     }

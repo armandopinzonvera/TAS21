@@ -24,5 +24,6 @@
     <string name="buscar">Buscar</string>
     <string name="continuar">continuar</string>
     <string name="limpiar">Limpiar</string>
+    <string name="vacio">      - - </string>
 
 </resources>
