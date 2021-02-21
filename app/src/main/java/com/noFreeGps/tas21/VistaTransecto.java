@@ -40,7 +40,7 @@ public class VistaTransecto extends AppCompatActivity {
         String data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
 
-        fragment_mapa = new MapFragment();
+        fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
     }
