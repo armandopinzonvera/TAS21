@@ -72,16 +72,6 @@ public class Iniciar extends AppCompatActivity  {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
-<<<<<<< Updated upstream
-
-
-=======
-    public void onClickIniciar(View view) {
-        startLocationService();
-    }
->>>>>>> Stashed changes
-
-
 
 
 
@@ -124,9 +114,4 @@ public class Iniciar extends AppCompatActivity  {
 
 
 
-<<<<<<< Updated upstream
-=======
-
-   
->>>>>>> Stashed changes
 }
