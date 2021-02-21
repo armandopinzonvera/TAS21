@@ -97,6 +97,8 @@ public class VistaTransecto extends AppCompatActivity {
                 +" VALUES ('"+et_especie.getText().toString()+"', '"+et_cantidad.getText().toString()+"')";
         ddbb.execSQL(insert1);
 
+        et_especie.setText("");
+        et_cantidad.setText("");
     }
 
 
