@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MapFragment extends Fragment {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    GoogleMap mMap;
     public MapFragment() {
         // Required empty public constructor
     }
@@ -19,8 +22,13 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        
+        return view;
+    }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
-        return inflater.inflate(R.layout.fragment_map, container, false);
     }
 }
