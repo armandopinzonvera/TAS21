@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".Continuar">
+    tools:context=".Continuar"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -62,45 +63,7 @@
         <LinearLayout
             android:layout_width="188dp"
             android:layout_height="19dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_c_sumaTransecto"
-                android:layout_width="81dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="S:"
-                android:textAlignment="viewEnd"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_c_riqueza"
-                android:layout_width="112dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/vacio" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="D:"
-                android:textAlignment="textEnd" />
-
-            <TextView
-                android:id="@+id/tv_c_densidad"
-                android:layout_width="39dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/vacio" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <Button
             android:id="@+id/bt_buscar"
@@ -109,18 +72,11 @@
             android:onClick="buscar"
             android:text="@string/buscar" />
 
-        <Button
-            android:id="@+id/bt_limpiar"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="limpiar"
-            android:text="@string/limpiar" />
-
-        <Button
-            android:id="@+id/bt_continuar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="continuar"
-            android:text="@string/continuar" />
+            android:layout_height="wrap_content" />
+        
+        
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

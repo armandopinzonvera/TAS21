@@ -1,6 +1,8 @@
 package com.noFreeGps.tas21;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +15,12 @@ import android.widget.Toast;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
+import java.util.ArrayList;
+
 public class Continuar extends AppCompatActivity {
+
+    ArrayList<String> listDatos;
+    RecyclerView recyclerView;
 
     EditText et_c_nombreproyecto;
     TextView tv_c_transecto, tv_c_sumaTransecto;
@@ -28,8 +35,16 @@ public class Continuar extends AppCompatActivity {
 
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
         tv_c_transecto = findViewById(R.id.tv_c_transectos);
-        tv_c_sumaTransecto = findViewById(R.id.tv_c_sumaTransecto);
+        recyclerView = findViewById(R.id.recyclerId);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        listDatos = new ArrayList<String>();
+
+        for(int i = 0; i < 20; i++){
+            listDatos.add("dato: "+i+" ");
+        }
+        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listDatos);
+        recyclerView.setAdapter(adaptadorRecycler);
     }
 
     public void buscar(View view) {
