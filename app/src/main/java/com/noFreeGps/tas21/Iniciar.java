@@ -104,11 +104,13 @@ public class Iniciar extends AppCompatActivity  {
                 +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "
                 +" VALUES ('"+et_IdTransecto.getText().toString()+"', '"+0+"')";
 
+        Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+        intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
+        intent.putExtra("extra_2", et_IdTransecto.getText().toString());
         ddbb.execSQL(insert2);
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
 
-        Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         startActivity(intent);
     }
 
