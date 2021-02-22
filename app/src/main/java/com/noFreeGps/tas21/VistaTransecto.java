@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ public class VistaTransecto extends AppCompatActivity {
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
     Fragment fragment_mapa;
+    Spinner spinner_especies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class VistaTransecto extends AppCompatActivity {
         et_cantidad = findViewById(R.id.et_cantidad);
         tv_idTransecto = findViewById(R.id.tv_idTransecto);
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
-
+        spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
 
        String data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
@@ -43,6 +47,30 @@ public class VistaTransecto extends AppCompatActivity {
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
+
+        spinnerManager();
+
+
+    }
+    //////////////////////////////////////
+    //////   Spinner funciones  //////////
+    //////////////////////////////////////
+
+    public void spinnerManager(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.combo_especies, android.R.layout.simple_spinner_item);
+        spinner_especies.setAdapter(adapter);
+
+        spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(VistaTransecto.this,
+                        "Seleccion: "+parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     ////////////////////////////////////

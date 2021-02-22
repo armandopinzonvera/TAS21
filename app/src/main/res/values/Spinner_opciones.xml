@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="combo_especies">
+        <item>seleccione</item>
+        <item>especie 1</item>
+        <item>especie 2</item>
+        <item>especie 3</item>
+        <item>especie 4</item>
+        <item>especie 5</item>
+    </string-array>
+</resources>
