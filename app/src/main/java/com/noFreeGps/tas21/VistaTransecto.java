@@ -72,6 +72,14 @@ public class VistaTransecto extends AppCompatActivity {
     //////////////////////////////////////
     //////   Spinner funciones  //////////
     //////////////////////////////////////
+    private void spinnerlist() {
+        listaEspecies = new ArrayList<String>();
+        listaEspecies.add("seleccione");
+
+        for(int i = 0; i<entidadesEspecies.size(); i++){
+            listaEspecies.add(entidadesEspecies.get(i).getEspecie()+" - "+entidadesEspecies.get(i).getDensidad());
+        }
+    }
 
     public void spinnersqlite(){
         // ****** SQLite ********
@@ -79,11 +87,13 @@ public class VistaTransecto extends AppCompatActivity {
         Entidad_Ttrack entidad_ttrack= null;
         entidadesEspecies = new ArrayList<Entidad_Ttrack>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT especie FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
+        Cursor cursor = ddbb.rawQuery("SELECT especie, densidad FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
         while(cursor.moveToNext()){
             entidad_ttrack = new Entidad_Ttrack();
             entidad_ttrack.setEspecie(cursor.getString(0));
-
+            /************************************/
+            entidad_ttrack.setDensidad(cursor.getInt(1));
+            /************************************/
             entidadesEspecies.add(entidad_ttrack);
         }
         spinnerlist();
@@ -108,14 +118,6 @@ public class VistaTransecto extends AppCompatActivity {
 
     }
 
-    private void spinnerlist() {
-        listaEspecies = new ArrayList<String>();
-        listaEspecies.add("seleccione");
-
-        for(int i = 0; i<entidadesEspecies.size(); i++){
-            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
-        }
-    }
 
 
     ////////////////////////////////////
