@@ -87,13 +87,12 @@ public class VistaTransecto extends AppCompatActivity {
         Entidad_Ttrack entidad_ttrack= null;
         entidadesEspecies = new ArrayList<Entidad_Ttrack>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT especie, densidad FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
+        Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie, densidad FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
         while(cursor.moveToNext()){
             entidad_ttrack = new Entidad_Ttrack();
             entidad_ttrack.setEspecie(cursor.getString(0));
-            /************************************/
             entidad_ttrack.setDensidad(cursor.getInt(1));
-            /************************************/
+
             entidadesEspecies.add(entidad_ttrack);
         }
         spinnerlist();
