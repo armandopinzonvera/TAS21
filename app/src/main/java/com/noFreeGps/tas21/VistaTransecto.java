@@ -77,7 +77,7 @@ public class VistaTransecto extends AppCompatActivity {
         listaEspecies.add("seleccione");
 
         for(int i = 0; i<entidadesEspecies.size(); i++){
-            listaEspecies.add(entidadesEspecies.get(i).getEspecie()+" - "+entidadesEspecies.get(i).getDensidad());
+            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
         }
     }
 
@@ -87,11 +87,11 @@ public class VistaTransecto extends AppCompatActivity {
         Entidad_Ttrack entidad_ttrack= null;
         entidadesEspecies = new ArrayList<Entidad_Ttrack>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie, densidad FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
+        Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
         while(cursor.moveToNext()){
             entidad_ttrack = new Entidad_Ttrack();
             entidad_ttrack.setEspecie(cursor.getString(0));
-            entidad_ttrack.setDensidad(cursor.getInt(1));
+         //   entidad_ttrack.setDensidad(cursor.getInt(1));
 
             entidadesEspecies.add(entidad_ttrack);
         }
@@ -99,21 +99,17 @@ public class VistaTransecto extends AppCompatActivity {
        ////////////////////////////////
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter( adapter);
-
-        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.combo_especies, android.R.layout.simple_spinner_item);
-        spinner_especies.setAdapter(adapter);*/
-/*
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                et_especie.setText(parent.getItemAtPosition(position).toString());
                 Toast.makeText(VistaTransecto.this,
                         "Seleccion: "+parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });*/
+        });
 
     }
 
