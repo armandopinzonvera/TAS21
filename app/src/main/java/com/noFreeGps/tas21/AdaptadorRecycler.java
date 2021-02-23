@@ -48,7 +48,7 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
             tv_rv_datorecycler = itemView.findViewById(R.id.tv_rv_datorecycler);
             tv_rv_transectos = itemView.findViewById(R.id.tv_rv_transectos);
             tv_rv_riquesa = itemView.findViewById(R.id.tv_rv_riquesa);
-            tv_rv_riquesa = itemView.findViewById(R.id.tv_rv_densidad);
+            tv_rv_densidad = itemView.findViewById(R.id.tv_rv_densidad);
         }
         public void asignarDatos(String datos) {
 

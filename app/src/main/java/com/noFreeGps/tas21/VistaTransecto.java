@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -17,20 +18,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
+import com.noFreeGps.tas21.SQLite.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
+
+import java.util.ArrayList;
 
 public class VistaTransecto extends AppCompatActivity {
 
+    // ****** GUI elements ********
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
+    // ****** Fragment ********
     Fragment fragment_mapa;
+    // ****** SQLite ********
+    ConexionSQLite conexionSQLite;
+    // ****** Spinner ********
     Spinner spinner_especies;
+    ArrayList<String> listaEspecies;
+    ArrayList<Entidad_Ttrack> entidadesEspecies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
 
+        // ****** GUI elements ********
         tv_lat = findViewById(R.id.tv_lat);
         tv_long = findViewById(R.id.tv_lon);
         et_especie = findViewById(R.id.et_especie);
@@ -39,28 +51,50 @@ public class VistaTransecto extends AppCompatActivity {
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
 
-       String data1 = getIntent().getStringExtra("extra_1");
+        // ****** Extra information ********
+         String data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
         String data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
 
+        // ****** Fragment ********
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
 
-        spinnerManager();
+        // ****** SQLite ********
+        conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
 
+        // ****** methods ********
+        spinnersqlite();
 
     }
     //////////////////////////////////////
     //////   Spinner funciones  //////////
     //////////////////////////////////////
 
-    public void spinnerManager(){
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.combo_especies, android.R.layout.simple_spinner_item);
-        spinner_especies.setAdapter(adapter);
+    public void spinnersqlite(){
+        // ****** SQLite ********
+        SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
+        Entidad_Ttrack entidad_ttrack= null;
+        entidadesEspecies = new ArrayList<Entidad_Ttrack>();
 
+        Cursor cursor = ddbb.rawQuery("SELECT especie FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
+        while(cursor.moveToNext()){
+            entidad_ttrack = new Entidad_Ttrack();
+            entidad_ttrack.setEspecie(cursor.getString(0));
+
+            entidadesEspecies.add(entidad_ttrack);
+        }
+        spinnerlist();
+       ////////////////////////////////
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
+        spinner_especies.setAdapter( adapter);
+
+        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.combo_especies, android.R.layout.simple_spinner_item);
+        spinner_especies.setAdapter(adapter);*/
+/*
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -70,8 +104,19 @@ public class VistaTransecto extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
+
     }
+
+    private void spinnerlist() {
+        listaEspecies = new ArrayList<String>();
+        listaEspecies.add("seleccione");
+
+        for(int i = 0; i<entidadesEspecies.size(); i++){
+            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
+        }
+    }
+
 
     ////////////////////////////////////
     /////   Validar EditText  /////////
@@ -115,9 +160,12 @@ public class VistaTransecto extends AppCompatActivity {
             default:   enviarInformacion();
         }
     }
+    ///////////////////////////////////////////
+    ///////  Enviar a BBDD  ///////////
+    ///////////////////////////////////////////
 
     private void enviarInformacion() {
-        ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
+
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
 
         String insert1 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRACK
