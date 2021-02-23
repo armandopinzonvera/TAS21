@@ -13,6 +13,7 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
     ArrayList<String> listDatos;
 
     public AdaptadorRecycler(ArrayList<String> listDatos) {
+
         this.listDatos = listDatos;
     }
 
@@ -32,19 +33,30 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
     
     @Override
     public int getItemCount() {
+
         return listDatos.size();
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
 
-        TextView tv_datorecycler;
+        TextView tv_rv_datorecycler, tv_rv_transectos, tv_rv_riquesa, tv_rv_densidad;
+
+
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            tv_datorecycler = itemView.findViewById(R.id.tv_datorecycler);
+            tv_rv_datorecycler = itemView.findViewById(R.id.tv_rv_datorecycler);
+            tv_rv_transectos = itemView.findViewById(R.id.tv_rv_transectos);
+            tv_rv_riquesa = itemView.findViewById(R.id.tv_rv_riquesa);
+            tv_rv_riquesa = itemView.findViewById(R.id.tv_rv_densidad);
         }
         public void asignarDatos(String datos) {
-            tv_datorecycler.setText(datos);
+
+            tv_rv_datorecycler.setText(datos);
+
+
+
+
         }
     }
 }

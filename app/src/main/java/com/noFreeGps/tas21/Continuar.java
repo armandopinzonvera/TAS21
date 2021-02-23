@@ -47,6 +47,10 @@ public class Continuar extends AppCompatActivity {
         recyclerView.setAdapter(adaptadorRecycler);
     }
 
+    /////////////////////////////////////////////////////
+    ///////////////// funcionalidad botones ///////////////
+   ////////////// ///////////////////////////////
+
     public void buscar(View view) {
         SQLiteDatabase db = conexionSQLite.getReadableDatabase();
         String [] parametros = {et_c_nombreproyecto.getText().toString()};
@@ -63,8 +67,8 @@ public class Continuar extends AppCompatActivity {
             Toast.makeText(this, "", Toast.LENGTH_SHORT).show();;
             et_c_nombreproyecto.setText("");
         }
+        llenadoTargetas();
     }
-
     public void continuar(View view) {
 
     }
@@ -74,4 +78,17 @@ public class Continuar extends AppCompatActivity {
         tv_c_sumaTransecto.setText("");
 
     }
+    //////////////////////////////////////
+    ////// llenado RecyclerView ///////////
+    //////////////////////////////////////
+
+    private void llenadoTargetas() {
+
+
+
+
+
+
+    }
+
 }
