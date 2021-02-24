@@ -80,7 +80,7 @@
                android:layout_toRightOf="@+id/iconCardView"
                >
                <TextView
-                   android:id="@+id/tv_rv_datorecycler"
+                   android:id="@+id/tv_rv_nombreProyecto"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginBottom="2dp"

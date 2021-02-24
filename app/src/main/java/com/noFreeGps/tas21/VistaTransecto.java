@@ -37,7 +37,6 @@ public class VistaTransecto extends AppCompatActivity {
     ArrayList<String> listaEspecies;
     ArrayList<Entidad_Ttrack> entidadesEspecies;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);

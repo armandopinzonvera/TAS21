@@ -13,13 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
+import com.noFreeGps.tas21.SQLite.Usuario;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;
 
 public class Continuar extends AppCompatActivity {
 
-    ArrayList<String> listDatos;
+    ArrayList<Usuario> listUsuario;
     RecyclerView recyclerView;
 
     EditText et_c_nombreproyecto;
@@ -35,23 +36,52 @@ public class Continuar extends AppCompatActivity {
 
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
         tv_c_transecto = findViewById(R.id.tv_c_transectos);
-        recyclerView = findViewById(R.id.recyclerId);
+        listUsuario = new ArrayList<>();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        llenadoTargetas();
+    }
+    //////////////////////////////////////
+    ////// llenado RecyclerView ///////////
+    //////////////////////////////////////
 
-        listDatos = new ArrayList<String>();
+    private void llenadoTargetas() {
+        SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();
+
+        Usuario usuario = null;
+        Cursor cursor = ddbb.rawQuery("SELECT * FROM "+ UtilidadesSQLite.TABLA_PROYECTO, null);
+
+        while(cursor.moveToNext()){
+            usuario = new Usuario();
+            usuario.setNombre_proyecto(cursor.getString(0));
+            /*****  para incluir mas resultados*/
+            //   entidad_ttrack.setDensidad(cursor.getInt(1));
+
+            listUsuario.add(usuario);
+        }
+        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listUsuario);
+        recyclerView.setAdapter(adaptadorRecycler);
+
+/*
+      listDatos = new ArrayList<String>();
 
         for(int i = 0; i < 20; i++){
             listDatos.add("dato: "+i+" ");
         }
-        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listDatos);
-        recyclerView.setAdapter(adaptadorRecycler);
+        AdaptadorRecycler adaptadorRecycler = n0ew AdaptadorRecycler(listDatos);
+        recyclerView.setAdapter(adaptadorRecycler);*/
+
+
+
+
     }
+
 
     /////////////////////////////////////////////////////
     ///////////////// funcionalidad botones ///////////////
    ////////////// ///////////////////////////////
 
-    public void buscar(View view) {
+   /* public void buscar(View view) {
         SQLiteDatabase db = conexionSQLite.getReadableDatabase();
         String [] parametros = {et_c_nombreproyecto.getText().toString()};
         String[] campos = {UtilidadesSQLite.FK_TRANSECTO};
@@ -67,8 +97,8 @@ public class Continuar extends AppCompatActivity {
             Toast.makeText(this, "", Toast.LENGTH_SHORT).show();;
             et_c_nombreproyecto.setText("");
         }
-        llenadoTargetas();
-    }
+
+    }*/
     public void continuar(View view) {
 
     }
@@ -76,18 +106,6 @@ public class Continuar extends AppCompatActivity {
     public void limpiar(View view) {
         tv_c_transecto.setText("");
         tv_c_sumaTransecto.setText("");
-
-    }
-    //////////////////////////////////////
-    ////// llenado RecyclerView ///////////
-    //////////////////////////////////////
-
-    private void llenadoTargetas() {
-
-
-
-
-
 
     }
 
