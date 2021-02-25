@@ -23,16 +23,17 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;
 
-public class VistaTransecto extends AppCompatActivity {
+public class
+VistaTransecto extends AppCompatActivity {
 
-    // ****** GUI elements ********
+    /****** GUI elements ********/
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    // ****** Fragment ********
+    /****** Fragment ********/
     Fragment fragment_mapa;
-    // ****** SQLite ********
+    /****** SQLite ********/
     ConexionSQLite conexionSQLite;
-    // ****** Spinner ********
+    /****** Spinner ********/
     Spinner spinner_especies;
     ArrayList<String> listaEspecies;
     ArrayList<Entidad_Ttrack> entidadesEspecies;
@@ -41,7 +42,7 @@ public class VistaTransecto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
 
-        // ****** GUI elements ********
+        /****** GUI elements ********/
         tv_lat = findViewById(R.id.tv_lat);
         tv_long = findViewById(R.id.tv_lon);
         et_especie = findViewById(R.id.et_especie);
@@ -50,27 +51,27 @@ public class VistaTransecto extends AppCompatActivity {
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
 
-        // ****** Extra information ********
+        /****** Extra information ********/
          String data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
         String data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
 
-        // ****** Fragment ********
+        /****** Fragment ********/
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
 
-        // ****** SQLite ********
+        /****** SQLite ********/
         conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
 
-        // ****** methods ********
+        /****** methods ********/
         spinnersqlite();
 
     }
-    //////////////////////////////////////
-    //////   Spinner funciones  //////////
-    //////////////////////////////////////
+    /*************************************
+    ********  Spinner funciones ***********
+    **************************************/
     private void spinnerlist() {
         listaEspecies = new ArrayList<String>();
         listaEspecies.add("seleccione");
@@ -81,7 +82,7 @@ public class VistaTransecto extends AppCompatActivity {
     }
 
     public void spinnersqlite(){
-        // ****** SQLite ********
+        /****** SQLite ********/
         SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
         Entidad_Ttrack entidad_ttrack= null;
         entidadesEspecies = new ArrayList<Entidad_Ttrack>();
@@ -95,7 +96,7 @@ public class VistaTransecto extends AppCompatActivity {
             entidadesEspecies.add(entidad_ttrack);
         }
         spinnerlist();
-       ////////////////////////////////
+       /*****************************************/
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter( adapter);
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -114,9 +115,9 @@ public class VistaTransecto extends AppCompatActivity {
 
 
 
-    ////////////////////////////////////
-    /////   Validar EditText  /////////
-    ///////////////////////////////////
+    /**********************************
+    *******  Validar EditText **********
+    ***********************************/
     public String validar(){
 
         String validacion ="bien";
@@ -131,9 +132,9 @@ public class VistaTransecto extends AppCompatActivity {
         return validacion;
     }
 
-    ///////////////////////////////////////////
-    ///////  Funcionalidad Botones  ///////////
-    ///////////////////////////////////////////
+    /****************************************
+    *******  Funcionalidad Botones  *********
+    *****************************************/
     public void terminar(View view) {
 
 
@@ -156,9 +157,9 @@ public class VistaTransecto extends AppCompatActivity {
             default:   enviarInformacion();
         }
     }
-    ///////////////////////////////////////////
-    ///////  Enviar a BBDD  ///////////
-    ///////////////////////////////////////////
+    /*******************************************
+    *************  Enviar a BBDD ***************
+    ********************************************/
 
     private void enviarInformacion() {
 
@@ -168,7 +169,10 @@ public class VistaTransecto extends AppCompatActivity {
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
                 +" VALUES ('"+et_especie.getText().toString()+"', '"+et_cantidad.getText().toString()+"')";
         ddbb.execSQL(insert1);
+        /**************************************************************************/
 
+
+        /**************************************************************************/
         et_especie.setText("");
         et_cantidad.setText("");
     }
