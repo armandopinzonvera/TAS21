@@ -22,6 +22,8 @@ import com.noFreeGps.tas21.SQLite.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class
 VistaTransecto extends AppCompatActivity {
@@ -74,11 +76,12 @@ VistaTransecto extends AppCompatActivity {
     **************************************/
     private void spinnerlist() {
         listaEspecies = new ArrayList<String>();
-        listaEspecies.add("seleccione");
+        listaEspecies.add(" ");
 
         for(int i = 0; i<entidadesEspecies.size(); i++){
-            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
+           listaEspecies.add(entidadesEspecies.get(i).getEspecie());
         }
+
     }
 
     public void spinnersqlite(){
@@ -169,10 +172,14 @@ VistaTransecto extends AppCompatActivity {
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
                 +" VALUES ('"+et_especie.getText().toString()+"', '"+et_cantidad.getText().toString()+"')";
         ddbb.execSQL(insert1);
-        /**************************************************************************/
 
+        /**************************************************************************
 
-        /**************************************************************************/
+        **************************************************************************/
+        listaEspecies.add(et_especie.getText().toString());
+        Set<String> hashSet = new HashSet<String>(listaEspecies);
+        listaEspecies.clear();
+        listaEspecies.addAll(hashSet);
         et_especie.setText("");
         et_cantidad.setText("");
     }
