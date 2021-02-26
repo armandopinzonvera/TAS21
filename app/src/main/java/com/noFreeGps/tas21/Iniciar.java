@@ -1,7 +1,10 @@
 package com.noFreeGps.tas21;
-//This class just take the project's information
-// and send it to activity VistaTransecto or return
-// to the past View
+
+/*************************************
+This class just take the project's information
+ and send it to activity VistaTransecto or return
+ to the past View
+ ****************************************/
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,15 +34,15 @@ public class Iniciar extends AppCompatActivity  {
 
     }
 
-    ///////////////////////////////////
-    //////  Functionality Buttons
-    ////    Validacion Text
-    ///////////////////////////////////
+    /**********************************
+              Functionality Buttons
+              Validacion Text
+    **************************************/
     public String validar(){
 
         String validacion ="bien";
-        String campo1 = et_nombreProyecto.getText().toString();
-        String campo2 = et_IdTransecto.getText().toString();
+        String campo1 = et_nombreProyecto.getText().toString().trim();
+        String campo2 = et_IdTransecto.getText().toString().trim();
         if(campo1.isEmpty() || campo2.isEmpty()){
             validacion = "vacio";
         }else if (campo1.equals(campo2)){
@@ -75,9 +78,9 @@ public class Iniciar extends AppCompatActivity  {
 
 
 
-    ///////////////////////////////////
-    ///// Permiso Localizacion ////////
-    ////////////////////////////////
+    /********************************
+             Permiso Localizacion
+    ********************************/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -85,11 +88,11 @@ public class Iniciar extends AppCompatActivity  {
 
     }
 
-    ////////////////////////////////
-    ///// enviar Datos proyecto ////
-    ///// Iniciar Localizacion /////
-    ///// pasar a VistaTransecto ////////
-    /////////////////////////////////////////////////////////////
+    /*********************************
+              enviar Datos proyecto
+              Iniciar Localizacion
+              pasar a VistaTransecto
+    **********************************/
 
     private void iniciarProyecto() {
 
@@ -98,7 +101,7 @@ public class Iniciar extends AppCompatActivity  {
 
         String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
                 +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+", "+UtilidadesSQLite.FK_TRANSECTO+") "
-                +" VALUES ('"+et_nombreProyecto.getText().toString()+"', '"+et_IdTransecto.getText().toString()+"')";
+                +" VALUES ('"+et_nombreProyecto.getText().toString().trim()+"', '"+et_IdTransecto.getText().toString().trim()+"')";
         ddbb.execSQL(insert);
         String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
                 +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "

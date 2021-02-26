@@ -76,7 +76,7 @@ VistaTransecto extends AppCompatActivity {
     **************************************/
     private void spinnerlist() {
         listaEspecies = new ArrayList<String>();
-        listaEspecies.add(" ");
+        //listaEspecies.add(" ");
 
         for(int i = 0; i<entidadesEspecies.size(); i++){
            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
@@ -129,8 +129,11 @@ VistaTransecto extends AppCompatActivity {
         if(campo1.isEmpty() || campo2.isEmpty()){
             validacion = "vacio";
 
-        } else if (campo1.length() > 10 || campo2.length() > 4){
+        } else if (campo1.length() > 10 || campo2.length() > 4) {
             validacion = "largo";
+      /*  }else if ((int)campo2 < 1){
+            validacion = "cero";
+        }*/
         }
         return validacion;
     }
@@ -160,23 +163,31 @@ VistaTransecto extends AppCompatActivity {
             default:   enviarInformacion();
         }
     }
-    /*******************************************
-    *************  Enviar a BBDD ***************
-    ********************************************/
+    /*******************************************/
+   /*************  Enviar a BBDD ***************/
+    /********************************************/
 
     private void enviarInformacion() {
 
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
+        /*******************************************
+        if (!et_cantidad.getText().toString().isEmpty()) {
+            if (et_cantidad.getText().toString().length() >= 0) {
+                String trim = et_cantidad.getText().toString().trim();
+                et_cantidad.setText(String.valueOf(trim));
+            }
+        } else {
+            et_cantidad.setError("Plz enter name");
+        }
 
+
+        *******************************************/
         String insert1 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRACK
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
-                +" VALUES ('"+et_especie.getText().toString()+"', '"+et_cantidad.getText().toString()+"')";
+                +" VALUES ('"+et_especie.getText().toString().trim()+"', '"+et_cantidad.getText().toString().trim()+"')";
         ddbb.execSQL(insert1);
 
-        /**************************************************************************
-
-        **************************************************************************/
-        listaEspecies.add(et_especie.getText().toString());
+        listaEspecies.add(et_especie.getText().toString().trim());
         Set<String> hashSet = new HashSet<String>(listaEspecies);
         listaEspecies.clear();
         listaEspecies.addAll(hashSet);
