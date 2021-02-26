@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 public class Iniciar extends AppCompatActivity  {
 
     EditText et_nombreProyecto, et_IdTransecto;
-
+    ConexionSQLite conexionSQLite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +50,38 @@ public class Iniciar extends AppCompatActivity  {
             validacion = "iguales";
         } else if (campo1.length() > 10 || campo2.length() > 10){
             validacion = "largo";
-        }
+        } /*else if(verificarNuevoProyecto().equals("existe")) {
+            validacion = "existe";
+        }*/
         return validacion;
-    }
 
+    }
+  /****************************************
+   *    Verficar Proyecto no Exista en la BBDD
+   ******************************************/
+    private String verificarNuevoProyecto() {
+        SQLiteDatabase db = conexionSQLite.getReadableDatabase();
+        String[] parametro = {et_nombreProyecto.getText().toString()};
+        String[] campos = {UtilidadesSQLite.NOMBRE_PROYECTO};
+
+        try {
+                 Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?",
+                           parametro, null, null, null );
+                 cursor.moveToFirst();
+                 if(campos.equals(et_nombreProyecto.getText().toString()) ){
+                     return "existe";
+                 }
+                 cursor.close();
+        } catch (Exception e) {
+            return "procede";
+
+        }
+        return "default";
+    }
+    /****************************************
+     *    Mensaje Validacion
+     *    Iniciar
+     ******************************************/
     public void onClickIniciar(View view) {
         switch (validar()){
             case "vacio":
@@ -67,6 +96,12 @@ public class Iniciar extends AppCompatActivity  {
                 et_nombreProyecto.setText("");
                 et_IdTransecto.setText("");
                 break;
+            case "existe":
+                Toast.makeText(this, "proyecto ya existe", Toast.LENGTH_LONG).show();
+                et_nombreProyecto.setText("");
+                et_IdTransecto.setText("");
+                break;
+
             default:   iniciarProyecto();
         }
     }

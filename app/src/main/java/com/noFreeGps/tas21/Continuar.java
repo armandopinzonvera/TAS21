@@ -41,9 +41,9 @@ public class Continuar extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         llenadoTargetas();
     }
-    //////////////////////////////////////
-    ////// llenado RecyclerView ///////////
-    //////////////////////////////////////
+    /*************************************
+            llenado RecyclerView
+    ***************************************/
 
     private void llenadoTargetas() {
         SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();

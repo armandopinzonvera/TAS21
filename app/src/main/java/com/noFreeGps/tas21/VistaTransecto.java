@@ -76,7 +76,7 @@ VistaTransecto extends AppCompatActivity {
     **************************************/
     private void spinnerlist() {
         listaEspecies = new ArrayList<String>();
-        //listaEspecies.add(" ");
+        listaEspecies.add(" ");
 
         for(int i = 0; i<entidadesEspecies.size(); i++){
            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
