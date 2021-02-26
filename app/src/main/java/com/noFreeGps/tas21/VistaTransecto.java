@@ -131,9 +131,9 @@ VistaTransecto extends AppCompatActivity {
 
         } else if (campo1.length() > 10 || campo2.length() > 4) {
             validacion = "largo";
-      /*  }else if ((int)campo2 < 1){
+         }else if (Integer.parseInt(campo2) < 1){
             validacion = "cero";
-        }*/
+
         }
         return validacion;
     }
@@ -160,6 +160,11 @@ VistaTransecto extends AppCompatActivity {
                 et_especie.setText("");
                 et_cantidad.setText("");
                 break;
+
+                case "cero"   :
+                    Toast.makeText(this, "no puede ser menor de 1", Toast.LENGTH_LONG).show();
+                    et_cantidad.setText("");
+                    break;
             default:   enviarInformacion();
         }
     }
@@ -170,18 +175,7 @@ VistaTransecto extends AppCompatActivity {
     private void enviarInformacion() {
 
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
-        /*******************************************
-        if (!et_cantidad.getText().toString().isEmpty()) {
-            if (et_cantidad.getText().toString().length() >= 0) {
-                String trim = et_cantidad.getText().toString().trim();
-                et_cantidad.setText(String.valueOf(trim));
-            }
-        } else {
-            et_cantidad.setError("Plz enter name");
-        }
 
-
-        *******************************************/
         String insert1 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRACK
                 +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
                 +" VALUES ('"+et_especie.getText().toString().trim()+"', '"+et_cantidad.getText().toString().trim()+"')";
