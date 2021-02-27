@@ -135,8 +135,8 @@ public class Iniciar extends AppCompatActivity  {
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
 
 
-        String insert = UtilidadesSQLite.crearProyecto(et_nombreProyecto, et_IdTransecto); /** el metodo recibe datos tipo EditText **/
-        String insert2 = UtilidadesSQLite.ingresarTransecto(et_IdTransecto);  /** el metodo recibe datos tipo EditText **/
+        String insert = UtilidadesSQLite.insertarProyecto(et_nombreProyecto, et_IdTransecto); /** el metodo recibe datos tipo EditText **/
+        String insert2 = UtilidadesSQLite.insertarTransecto(et_IdTransecto);  /** el metodo recibe datos tipo EditText **/
 
         ddbb.execSQL(insert);
         Toast.makeText(this, "proyecto ingresado", Toast.LENGTH_LONG).show();

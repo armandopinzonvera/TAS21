@@ -176,9 +176,7 @@ VistaTransecto extends AppCompatActivity {
 
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
 
-        String insert1 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRACK
-                +" ( " +UtilidadesSQLite.ESPECIE+", "+UtilidadesSQLite.DENSIDAD+") "
-                +" VALUES ('"+et_especie.getText().toString().trim()+"', '"+et_cantidad.getText().toString().trim()+"')";
+        String insert1 = UtilidadesSQLite.insertarEspecieyDensidad(et_especie, et_cantidad); /** el metodo recibe datos tipo EditText **/
         ddbb.execSQL(insert1);
 
         listaEspecies.add(et_especie.getText().toString().trim());
