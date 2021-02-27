@@ -1,10 +1,12 @@
 package com.noFreeGps.tas21.SQLite;
 
+import android.widget.EditText;
+
 public class UtilidadesSQLite {
     public static final String DDBB_NAME="DDBB_tas";
 
 
-    //////////  tabla transecto  /////////////
+    /*********  tabla transecto  ************/
 
     public static final String TABLA_TRANSECTO = "tabla_transecto";
     public static final String ID_TRANSECTO = "id_transecto";
@@ -16,7 +18,7 @@ public class UtilidadesSQLite {
             +FK_TRACK+" INTEGER )";
 
 
-    //////////  tabla proyecto  /////////////
+    /***********  tabla proyecto  ************/
 
     public static final String TABLA_PROYECTO = "tabla_proyecto";
     public static final String NOMBRE_PROYECTO = "nombre_proyecto";
@@ -29,7 +31,7 @@ public class UtilidadesSQLite {
             +FK_TRANSECTO+" TEXT, FOREIGN KEY("+FK_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") )";
 
 
-    //////////  tabla track  /////////////
+    /*********  tabla track  ************/
 
     public static final String TABLA_TRACK = "tabla_track";
     public static final String ID_TRACK = "id_track";
@@ -52,5 +54,21 @@ public class UtilidadesSQLite {
             +ESPECIE+" TEXT, "
             +DENSIDAD+" INTEGER )";
 
+    /**********  Activity Iniciar  ************/
+
+    public static String crearProyecto(EditText nombreProyecto, EditText idTransecto){
+        String nombreProyecto1 = nombreProyecto.getText().toString().trim();
+        String idTransecto1 = idTransecto.getText().toString().trim();
+
+        return "INSERT INTO "+TABLA_PROYECTO +" ( " +NOMBRE_PROYECTO+", "+FK_TRANSECTO+") "+" VALUES ('"+nombreProyecto1+"', '"+idTransecto1+"')";
+    }
+
+
+    public static String ingresarTransecto(EditText etIdTransecto){
+        String idTransecto1 = etIdTransecto.getText().toString().trim();
+
+        return "INSERT INTO " +TABLA_TRANSECTO+ " ( " + ID_TRANSECTO + ", " + FK_TRACK + ") "+" VALUES ('" + idTransecto1 + "', '" + 0 + "')";
+
+    }
 
 }

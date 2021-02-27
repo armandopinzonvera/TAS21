@@ -134,14 +134,12 @@ public class Iniciar extends AppCompatActivity  {
         ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
         SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
 
-        String insert = "INSERT INTO "+UtilidadesSQLite.TABLA_PROYECTO
-                +" ( " +UtilidadesSQLite.NOMBRE_PROYECTO+", "+UtilidadesSQLite.FK_TRANSECTO+") "
-                +" VALUES ('"+et_nombreProyecto.getText().toString().trim()+"', '"+et_IdTransecto.getText().toString().trim()+"')";
-        ddbb.execSQL(insert);
-        String insert2 = "INSERT INTO "+UtilidadesSQLite.TABLA_TRANSECTO
-                +" ( " +UtilidadesSQLite.ID_TRANSECTO+", "+UtilidadesSQLite.FK_TRACK+") "
-                +" VALUES ('"+et_IdTransecto.getText().toString()+"', '"+0+"')";
 
+        String insert = UtilidadesSQLite.crearProyecto(et_nombreProyecto, et_IdTransecto); /** el metodo recibe datos tipo EditText **/
+        String insert2 = UtilidadesSQLite.ingresarTransecto(et_IdTransecto);  /** el metodo recibe datos tipo EditText **/
+
+        ddbb.execSQL(insert);
+        Toast.makeText(this, "proyecto ingresado", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTransecto.getText().toString());
