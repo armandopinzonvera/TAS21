@@ -3,31 +3,24 @@ package com.noFreeGps.tas21.SQLite;
 import android.widget.EditText;
 
 public class UtilidadesSQLite {
+
+    /*********** Nombre BBDD  ************/
+
     public static final String DDBB_NAME="DDBB_tas";
 
-    /*********  tabla transecto  ************/
-
-    public static final String TABLA_TRANSECTO = "tabla_transecto";
-    public static final String ID_TRANSECTO = "id_transecto";
-    public static final String FK_TRACK = "fk_track";
-
-    public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
-            +TABLA_TRANSECTO+" ("
-            +ID_TRANSECTO+" TEXT PRIMARY KEY, "
-            +FK_TRACK+" INTEGER )";
-
-    /***********  tabla proyecto  ************/
+    /*********** Constantes tabla proyecto  ************/
 
     public static final String TABLA_PROYECTO = "tabla_proyecto";
     public static final String NOMBRE_PROYECTO = "nombre_proyecto";
     public static final String FK_TRANSECTO = "fk_transecto";
 
-    public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
-            +TABLA_PROYECTO+" ("
-            +NOMBRE_PROYECTO+" TEXT, "
-            +FK_TRANSECTO+" TEXT, FOREIGN KEY("+FK_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") )";
+    /********* Constantes tabla transecto  ************/
 
-    /*********  tabla track  ************/
+    public static final String TABLA_TRANSECTO = "tabla_transecto";
+    public static final String ID_TRANSECTO = "id_transecto";
+    public static final String FK_TRACK = "fk_track";
+
+    /********* Constantes tabla track  ************/
 
     public static final String TABLA_TRACK = "tabla_track";
     public static final String ID_TRACK = "id_track";
@@ -38,6 +31,9 @@ public class UtilidadesSQLite {
     public static final String ALTURA = "altura";
     public static final String ESPECIE = "especie";
     public static final String DENSIDAD = "densidad";
+
+    /************************************************************************************************************/
+    /*********  crear tabla track ************/
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
@@ -50,6 +46,22 @@ public class UtilidadesSQLite {
             +ESPECIE+" TEXT, "
             +DENSIDAD+" INTEGER )";
 
+    /*********  crear tabla transecto  ************/
+
+    public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
+            +TABLA_TRANSECTO+" ("
+            +ID_TRANSECTO+" TEXT PRIMARY KEY, "
+            +FK_TRACK+" INTEGER, FOREING KEY("+FK_TRACK+") REFERENCES "+TABLA_TRACK+"( "+ID_TRACK+") )";
+
+    /*********  crear tabla proyecto  ************/
+
+    public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
+            +TABLA_PROYECTO+" ("
+            +NOMBRE_PROYECTO+" TEXT, "
+            +FK_TRANSECTO+" TEXT, FOREIGN KEY("+FK_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") )";
+
+
+    /************************************************************************************************************/
     /**********  Activity Iniciar  ************/
 
     public static String insertarProyecto(EditText nombreProyecto, EditText idTransecto){

@@ -183,6 +183,7 @@ VistaTransecto extends AppCompatActivity {
         Set<String> hashSet = new HashSet<String>(listaEspecies);
         listaEspecies.clear();
         listaEspecies.addAll(hashSet);
+        ddbb.close();
         et_especie.setText("");
         et_cantidad.setText("");
     }

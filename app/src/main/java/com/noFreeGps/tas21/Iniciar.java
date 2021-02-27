@@ -137,13 +137,14 @@ public class Iniciar extends AppCompatActivity  {
 
         String insert = UtilidadesSQLite.insertarProyecto(et_nombreProyecto, et_IdTransecto); /** el metodo recibe datos tipo EditText **/
         String insert2 = UtilidadesSQLite.insertarTransecto(et_IdTransecto);  /** el metodo recibe datos tipo EditText **/
-
         ddbb.execSQL(insert);
+        ddbb.execSQL(insert2);
+        //ddbb.update();
         Toast.makeText(this, "proyecto ingresado", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTransecto.getText().toString());
-        ddbb.execSQL(insert2);
+        ddbb.close();
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
 

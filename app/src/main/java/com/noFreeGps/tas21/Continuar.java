@@ -1,4 +1,13 @@
 package com.noFreeGps.tas21;
+/***************************
+* En este activity se presentan targetas (recyclerView)
+ * con informacion general de cada proyecto: nombre, cantidad de
+ * transectos, riqueza acumulada y densidad acumulada.
+ * con informacion tomada de la BBDD
+ * y contienen un listener que permiter continuar un proyecto
+ * o descargar la informacion
+*
+****************************/
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,12 +29,12 @@ import java.util.ArrayList;
 
 public class Continuar extends AppCompatActivity {
 
-    ArrayList<Usuario> listUsuario;
-    RecyclerView recyclerView;
-
     EditText et_c_nombreproyecto;
     TextView tv_c_transecto, tv_c_sumaTransecto;
     ConexionSQLite conexionSQLite;
+    /*****  RecyclerView ******/
+    ArrayList<Usuario> listUsuario;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,7 @@ public class Continuar extends AppCompatActivity {
 
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
         tv_c_transecto = findViewById(R.id.tv_c_transectos);
+        /*****  RecyclerView ******/
         listUsuario = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
