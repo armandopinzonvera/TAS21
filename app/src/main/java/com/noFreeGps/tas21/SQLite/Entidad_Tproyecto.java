@@ -1,17 +1,17 @@
 package com.noFreeGps.tas21.SQLite;
 import java.io.Serializable;
 
-public class Usuario implements Serializable {
+public class Entidad_Tproyecto implements Serializable {
 
     private String nombre_proyecto;
     private String fk_transecto;
 
-    public Usuario(String nombre_proyecto, String fk_transecto) {
+    public Entidad_Tproyecto(String nombre_proyecto, String fk_transecto) {
         this.nombre_proyecto = nombre_proyecto;
         this.fk_transecto = fk_transecto;
     }
 
-    public Usuario() {
+    public Entidad_Tproyecto() {
     }
 
     public String getNombre_proyecto() {

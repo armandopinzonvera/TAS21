@@ -7,17 +7,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.noFreeGps.tas21.SQLite.Usuario;
+import com.noFreeGps.tas21.SQLite.Entidad_Tproyecto;
 
 import java.util.ArrayList;
 
 public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.ViewHolderDatos> {
 
 
-    ArrayList<Usuario> listaUsuario;
+    ArrayList<Entidad_Tproyecto> listaEntidadTproyecto;
 
-    public AdaptadorRecycler(ArrayList<Usuario> listaUsuario) {
-        this.listaUsuario = listaUsuario;
+    public AdaptadorRecycler(ArrayList<Entidad_Tproyecto> listaEntidadTproyecto) {
+        this.listaEntidadTproyecto = listaEntidadTproyecto;
     }
 
     @NonNull
@@ -28,13 +28,13 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
-        holder.tv_rv_nombreProyecto.setText(listaUsuario.get(position).getNombre_proyecto());
+        holder.tv_rv_nombreProyecto.setText(listaEntidadTproyecto.get(position).getNombre_proyecto());
     }
     
     @Override
     public int getItemCount() {
 
-        return listaUsuario.size();
+        return listaEntidadTproyecto.size();
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {

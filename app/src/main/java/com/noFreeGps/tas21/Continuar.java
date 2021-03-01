@@ -19,10 +19,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
-import com.noFreeGps.tas21.SQLite.Usuario;
+import com.noFreeGps.tas21.SQLite.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class Continuar extends AppCompatActivity {
     TextView tv_c_transecto, tv_c_sumaTransecto;
     ConexionSQLite conexionSQLite;
     /*****  RecyclerView ******/
-    ArrayList<Usuario> listUsuario;
+    ArrayList<Entidad_Tproyecto> listTproyecto;
     RecyclerView recyclerView;
 
     @Override
@@ -46,7 +45,7 @@ public class Continuar extends AppCompatActivity {
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
         tv_c_transecto = findViewById(R.id.tv_c_transectos);
         /*****  RecyclerView ******/
-        listUsuario = new ArrayList<>();
+        listTproyecto = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         llenadoTargetas();
@@ -58,18 +57,18 @@ public class Continuar extends AppCompatActivity {
     private void llenadoTargetas() {
         SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();
 
-        Usuario usuario = null;
+        Entidad_Tproyecto entidadTproyecto = null;
         Cursor cursor = ddbb.rawQuery("SELECT * FROM "+ UtilidadesSQLite.TABLA_PROYECTO, null);
 
         while(cursor.moveToNext()){
-            usuario = new Usuario();
-            usuario.setNombre_proyecto(cursor.getString(0));
+            entidadTproyecto = new Entidad_Tproyecto();
+            entidadTproyecto.setNombre_proyecto(cursor.getString(0));
             /*****  para incluir mas resultados*/
             //   entidad_ttrack.setDensidad(cursor.getInt(1));
 
-            listUsuario.add(usuario);
+            listTproyecto.add(entidadTproyecto);
         }
-        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listUsuario);
+        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(listTproyecto);
         recyclerView.setAdapter(adaptadorRecycler);
 
 /*
