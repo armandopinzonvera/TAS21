@@ -102,6 +102,10 @@ VistaTransecto extends AppCompatActivity {
        /*****************************************/
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter( adapter);
+        /*****************************************/
+
+
+        /*****************************************/
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

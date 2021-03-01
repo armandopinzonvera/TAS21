@@ -89,13 +89,13 @@
 
             <Spinner
                 android:id="@+id/spinner_especies"
-                android:layout_width="271dp"
+                android:layout_width="234dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:dropDownWidth="fill_parent"
+                android:background="@drawable/arrow_spinner"
                 android:spinnerMode="dropdown"
-                android:background="@android:drawable/btn_dropdown"
+
                 />
 
         </LinearLayout>
