@@ -11,6 +11,14 @@ public class Entidad_Tproyecto implements Serializable {
         this.fk_transecto = fk_transecto;
     }
 
+    @Override
+    public String toString() {
+        return "Entidad_Tproyecto{" +
+                "nombre_proyecto='" + nombre_proyecto + '\'' +
+                ", fk_transecto='" + fk_transecto + '\'' +
+                '}';
+    }
+
     public Entidad_Tproyecto() {
     }
 

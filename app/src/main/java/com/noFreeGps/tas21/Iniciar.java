@@ -7,6 +7,7 @@ This class just take the project's information
  ****************************************/
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -145,12 +146,20 @@ public class Iniciar extends AppCompatActivity  {
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTransecto.getText().toString());
         ddbb.close();
+
+        showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
-
         startActivity(intent);
     }
 
+    public void showMessage(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
 
 
 }
