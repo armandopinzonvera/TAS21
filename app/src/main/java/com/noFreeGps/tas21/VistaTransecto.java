@@ -2,9 +2,7 @@ package com.noFreeGps.tas21;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
-import com.noFreeGps.tas21.SQLite.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;

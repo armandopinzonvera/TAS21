@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
-import com.noFreeGps.tas21.SQLite.Entidad_Tproyecto;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;

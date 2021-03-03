@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.noFreeGps.tas21.SQLite.Entidad_Tproyecto;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 
 import java.util.ArrayList;
 
