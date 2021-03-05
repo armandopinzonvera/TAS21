@@ -1,26 +1,26 @@
 package com.noFreeGps.tas21.SQLite;
-
-import android.widget.EditText;
+/**
+ * Esta clase alberga las constantes que definen los nombres de la
+ * BBDD, tablas, y campos
+ * ademas las sentencias de creacion de las tablas
+ *
+ * */
 
 public class UtilidadesSQLite {
 
-    /*********** Nombre BBDD  ************/
+   //  Nombre BBDD
 
-    public static final String DDBB_NAME="DDBB_tas";
+    public static final String DDBB_NAME="DDBB_tas21";
 
-    /*********** Constantes tabla proyecto  ************/
+    // Constantes tabla especies
 
-    public static final String TABLA_PROYECTO = "tabla_proyecto";
-    public static final String NOMBRE_PROYECTO = "nombre_proyecto";
-    public static final String FK_TRANSECTO = "fk_transecto";
+    public static final String TABLA_ESPECIES = "tabla_especies";
+    public static final String ID_ESPECIES ="id_especie";
+    public static final String ESPECIE = "especie";
+    public static final String DENSIDAD = "densidad";
+    public static final String FK_ID_TRACK = "fk_IdTrack";
 
-    /********* Constantes tabla transecto  ************/
-
-    public static final String TABLA_TRANSECTO = "tabla_transecto";
-    public static final String ID_TRANSECTO = "id_transecto";
-    public static final String FK_TRACK = "fk_track";
-
-    /********* Constantes tabla track  ************/
+    // Constantes tabla track
 
     public static final String TABLA_TRACK = "tabla_track";
     public static final String ID_TRACK = "id_track";
@@ -29,11 +29,33 @@ public class UtilidadesSQLite {
     public static final String LONGITUD = "longitud";
     public static final String LATITUD = "latitud";
     public static final String ALTURA = "altura";
-    public static final String ESPECIE = "especie";
-    public static final String DENSIDAD = "densidad";
+    public static final String FK_ID_TRANSECTO = "fk_Idtransecto";
 
-    /************************************************************************************************************/
-    /*********  crear tabla track ************/
+    //  Constantes tabla transecto
+
+    public static final String TABLA_TRANSECTO = "tabla_transecto";
+    public static final String ID_TRANSECTO = "id_transecto";
+    public static final String FK_NOMBRE_PROYECTO = "fk_NombreProyecto";
+
+
+    // Constantes tabla proyecto
+
+    public static final String TABLA_PROYECTO = "tabla_proyecto";
+    public static final String NOMBRE_PROYECTO = "nombre_proyecto";
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+    //  crear tabla especies
+
+    public static final String CREAR_TABLA_ESPECIES = "CREATE TABLE "
+            +TABLA_ESPECIES+" ("
+            +ID_ESPECIES+" INTEGER, "
+            +ESPECIE+" TEXT, "
+            +DENSIDAD+" INTEGER, "
+            +FK_ID_TRACK+" INTEGER, "
+            +" FOREIGN KEY("+FK_ID_TRACK+") REFERENCES "+TABLA_TRACK+"( "+ID_TRACK+") );";
+
+//  crear tabla track
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
@@ -43,47 +65,34 @@ public class UtilidadesSQLite {
             +LONGITUD+" INTEGER, "
             +LATITUD+" INTEGER, "
             +ALTURA+"  INTEGER, "
-            +ESPECIE+" TEXT, "
-            +DENSIDAD+" INTEGER )";
+            +FK_ID_TRANSECTO+ " TEXT, "
+            +" FOREIGN KEY("+FK_ID_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") );";
 
-    /*********  crear tabla transecto  ************/
+    // crear tabla transecto
 
     public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
             +TABLA_TRANSECTO+" ("
             +ID_TRANSECTO+" TEXT PRIMARY KEY, "
-            +FK_TRACK+" INTEGER, FOREING KEY("+FK_TRACK+") REFERENCES "+TABLA_TRACK+"( "+ID_TRACK+") )";
+            + FK_NOMBRE_PROYECTO +" TEXT, "
+            +" FOREIGN KEY("+ FK_NOMBRE_PROYECTO +") REFERENCES "+TABLA_PROYECTO+"( "+NOMBRE_PROYECTO+") );";
 
-    /*********  crear tabla proyecto  ************/
+    //  crear tabla proyecto
 
     public static final String CREAR_TABLA_PROYECTO = "CREATE TABLE "
             +TABLA_PROYECTO+" ("
-            +NOMBRE_PROYECTO+" TEXT, "
-            +FK_TRANSECTO+" TEXT, FOREIGN KEY("+FK_TRANSECTO+") REFERENCES "+TABLA_TRANSECTO+"( "+ID_TRANSECTO+") )";
+            +NOMBRE_PROYECTO+" TEXT PRIMARY KEY);";
 
 
-    /************************************************************************************************************/
-    /**********  Activity Iniciar  ************/
 
-    public static String insertarProyecto(EditText nombreProyecto, EditText idTransecto){
-        String nombreProyecto1 = nombreProyecto.getText().toString().trim();
-        String idTransecto1 = idTransecto.getText().toString().trim();
 
-        return "INSERT INTO "+TABLA_PROYECTO +" ( " +NOMBRE_PROYECTO+", "+FK_TRANSECTO+") "+" VALUES ('"+nombreProyecto1+"', '"+idTransecto1+"')";
-    }
 
-    public static String insertarTransecto(EditText etIdTransecto){
-        String idTransecto1 = etIdTransecto.getText().toString().trim();
 
-        return "INSERT INTO " +TABLA_TRANSECTO+ " ( " + ID_TRANSECTO + ", " + FK_TRACK + ") "+" VALUES ('" + idTransecto1 + "', '" + 0 + "')";
-    }
 
-    /**********  Activity VistaTransecto  ************/
 
-    public static String insertarEspecieyDensidad(EditText etespecie, EditText etcantidad) {
-        String etespecie1 = etespecie.getText().toString().trim();
-        String etcantidad1 = etcantidad.getText().toString().trim();
 
-        return "INSERT INTO "+TABLA_TRACK+" ( " +ESPECIE+", "+DENSIDAD+") "+" VALUES ('"+etespecie1+"', '"+etcantidad1+"')";
-    }
+
+
+
+
 
 }

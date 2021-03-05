@@ -8,23 +8,24 @@ package com.noFreeGps.tas21.SQLite.entidades;
  * */
 public class Entidad_Ttrack {
 
-    private int id_track;
+    public int id_track;
     private String fecha;
     private String hora;
     private float longitud;
     private float latitud;
     private int altura;
+    private String fk_idTransecto;
 
 
-    public Entidad_Ttrack( int id_track, String fecha, String hora, float longitud, float latitud, int altura) {
+    public Entidad_Ttrack( /*int id_track, */String fecha, String hora, float longitud, float latitud, int altura, String fk_idTransecto) {
 
-        this.id_track = id_track;
+       /* this.id_track = id_track;*/
         this.fecha = fecha;
         this.hora = hora;
         this.longitud = longitud;
         this.latitud = latitud;
         this.altura = altura;
-
+        this.fk_idTransecto = fk_idTransecto;
     }
 
     public Entidad_Ttrack() {
@@ -44,6 +45,7 @@ public class Entidad_Ttrack {
     }
 
     public int getId_track() {
+
         return id_track;
     }
 
@@ -65,6 +67,11 @@ public class Entidad_Ttrack {
 
     public int getAltura() {
         return altura;
+    }
+
+    public String getFk_idTransecto(){
+
+        return fk_idTransecto;
     }
  ///////////////////////////////////////////////////////
 
@@ -93,6 +100,7 @@ public class Entidad_Ttrack {
     }
 
     public void setAltura(int altura) {
+
         this.altura = altura;
     }
 

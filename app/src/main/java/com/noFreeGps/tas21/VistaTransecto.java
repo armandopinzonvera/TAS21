@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
@@ -26,23 +27,24 @@ import java.util.Set;
 public class
 VistaTransecto extends AppCompatActivity {
 
-    /****** GUI elements ********/
+    // GUI elements
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    /****** Fragment ********/
+    // Fragment
     Fragment fragment_mapa;
-    /****** SQLite ********/
+    // SQLite
     ConexionSQLite conexionSQLite;
-    /****** Spinner ********/
+    // Spinner
     Spinner spinner_especies;
-    ArrayList<String> listaEspecies;
-    ArrayList<Entidad_Ttrack> entidadesEspecies;
+    ArrayAdapter entidadArrayAdapter;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
 
-        /****** GUI elements ********/
+        // GUI elements
         tv_lat = findViewById(R.id.tv_lat);
         tv_long = findViewById(R.id.tv_lon);
         et_especie = findViewById(R.id.et_especie);
@@ -51,27 +53,25 @@ VistaTransecto extends AppCompatActivity {
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
 
-        /****** Extra information ********/
+        // Extra information
          String data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
         String data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
-
-        /****** Fragment ********/
+        // Fragment
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
-
-        /****** SQLite ********/
-        conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
-
-        /****** methods ********/
-        spinnersqlite();
-
+        // SQLite
+        conexionSQLite = new ConexionSQLite(this);
+        mostrarListView(conexionSQLite);
+        // methods
+      //  spinnersqlite();
     }
-    /*************************************
-    ********  Spinner funciones ***********
-    **************************************/
+/***
+    //     Spinner funciones
+       ArrayList<String> listaEspecies;
+       ArrayList<Entidad_Tespecies> entidadesEspecies;
     private void spinnerlist() {
         listaEspecies = new ArrayList<String>();
         listaEspecies.add(" ");
@@ -80,30 +80,33 @@ VistaTransecto extends AppCompatActivity {
            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
         }
 
-    }
-
+    }*/
+/**
     public void spinnersqlite(){
-        /****** SQLite ********/
+        // SQLite
         SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
-        Entidad_Ttrack entidad_ttrack= null;
-        entidadesEspecies = new ArrayList<Entidad_Ttrack>();
+        Entidad_Tespecies entidad_ttrack= null;
+        entidadesEspecies = new ArrayList<Entidad_Tespecies>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_TRACK, null);
+       // Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES, null);
+
+        Cursor cursor = ddbb.rawQuery("SELECT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES, null);
         while(cursor.moveToNext()){
-            entidad_ttrack = new Entidad_Ttrack();
-            entidad_ttrack.setEspecie(cursor.getString(0));
+            entidad_ttrack = new Entidad_Tespecies();
+            entidad_ttrack.setEspecie(cursor.getString(1));
+            cursor.close();
          //   entidad_ttrack.setDensidad(cursor.getInt(1));
 
             entidadesEspecies.add(entidad_ttrack);
         }
         spinnerlist();
-       /*****************************************/
+
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter( adapter);
-        /*****************************************/
 
 
-        /*****************************************/
+
+
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -117,7 +120,7 @@ VistaTransecto extends AppCompatActivity {
         });
 
     }
-
+*/
 
 
     /**********************************
@@ -140,9 +143,8 @@ VistaTransecto extends AppCompatActivity {
         return validacion;
     }
 
-    /****************************************
-    *******  Funcionalidad Botones  *********
-    *****************************************/
+    //  Funcionalidad Botones
+
     public void terminar(View view) {
 
 
@@ -170,25 +172,32 @@ VistaTransecto extends AppCompatActivity {
             default:   enviarInformacion();
         }
     }
-    /*******************************************/
-   /*************  Enviar a BBDD ***************/
-    /********************************************/
+    //   Enviar a BBDD
 
     private void enviarInformacion() {
+        Entidad_Tespecies entidadTespecies;
 
-        SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
+        try {
+            entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString(), Integer.parseInt(et_cantidad.getText().toString()), 1);
+        } catch (NumberFormatException e) {
+            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, 1);
+        }
+        conexionSQLite = new ConexionSQLite(this);
+        conexionSQLite.addDatoTespecies(entidadTespecies);
 
-        String insert1 = UtilidadesSQLite.insertarEspecieyDensidad(et_especie, et_cantidad); /** el metodo recibe datos tipo EditText **/
-        ddbb.execSQL(insert1);
+        mostrarListView(conexionSQLite);
 
-        listaEspecies.add(et_especie.getText().toString().trim());
+      /*  listaEspecies.add(et_especie.getText().toString().trim());
         Set<String> hashSet = new HashSet<String>(listaEspecies);
         listaEspecies.clear();
-        listaEspecies.addAll(hashSet);
-        ddbb.close();
+        listaEspecies.addAll(hashSet);*/
+
         et_especie.setText("");
         et_cantidad.setText("");
     }
-
+    public void mostrarListView(ConexionSQLite conexionSQLite1){
+        entidadArrayAdapter = new ArrayAdapter<Entidad_Tespecies>(VistaTransecto.this, android.R.layout.simple_expandable_list_item_1, conexionSQLite1.getEveryoneEspecie());
+        spinner_especies.setAdapter(entidadArrayAdapter);
+    }
 
 }

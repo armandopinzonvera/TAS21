@@ -40,7 +40,7 @@ public class Continuar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_continuar);
 
-        conexionSQLite = new ConexionSQLite(getApplicationContext(), UtilidadesSQLite.DDBB_NAME, null, 1 );
+        conexionSQLite = new ConexionSQLite(getApplicationContext() );
 
         et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
         tv_c_transecto = findViewById(R.id.tv_c_transectos);

@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
 
 public class Iniciar extends AppCompatActivity  {
 
@@ -36,10 +40,9 @@ public class Iniciar extends AppCompatActivity  {
 
     }
 
-    /**********************************
-              Functionality Buttons
-              Validacion Text
-    **************************************/
+    //         Functionality Buttons
+    //          Validacion Text
+
     public String validar(){
 
         String validacion ="bien";
@@ -57,9 +60,8 @@ public class Iniciar extends AppCompatActivity  {
         return validacion;
 
     }
-  /****************************************
-   *    Verficar Proyecto no Exista en la BBDD
-   ******************************************/
+  //    Verficar Proyecto no Exista en la BBDD
+
     private String verificarNuevoProyecto() {
         SQLiteDatabase db = conexionSQLite.getReadableDatabase();
         String[] parametro = {et_nombreProyecto.getText().toString()};
@@ -79,10 +81,10 @@ public class Iniciar extends AppCompatActivity  {
         }
         return "default";
     }
-    /****************************************
-     *    Mensaje Validacion
-     *    Iniciar
-     ******************************************/
+    //
+     //   Mensaje Validacion
+    //    Iniciar
+
     public void onClickIniciar(View view) {
         switch (validar()){
             case "vacio":
@@ -114,9 +116,8 @@ public class Iniciar extends AppCompatActivity  {
 
 
 
-    /********************************
-             Permiso Localizacion
-    ********************************/
+    //     Permiso Localizacion
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -124,30 +125,45 @@ public class Iniciar extends AppCompatActivity  {
 
     }
 
-    /*********************************
-              enviar Datos proyecto
-              Iniciar Localizacion
-              pasar a VistaTransecto
-    **********************************/
+    //
+    //          enviar Datos proyecto
+     //         Iniciar Localizacion
+    //          pasar a VistaTransecto
+
 
     private void iniciarProyecto() {
+        Entidad_Tproyecto entidadTproyecto;
+        Entidad_Ttransecto entidadTtransecto, ett ;
+        Entidad_Ttrack entidadTtrack;
 
-        ConexionSQLite conexionSQLite = new ConexionSQLite(this, UtilidadesSQLite.DDBB_NAME, null, 1);
-        SQLiteDatabase ddbb = conexionSQLite.getWritableDatabase();
+        try {
+            entidadTtrack = new Entidad_Ttrack("fecha", "hora", 1.111f, 2.222f,2222, et_IdTransecto.getText().toString());
+            entidadTproyecto = new Entidad_Tproyecto(et_nombreProyecto.getText().toString());
+
+            entidadTtransecto = new Entidad_Ttransecto(et_IdTransecto.getText().toString(), et_nombreProyecto.getText().toString());
 
 
-        String insert = UtilidadesSQLite.insertarProyecto(et_nombreProyecto, et_IdTransecto); /** el metodo recibe datos tipo EditText **/
-        String insert2 = UtilidadesSQLite.insertarTransecto(et_IdTransecto);  /** el metodo recibe datos tipo EditText **/
-        ddbb.execSQL(insert);
-        ddbb.execSQL(insert2);
-        //ddbb.update();
-        Toast.makeText(this, "proyecto ingresado", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            entidadTproyecto = new Entidad_Tproyecto("error");
+            entidadTtransecto = new Entidad_Ttransecto(et_IdTransecto.getText().toString(),"error");
+            entidadTtrack = new Entidad_Ttrack("error", "error", 1.111f, 2.222f,1, " error");
+        }
+
+        ConexionSQLite conexionSQLite = new ConexionSQLite(this);
+
+        boolean success1 = conexionSQLite.addDatoTproyecto(entidadTproyecto);
+        boolean success2 = conexionSQLite.addDatoTtransecto(entidadTtransecto);
+        boolean success3 = conexionSQLite.addDatoTtrack(entidadTtrack);
+
+        Toast.makeText(Iniciar.this, "Exito: "+success1+ ", "+success2+ ", "+success3, Toast.LENGTH_SHORT).show();
+
+
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTransecto.getText().toString());
-        ddbb.close();
 
-        showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
+
+        //showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
         et_nombreProyecto.setText("");
         et_IdTransecto.setText("");
         startActivity(intent);
@@ -160,6 +176,7 @@ public class Iniciar extends AppCompatActivity  {
         builder.setMessage(message);
         builder.show();
     }
+
 
 
 }
