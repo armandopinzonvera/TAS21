@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.config;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 
 import java.util.ArrayList;

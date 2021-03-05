@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.noFreeGps.tas21.R;
 
 public class MapsFragment extends Fragment {
 

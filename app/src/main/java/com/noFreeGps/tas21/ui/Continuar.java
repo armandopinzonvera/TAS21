@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.ui;
 /***************************
 * En este activity se presentan targetas (recyclerView)
  * con informacion general de cada proyecto: nombre, cantidad de
@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.noFreeGps.tas21.config.AdaptadorRecycler;
+import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;

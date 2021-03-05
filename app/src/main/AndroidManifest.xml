@@ -22,15 +22,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdxLAWjk_BUBqFCwEBTVzwYqo8b3FsV88" />
 
-        <activity android:name=".Continuar" />
-        <activity android:name=".VistaTransecto" />
+        <activity android:name=".ui.Continuar" />
+        <activity android:name=".ui.VistaTransecto" />
 
         <service
-            android:name=".ServiceLocation"
+            android:name=".config.ServiceLocation"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Iniciar" />
+        <activity android:name=".ui.Iniciar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

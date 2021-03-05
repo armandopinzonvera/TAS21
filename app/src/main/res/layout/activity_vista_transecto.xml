@@ -7,7 +7,7 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:textAlignment="center"
-    tools:context=".VistaTransecto">
+    tools:context=".ui.VistaTransecto">
 
     <LinearLayout
         android:layout_width="match_parent"

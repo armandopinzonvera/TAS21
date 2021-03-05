@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,9 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.noFreeGps.tas21.MainActivity;
+import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
-import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ VistaTransecto extends AppCompatActivity {
                 .add(R.id.marco_fragment, fragment_mapa).commit();
         // SQLite
         conexionSQLite = new ConexionSQLite(this);
-   //     mostrarListView(conexionSQLite);
+
         // methods
       spinnersqlite();
     }
@@ -179,7 +180,7 @@ VistaTransecto extends AppCompatActivity {
         conexionSQLite = new ConexionSQLite(this);
         conexionSQLite.addDatoTespecies(entidadTespecies);
 
- //       mostrarListView(conexionSQLite);
+
 
         listaEspecies.add(et_especie.getText().toString().trim());
         Set<String> hashSet = new HashSet<String>(listaEspecies);

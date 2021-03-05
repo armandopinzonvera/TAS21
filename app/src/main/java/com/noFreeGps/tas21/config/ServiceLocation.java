@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.config;
 
 import android.app.Service;
 import android.content.Intent;

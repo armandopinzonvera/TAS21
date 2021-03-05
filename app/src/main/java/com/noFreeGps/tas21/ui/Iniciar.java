@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21;
+package com.noFreeGps.tas21.ui;
 
 /*************************************
 This class just take the project's information
@@ -15,13 +15,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.noFreeGps.tas21.MainActivity;
+import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
-import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
