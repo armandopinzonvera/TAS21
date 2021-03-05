@@ -19,6 +19,9 @@ public class Entidad_Tespecies {
         this.densidad = densidad;
         this.fk_idTrack = fk_idTrack;
     }
+    public Entidad_Tespecies( String especie){
+        this.especie = especie;
+    }
 
     public Entidad_Tespecies() {
     }

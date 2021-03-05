@@ -115,13 +115,18 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     //        METODOS PARA LLENAR lISTvIEW
     ///////////////////////////////////////
 
-    public List<Entidad_Tespecies> getEveryoneEspecie(){
+
+
+
+
+
+       public List<Entidad_Tespecies> getEveryoneEspecie(){
         List<Entidad_Tespecies> returnList = new ArrayList<>();
 
         String queryString = "SELECT * FROM "+UtilidadesSQLite.TABLA_ESPECIES;
+
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
-
         if(cursor.moveToFirst()){
             do{
                 int id = cursor.getInt(0);
@@ -130,7 +135,11 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                 int fk_IdTrack= cursor.getInt(3);
 
                 Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(id, especie, densidad, fk_IdTrack);
+                //Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(especie);
+                entidadTespecies.getEspecie();
                 returnList.add(entidadTespecies);
+
+
             }while(cursor.moveToNext());
         }else{
 
