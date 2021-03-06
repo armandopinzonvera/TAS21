@@ -28,7 +28,16 @@
 
     <!--Activity Continuar-->
     <string name="continuar">Continuar Proyecto</string>
-
-
+    <string name="cantidadtransectos">Cantidad de transectos:</string>
+    <string name="inicio">Inicio:</string>
+    <string name="finalizacion">Finalizacion:</string>
+    <string name="distanciaT">Distancia Total:</string>
+    <string name="tiempoT">Tiempo Total:</string>
+    <string name="Hmax">Altura max:</string>
+    <string name="Hmin">Altura min:</string>
+    <string name="riqueza">Riqueza:</string>
+    <string name="abundancia">Abundancia:</string>
+    <string name="descargar">Descargar</string>
+    <string name="eliminar">Eliminar</string>
 
 </resources>
