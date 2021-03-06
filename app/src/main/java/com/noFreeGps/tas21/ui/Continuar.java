@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class Continuar extends AppCompatActivity {
 
-    EditText et_c_nombreproyecto;
+
     TextView tv_c_transecto, tv_c_sumaTransecto;
     ConexionSQLite conexionSQLite;
     /*****  RecyclerView ******/
@@ -44,7 +44,7 @@ public class Continuar extends AppCompatActivity {
 
         conexionSQLite = new ConexionSQLite(getApplicationContext() );
 
-        et_c_nombreproyecto =  findViewById(R.id.et_c_nombreProyecto);
+
         tv_c_transecto = findViewById(R.id.tv_c_transectos);
         /*****  RecyclerView ******/
         listTproyecto = new ArrayList<>();

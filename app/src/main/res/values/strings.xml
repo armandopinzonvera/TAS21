@@ -19,11 +19,16 @@
     <string name="latitud">Lat:</string>
     <string name="logitud">Lon:</string>
 
-    <!--Activity Continuar-->
+    <!--Activity Consultar-->
     <string name="consultar">Consultar Proyecto</string>
     <string name="buscar">Buscar</string>
-    <string name="continuar">continuar</string>
+
     <string name="limpiar">Limpiar</string>
     <string name="vacio">      - - </string>
+
+    <!--Activity Continuar-->
+    <string name="continuar">Continuar Proyecto</string>
+
+
 
 </resources>

@@ -81,9 +81,7 @@ VistaTransecto extends AppCompatActivity {
         for(int i = 0; i<entidadesEspecies.size(); i++){
            listaEspecies.add(entidadesEspecies.get(i).getEspecie());
         }
-
     }
-
     public void spinnersqlite(){
         // SQLite
         SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();

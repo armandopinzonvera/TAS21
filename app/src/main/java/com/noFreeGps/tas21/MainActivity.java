@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.noFreeGps.tas21.ui.Consultar;
 import com.noFreeGps.tas21.ui.Continuar;
 import com.noFreeGps.tas21.ui.Iniciar;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bt_Iniciar, bt_continuar;
+    Button bt_Iniciar, bt_continuar, bt_consultar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         bt_Iniciar = findViewById(R.id.bt_iniciar);
         bt_continuar = findViewById(R.id.bt_continuar);
+        bt_consultar = findViewById(R.id.bt_consultar);
 
         bt_Iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        bt_consultar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Consultar.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }
