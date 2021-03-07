@@ -28,7 +28,7 @@ import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
 
 public class Iniciar extends AppCompatActivity  {
 
-    EditText et_nombreProyecto, et_IdTransecto;
+    EditText et_nombreProyecto, et_IdTrack;
     ConexionSQLite conexionSQLite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class Iniciar extends AppCompatActivity  {
         setContentView(R.layout.activity_iniciar);
 
         et_nombreProyecto = findViewById(R.id.et_nombreProyecto);
-        et_IdTransecto = findViewById(R.id.et_idTransecto);
+        et_IdTrack = findViewById(R.id.et_idTransecto);
 
     }
 
@@ -47,7 +47,7 @@ public class Iniciar extends AppCompatActivity  {
 
         String validacion ="bien";
         String campo1 = et_nombreProyecto.getText().toString().trim();
-        String campo2 = et_IdTransecto.getText().toString().trim();
+        String campo2 = et_IdTrack.getText().toString().trim();
         if(campo1.isEmpty() || campo2.isEmpty()){
             validacion = "vacio";
         }else if (campo1.equals(campo2)){
@@ -92,17 +92,17 @@ public class Iniciar extends AppCompatActivity  {
                 break;
             case "iguales":
                 Toast.makeText(this, "No pueden ser iguales", Toast.LENGTH_LONG).show();
-                et_IdTransecto.setText("");
+                et_IdTrack.setText("");
                 break;
             case "largo":
                 Toast.makeText(this, "no pueden ser tan grandes", Toast.LENGTH_LONG).show();
                 et_nombreProyecto.setText("");
-                et_IdTransecto.setText("");
+                et_IdTrack.setText("");
                 break;
             case "existe":
                 Toast.makeText(this, "proyecto ya existe", Toast.LENGTH_LONG).show();
                 et_nombreProyecto.setText("");
-                et_IdTransecto.setText("");
+                et_IdTrack.setText("");
                 break;
 
             default:   iniciarProyecto();
@@ -137,35 +137,35 @@ public class Iniciar extends AppCompatActivity  {
         Entidad_Ttrack entidadTtrack;
 
         try {
-            entidadTtrack = new Entidad_Ttrack("fecha", "hora", 1.111f, 2.222f,2222, et_IdTransecto.getText().toString());
+            entidadTtrack = new Entidad_Ttrack(et_IdTrack.getText().toString(),"fecha", "hora", 1.111f, 2.222f,2222, et_nombreProyecto.getText().toString());
             entidadTproyecto = new Entidad_Tproyecto(et_nombreProyecto.getText().toString());
 
-            entidadTtransecto = new Entidad_Ttransecto(et_IdTransecto.getText().toString(), et_nombreProyecto.getText().toString());
+            //entidadTtransecto = new Entidad_Ttransecto(et_IdTrack.getText().toString(), et_nombreProyecto.getText().toString());
 
 
         } catch (Exception e) {
             entidadTproyecto = new Entidad_Tproyecto("error");
-            entidadTtransecto = new Entidad_Ttransecto(et_IdTransecto.getText().toString(),"error");
-            entidadTtrack = new Entidad_Ttrack("error", "error", 1.111f, 2.222f,1, " error");
+           // entidadTtransecto = new Entidad_Ttransecto(et_IdTrack.getText().toString(),"error");
+            entidadTtrack = new Entidad_Ttrack("error","error", "error", 1.111f, 2.222f,1, " error");
         }
 
         ConexionSQLite conexionSQLite = new ConexionSQLite(this);
 
         boolean success1 = conexionSQLite.addDatoTproyecto(entidadTproyecto);
-        boolean success2 = conexionSQLite.addDatoTtransecto(entidadTtransecto);
+      //  boolean success2 = conexionSQLite.addDatoTtransecto(entidadTtransecto);
         boolean success3 = conexionSQLite.addDatoTtrack(entidadTtrack);
 
-        Toast.makeText(Iniciar.this, "Exito: "+success1+ ", "+success2+ ", "+success3, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Iniciar.this, "Exito: "+success1+ ", "+success3, Toast.LENGTH_SHORT).show();
 
 
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
-        intent.putExtra("extra_2", et_IdTransecto.getText().toString());
+        intent.putExtra("extra_2", et_IdTrack.getText().toString());
 
 
         //showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
         et_nombreProyecto.setText("");
-        et_IdTransecto.setText("");
+        et_IdTrack.setText("");
         startActivity(intent);
     }
 

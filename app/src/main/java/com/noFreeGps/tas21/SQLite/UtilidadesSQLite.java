@@ -19,6 +19,7 @@ public class UtilidadesSQLite {
     public static final String ESPECIE = "especie";
     public static final String DENSIDAD = "densidad";
     public static final String FK_ID_TRACK = "fk_IdTrack";
+    public static final String FK_ID_PROYECTO_SP = "fk_IdProyecto";
 
     // Constantes tabla track
 
@@ -53,13 +54,14 @@ public class UtilidadesSQLite {
             +ESPECIE+" TEXT, "
             +DENSIDAD+" INTEGER, "
             +FK_ID_TRACK+" INTEGER, "
+
             +" FOREIGN KEY("+FK_ID_TRACK+") REFERENCES "+TABLA_TRACK+"( "+ID_TRACK+") );";
 
 //  crear tabla track
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
-            +ID_TRACK+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+            +ID_TRACK+" TEXT PRIMARY KEY, "
             +FECHA+" DATE, "
             +HORA+" TIME, "
             +LONGITUD+" INTEGER, "

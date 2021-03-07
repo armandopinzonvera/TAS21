@@ -27,7 +27,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
-        db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRANSECTO);
+      //  db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRANSECTO);
 
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
     }
@@ -36,7 +36,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_PROYECTO);
-        db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRANSECTO);
+      //db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRANSECTO);
         db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRACK);
         onCreate(db);
 
@@ -68,7 +68,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         SQLiteDatabase db =this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(UtilidadesSQLite.ID_TRANSECTO, entidadTtransecto.getId_transecto());
+      //  contentValues.put(UtilidadesSQLite.ID_TRANSECTO, entidadTtransecto.getId_transecto());
         contentValues.put(UtilidadesSQLite.FK_NOMBRE_PROYECTO, entidadTtransecto.getFk_nombreProyecto());
 
         long insert = db.insert(UtilidadesSQLite.TABLA_TRANSECTO, null, contentValues);
@@ -81,6 +81,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(UtilidadesSQLite.ID_TRACK, entidadTtrack.getId_track());
         contentValues.put(UtilidadesSQLite.FECHA, entidadTtrack.getFecha());
         contentValues.put(UtilidadesSQLite.HORA, entidadTtrack.getHora());
         contentValues.put(UtilidadesSQLite.LONGITUD, entidadTtrack.getLongitud());
