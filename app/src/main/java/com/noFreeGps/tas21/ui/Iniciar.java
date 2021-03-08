@@ -24,7 +24,6 @@ import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
-import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
 
 public class Iniciar extends AppCompatActivity  {
 
@@ -133,19 +132,15 @@ public class Iniciar extends AppCompatActivity  {
 
     private void iniciarProyecto() {
         Entidad_Tproyecto entidadTproyecto;
-        Entidad_Ttransecto entidadTtransecto ;
         Entidad_Ttrack entidadTtrack;
 
         try {
             entidadTtrack = new Entidad_Ttrack(et_IdTrack.getText().toString(),"fecha", "hora", 1.111f, 2.222f,2222, et_nombreProyecto.getText().toString());
             entidadTproyecto = new Entidad_Tproyecto(et_nombreProyecto.getText().toString());
 
-            //entidadTtransecto = new Entidad_Ttransecto(et_IdTrack.getText().toString(), et_nombreProyecto.getText().toString());
-
 
         } catch (Exception e) {
             entidadTproyecto = new Entidad_Tproyecto("error");
-           // entidadTtransecto = new Entidad_Ttransecto(et_IdTrack.getText().toString(),"error");
             entidadTtrack = new Entidad_Ttrack("error","error", "error", 1.111f, 2.222f,1, " error");
         }
 

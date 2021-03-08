@@ -22,7 +22,6 @@ import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
-import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
 
 import java.util.ArrayList;
 import java.util.HashSet;
