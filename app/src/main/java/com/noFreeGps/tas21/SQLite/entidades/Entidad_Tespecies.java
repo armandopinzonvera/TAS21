@@ -11,17 +11,24 @@ public class Entidad_Tespecies {
     int id;
     String especie;
     int densidad;
-    int fk_idTrack;
+    String fk_idTrack;
+    String fk_IdSProyecto;
 
-    public Entidad_Tespecies(int id, String especie, int densidad, int fk_idTrack) {
+
+  public Entidad_Tespecies(int id, String especie, int densidad, String fk_idTrack, String fk_IdSProyecto) {
         this.id = id;
         this.especie = especie;
         this.densidad = densidad;
         this.fk_idTrack = fk_idTrack;
+        this.fk_IdSProyecto = fk_IdSProyecto;
     }
-    public Entidad_Tespecies( String especie){
+    public Entidad_Tespecies(int id, String especie, int densidad) {
+        this.id = id;
         this.especie = especie;
+        this.densidad = densidad;
+
     }
+
 
     public Entidad_Tespecies() {
     }
@@ -32,7 +39,8 @@ public class Entidad_Tespecies {
                 "id=" + id +
                 ", especie='" + especie + '\'' +
                 ", densidad=" + densidad +
-                ", fk_idTrack=" + fk_idTrack +
+                ", fk_idTrack='" + fk_idTrack + '\'' +
+                ", fk_IdSProyecto='" + fk_IdSProyecto + '\'' +
                 '}';
     }
 
@@ -60,11 +68,26 @@ public class Entidad_Tespecies {
         this.densidad = densidad;
     }
 
-    public int getFk_idTrack() {
+    public String getFk_idTrack() {
+
         return fk_idTrack;
     }
 
-    public void setFk_idTrack(int fk_idTrack) {
+    public void setFk_idTrack(String fk_idTrack) {
+
         this.fk_idTrack = fk_idTrack;
     }
+
+    public String getfk_IdSProyecto() {
+
+        return fk_IdSProyecto;
+    }
+
+    public void setfk_IdSProyecto(String fk_IdSProyecto) {
+
+        this.fk_IdSProyecto = fk_IdSProyecto;
+    }
+
+
+
 }

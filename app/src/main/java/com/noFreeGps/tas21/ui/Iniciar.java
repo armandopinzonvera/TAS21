@@ -133,7 +133,7 @@ public class Iniciar extends AppCompatActivity  {
 
     private void iniciarProyecto() {
         Entidad_Tproyecto entidadTproyecto;
-        Entidad_Ttransecto entidadTtransecto, ett ;
+        Entidad_Ttransecto entidadTtransecto ;
         Entidad_Ttrack entidadTtrack;
 
         try {

@@ -19,25 +19,27 @@ import java.util.List;
 public class ConexionSQLite extends SQLiteOpenHelper {
 
     public ConexionSQLite(@Nullable Context context) {
-        super(context, UtilidadesSQLite.DDBB_NAME, null, 1);
+        super(context, UtilidadesSQLite.DDBB_NAME, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
+        db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
       //  db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRANSECTO);
 
-        db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_PROYECTO);
-      //db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRANSECTO);
         db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_TRACK);
+        db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_PROYECTO);
+        db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_ESPECIES);
         onCreate(db);
 
     }
@@ -63,7 +65,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         }
 
     }
-    public boolean addDatoTtransecto(Entidad_Ttransecto entidadTtransecto){
+/*    public boolean addDatoTtransecto(Entidad_Ttransecto entidadTtransecto){
 
         SQLiteDatabase db =this.getWritableDatabase();
 
@@ -77,7 +79,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return false;
         else
             return true;
-    }
+    }*/
     public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -87,7 +89,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         contentValues.put(UtilidadesSQLite.LONGITUD, entidadTtrack.getLongitud());
         contentValues.put(UtilidadesSQLite.LATITUD, entidadTtrack.getLatitud());
         contentValues.put(UtilidadesSQLite.ALTURA, entidadTtrack.getAltura());
-        contentValues.put(UtilidadesSQLite.FK_ID_TRANSECTO, entidadTtrack.getFk_idTransecto());
+        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_TR, entidadTtrack.getFk_idTransecto());
 
         long insert = db.insert(UtilidadesSQLite.TABLA_TRACK, null, contentValues);
 
@@ -100,9 +102,12 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(UtilidadesSQLite.ID_ESPECIES, entidadTespecies.getEspecie());
         contentValues.put(UtilidadesSQLite.ESPECIE, entidadTespecies.getEspecie());
         contentValues.put(UtilidadesSQLite.DENSIDAD, entidadTespecies.getDensidad());
         contentValues.put(UtilidadesSQLite.FK_ID_TRACK, entidadTespecies.getFk_idTrack());
+        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_SP, entidadTespecies.getfk_IdSProyecto());
+
         long insert = db.insert(UtilidadesSQLite.TABLA_ESPECIES, null, contentValues);
 
         if(insert == -1)
@@ -133,9 +138,10 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String especie = cursor.getString(1);
                 int densidad = cursor.getInt(2);
-                int fk_IdTrack= cursor.getInt(3);
+                String fk_IdTrack= cursor.getString(3);
+                String fk_IdSProyecto= cursor.getString(4);
 
-                Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(id, especie, densidad, fk_IdTrack);
+                Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(id, especie, densidad, fk_IdTrack, fk_IdSProyecto);
                 //Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(especie);
                 entidadTespecies.getEspecie();
                 returnList.add(entidadTespecies);

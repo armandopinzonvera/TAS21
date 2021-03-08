@@ -20,6 +20,9 @@ import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttransecto;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,8 +42,8 @@ VistaTransecto extends AppCompatActivity {
     Spinner spinner_especies;
     ArrayAdapter entidadArrayAdapter;
 
-
-
+    String data1;
+    String data2;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
@@ -55,9 +58,9 @@ VistaTransecto extends AppCompatActivity {
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
 
         // Extra information
-         String data1 = getIntent().getStringExtra("extra_1");
+         data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
-        String data2 = getIntent().getStringExtra("extra_2");
+        data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
         // Fragment
         fragment_mapa = new MapsFragment();
@@ -169,11 +172,13 @@ VistaTransecto extends AppCompatActivity {
 
     private void enviarInformacion() {
         Entidad_Tespecies entidadTespecies;
-
+        Entidad_Ttrack entidadTtrack = null;
+        Entidad_Tproyecto entidadTproyecto = null;
         try {
-            entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), 1);
+          entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), data2, data1);
+          Toast.makeText(this, entidadTespecies.toString(), Toast.LENGTH_LONG).show();
         } catch (NumberFormatException e) {
-            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, 1);
+            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
         }
         conexionSQLite = new ConexionSQLite(this);
         conexionSQLite.addDatoTespecies(entidadTespecies);
