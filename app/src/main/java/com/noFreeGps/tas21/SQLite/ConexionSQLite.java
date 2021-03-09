@@ -24,13 +24,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
-      //  db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRANSECTO);
-
-
     }
 
     @Override
@@ -40,17 +36,14 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_PROYECTO);
         db.execSQL("DROP TABLE IF EXISTS "+UtilidadesSQLite.TABLA_ESPECIES);
         onCreate(db);
-
     }
 
-
-
-    //////////////////////////////////////
-    //        METODOS PARA AGREGAR DATOS
-    ///////////////////////////////////////
+                                                //////////////////////////////////////
+      ///////////////////////////////           //     Add Data Methods
+                                                ///////////////////////////////////////
 
     public boolean addDatoTproyecto(Entidad_Tproyecto entidadTproyecto){
-       // Entidad_Ttransecto entidadTtransecto = new Entidad_Ttransecto();
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(UtilidadesSQLite.NOMBRE_PROYECTO, entidadTproyecto.getNombre_proyecto());
@@ -62,23 +55,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         }else{
             return true;
         }
-
     }
-/*    public boolean addDatoTtransecto(Entidad_Ttransecto entidadTtransecto){
 
-        SQLiteDatabase db =this.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-      //  contentValues.put(UtilidadesSQLite.ID_TRANSECTO, entidadTtransecto.getId_transecto());
-        contentValues.put(UtilidadesSQLite.FK_NOMBRE_PROYECTO, entidadTtransecto.getFk_nombreProyecto());
-
-        long insert = db.insert(UtilidadesSQLite.TABLA_TRANSECTO, null, contentValues);
-
-        if(insert == -1)
-            return false;
-        else
-            return true;
-    }*/
     public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -96,8 +74,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return false;
         else
             return true;
-
     }
+
     public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -114,10 +92,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         else
             return true;
     }
-
-//////////////////////////////////////
-    //        METODOS PARA LLENAR lISTvIEW
-    ///////////////////////////////////////
+                                                 //////////////////////////////////////
+    ///////////////////////////////           //     Fill ListView with Species Method
+                                                 ///////////////////////////////////////
 
 
        public List<Entidad_Tespecies> getEveryoneEspecie(){
@@ -136,7 +113,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                 String fk_IdSProyecto= cursor.getString(4);
 
                 Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(id, especie, densidad, fk_IdTrack, fk_IdSProyecto);
-                //Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(especie);
+
                 entidadTespecies.getEspecie();
                 returnList.add(entidadTespecies);
 
@@ -150,6 +127,36 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
         return returnList;
     }
+
+                                                 //////////////////////////////////////
+    ///////////////////////////////           //     Amount of tracks per project Method
+                                                ///////////////////////////////////////
+    ArrayList<Entidad_Ttrack> entidadTtrackArrayList;
+
+    public int cantidadtransectos(String busquedaProyecto){
+
+        SQLiteDatabase ddbb = this.getReadableDatabase();
+        Entidad_Ttrack entidadTtrack = null;
+        entidadTtrackArrayList = new ArrayList<Entidad_Ttrack>();
+
+        String consultaCantidadTrack = "SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
+                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
+                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO+
+                " WHERE "+UtilidadesSQLite.NOMBRE_PROYECTO+" = '"+busquedaProyecto+"'; ";
+
+        Cursor cursor = ddbb.rawQuery(consultaCantidadTrack, null);
+
+        int indexColumna = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);
+        int largoArray = 0;
+        while(cursor.moveToNext()){
+            entidadTtrack = new Entidad_Ttrack();
+            entidadTtrack.setId_track(cursor.getString(indexColumna));
+            entidadTtrackArrayList.add(entidadTtrack);
+            largoArray = entidadTtrackArrayList.size();
+        }
+        return largoArray;
+    }
+
 
 
 

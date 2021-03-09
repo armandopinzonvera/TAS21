@@ -92,8 +92,8 @@ public class Consultar extends AppCompatActivity {
              busquedaProyecto = parent.getItemAtPosition(position).toString();
               //  Toast.makeText(Consultar.this, "Seleccion: "+busquedaProyecto, Toast.LENGTH_LONG).show();
 
-                cantidadTransectos();
-
+               int cantidad =  conexionSQLite.cantidadtransectos(busquedaProyecto);
+               tv_c_transecto.setText(Integer.toString(cantidad));
 
             }
 
@@ -110,7 +110,6 @@ public class Consultar extends AppCompatActivity {
             listaProyectos.add(entidadTproyectoArrayList.get(i).getNombre_proyecto());
         }
     }
-
 
         public void buscar(View view) {
             SQLiteDatabase db = conexionSQLite.getReadableDatabase();
@@ -132,7 +131,7 @@ public class Consultar extends AppCompatActivity {
         }
         ///////////////////////////////////////////////////////////////////
 
-        ArrayList<Entidad_Ttrack> entidadTtrackArrayList;
+   /*     ArrayList<Entidad_Ttrack> entidadTtrackArrayList;
 
         public void cantidadTransectos(){
 
@@ -161,7 +160,7 @@ public class Consultar extends AppCompatActivity {
                 tv_c_transecto.setText(Integer.toString(largoArray));
             }
 
-        }
+        }*/
 
 
 }

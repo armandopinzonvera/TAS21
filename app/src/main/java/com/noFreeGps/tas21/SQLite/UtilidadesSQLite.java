@@ -32,13 +32,6 @@ public class UtilidadesSQLite {
     public static final String ALTURA = "altura";
     public static final String FK_ID_PROYECTO_TR = "fk_IdTProyecto";
 
- /*   //  Constantes tabla transecto
-
-    public static final String TABLA_TRANSECTO = "tabla_transecto";
-    public static final String ID_TRANSECTO = "id_transecto";
-    public static final String FK_NOMBRE_PROYECTO = "fk_NombreProyecto";*/
-
-
     // Constantes tabla proyecto
 
     public static final String TABLA_PROYECTO = "tabla_proyecto";
@@ -74,13 +67,6 @@ public class UtilidadesSQLite {
             + FK_ID_PROYECTO_TR + " TEXT, "
             +" FOREIGN KEY("+ FK_ID_PROYECTO_TR +") REFERENCES "+TABLA_PROYECTO+"( "+NOMBRE_PROYECTO+") );";
 
-/*    // crear tabla transecto
-
-    public static final String CREAR_TABLA_TRANSECTO = "CREATE TABLE "
-            +TABLA_TRANSECTO+" ("
-            +ID_TRANSECTO+" TEXT PRIMARY KEY, "
-            + FK_NOMBRE_PROYECTO +" TEXT, "
-            +" FOREIGN KEY("+ FK_NOMBRE_PROYECTO +") REFERENCES "+TABLA_PROYECTO+"( "+NOMBRE_PROYECTO+") );";*/
 
     //  crear tabla proyecto
 
