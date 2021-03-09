@@ -66,9 +66,8 @@ public class Iniciar extends AppCompatActivity  {
         String[] parametro = {et_nombreProyecto.getText().toString()};
         String[] campos = {UtilidadesSQLite.NOMBRE_PROYECTO};
 
-        try {
-                 Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?",
-                           parametro, null, null, null );
+        try {    Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?",
+                parametro, null, null, null );
                  cursor.moveToFirst();
                  if(campos.equals(et_nombreProyecto.getText().toString()) ){
                      return "existe";

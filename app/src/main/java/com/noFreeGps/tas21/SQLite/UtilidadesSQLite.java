@@ -56,6 +56,8 @@ public class UtilidadesSQLite {
             +DENSIDAD+" INTEGER, "
             +FK_ID_TRACK+ " TEXT NOT NULL, "
             +FK_ID_PROYECTO_SP+ " TEXT NOT NULL, "
+
+
             +" FOREIGN KEY("+FK_ID_TRACK+") REFERENCES "+TABLA_TRACK+"( "+ID_TRACK+"), "
             +" FOREIGN KEY("+FK_ID_PROYECTO_SP+") REFERENCES "+TABLA_PROYECTO+"( "+NOMBRE_PROYECTO+") );";
 

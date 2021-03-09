@@ -115,14 +115,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return true;
     }
 
-
 //////////////////////////////////////
     //        METODOS PARA LLENAR lISTvIEW
     ///////////////////////////////////////
-
-
-
-
 
 
        public List<Entidad_Tespecies> getEveryoneEspecie(){
@@ -155,6 +150,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
         return returnList;
     }
+
 
 
 }
