@@ -1,4 +1,15 @@
 package com.noFreeGps.tas21.ui;
+/**
+ * This activity has a Spinner whit the list of projects name.
+ * in which the user selects what he cares about and it's show the
+ * information of the set of tracks as begins and finish date,
+ * length, time, height, richness and density.
+ * Allowing deletes or edits the project name and id track
+ * also it gives the option to download the info in .xlsx
+ * So here we can find the following methods:
+ *
+ * 
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
 
