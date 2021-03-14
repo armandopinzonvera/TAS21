@@ -19,13 +19,6 @@ public class Entidad_Tproyecto {
 
     }
 
-    @Override
-    public String toString() {
-        return "Entidad_Tproyecto{" +
-                "nombre_proyecto='" + nombre_proyecto + '\'' +
-                '}';
-    }
-
     public Entidad_Tproyecto() {
     }
 
@@ -36,6 +29,29 @@ public class Entidad_Tproyecto {
 
     public void setNombre_proyecto(String nombre_proyecto) {
         this.nombre_proyecto = nombre_proyecto;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Entidad_Tproyecto{" +
+                "nombre_proyecto='" + nombre_proyecto + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entidad_Tproyecto)) return false;
+
+        Entidad_Tproyecto that = (Entidad_Tproyecto) o;
+
+        return getNombre_proyecto().equals(that.getNombre_proyecto());
+    }
+
+    @Override
+    public int hashCode() {
+        return getNombre_proyecto().hashCode();
     }
 
 

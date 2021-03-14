@@ -1,10 +1,10 @@
 package com.noFreeGps.tas21.ui;
 
-/*************************************
-This class just take the project's information
- and send it to activity VistaTransecto or return
- to the past View
- ****************************************/
+//************************************
+//****************** This class just take the project's information
+//****************** and send it to activity VistaTransecto or return
+//****************** to the past View
+//************************************
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+
+import java.util.ArrayList;
 
 public class Iniciar extends AppCompatActivity  {
 
@@ -39,51 +42,14 @@ public class Iniciar extends AppCompatActivity  {
 
     }
 
-    //         Functionality Buttons
-    //          Validacion Text
-
-    public String validar(){
-
-        String validacion ="bien";
-        String campo1 = et_nombreProyecto.getText().toString().trim();
-        String campo2 = et_IdTrack.getText().toString().trim();
-        if(campo1.isEmpty() || campo2.isEmpty()){
-            validacion = "vacio";
-        }else if (campo1.equals(campo2)){
-            validacion = "iguales";
-        } else if (campo1.length() > 10 || campo2.length() > 10){
-            validacion = "largo";
-        } /*else if(verificarNuevoProyecto().equals("existe")) {
-            validacion = "existe";
-        }*/
-        return validacion;
-
-    }
-  //    Verficar Proyecto no Exista en la BBDD
-
-    private String verificarNuevoProyecto() {
-        SQLiteDatabase db = conexionSQLite.getReadableDatabase();
-        String[] parametro = {et_nombreProyecto.getText().toString()};
-        String[] campos = {UtilidadesSQLite.NOMBRE_PROYECTO};
-
-        try {    Cursor cursor =  db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO+"=?",
-                parametro, null, null, null );
-                 cursor.moveToFirst();
-                 if(campos.equals(et_nombreProyecto.getText().toString()) ){
-                     return "existe";
-                 }
-                 cursor.close();
-        } catch (Exception e) {
-            return "procede";
-
-        }
-        return "default";
-    }
-    //
-     //   Mensaje Validacion
-    //    Iniciar
+                                          //////////////////////////////////////
+    ///////////////////////////////     //     Function buttons
+                                         ////////////////////////////////////////
 
     public void onClickIniciar(View view) {
+
+        verificarNuevoProyecto(et_nombreProyecto.getText().toString().trim());
+
         switch (validar()){
             case "vacio":
                 Toast.makeText(this, "No pueden estar vacios", Toast.LENGTH_LONG).show();
@@ -102,7 +68,6 @@ public class Iniciar extends AppCompatActivity  {
                 et_nombreProyecto.setText("");
                 et_IdTrack.setText("");
                 break;
-
             default:   iniciarProyecto();
         }
     }
@@ -112,22 +77,89 @@ public class Iniciar extends AppCompatActivity  {
         startActivity(intent);
     }
 
+                                           //////////////////////////////////////
+    ///////////////////////////////     //     Validation EditText
+                                          ///////////////////////////////////////
 
+    public String validar(){
 
-    //     Permiso Localizacion
+        String validacion ="bien";
+        String campo1 = et_nombreProyecto.getText().toString().trim();
+        String campo2 = et_IdTrack.getText().toString().trim();
+        if(campo1.isEmpty() || campo2.isEmpty()){
+            validacion = "vacio";
+        }else if (campo1.equals(campo2)){
+            validacion = "iguales";
+        } else if (campo1.length() > 10 || campo2.length() > 10){
+            validacion = "largo";
+        } else if(verificarNuevoProyecto(et_nombreProyecto.getText().toString().trim()).equals("existe")) {
+            validacion = "existe";
+        }
+        return validacion;
 
+    }
+//************************************   Verficar Proyecto no Exista en la BBDD
+    ArrayList<Entidad_Tproyecto> arrayNombreProyecto;
+
+    private String verificarNuevoProyecto(String nombreProyecto) {
+
+        ConexionSQLite conexion = new ConexionSQLite(this);
+        SQLiteDatabase db = conexion.getReadableDatabase();
+        arrayNombreProyecto = new ArrayList<Entidad_Tproyecto>();
+
+        Entidad_Tproyecto entidadTproyecto = null;
+
+        String queryProyecto = "SELECT "+UtilidadesSQLite.NOMBRE_PROYECTO+
+                " FROM "+UtilidadesSQLite.TABLA_PROYECTO+
+                " WHERE "+UtilidadesSQLite.NOMBRE_PROYECTO+
+                " = '"+nombreProyecto+"';";
+
+        Cursor cursor = db.rawQuery(queryProyecto, null);
+        int columIndex = cursor.getColumnIndex(UtilidadesSQLite.NOMBRE_PROYECTO);
+
+        if(cursor.moveToNext()){
+            Toast toast = Toast.makeText(getApplicationContext(), "   EXISTE   ", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0,0);
+            toast.show();
+            return "existe";
+        }
+
+       /* while(cursor.moveToNext()){
+            entidadTproyecto = new Entidad_Tproyecto();
+            entidadTproyecto.setNombre_proyecto(cursor.getString(columIndex));
+            arrayNombreProyecto.add(entidadTproyecto);
+
+        }
+        String Pregunta =String.valueOf(arrayNombreProyecto.contains(entidadTproyectoxx)); *//*******//* //el parametro ingresado, es el raro creado como objeto de la entidad
+
+        if(!arrayNombreProyecto.contains(nombreProyecto)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "EXISTE", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0,0);
+            toast.show();
+            System.out.println("                                                                        ");
+            System.out.println("                                "+Pregunta+"                            ");
+            System.out.println("                                                                        ");
+        }
+*/
+
+                 return "";
+
+    }
+
+                                         //////////////////////////////////////
+    ///////////////////////////////     //     location Permission
+                                         ///////////////////////////////////////
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
-
-    //
-    //          enviar Datos proyecto
-     //         Iniciar Localizacion
-    //          pasar a VistaTransecto
-
+                                         //////////////////////////////////////
+ ///////////////////////////////     //     - Send data and begin a new project
+                                     //     - Begin Location - Service
+                                     //     - Continue to next activity: VistaTransecto.java
+                                         ///////////////////////////////////////
 
     private void iniciarProyecto() {
         Entidad_Tproyecto entidadTproyecto;
@@ -151,11 +183,9 @@ public class Iniciar extends AppCompatActivity  {
 
         Toast.makeText(Iniciar.this, "Exito: "+success1+ ", "+success3, Toast.LENGTH_SHORT).show();
 
-
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTrack.getText().toString());
-
 
         //showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
         et_nombreProyecto.setText("");

@@ -66,7 +66,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         contentValues.put(UtilidadesSQLite.LONGITUD, entidadTtrack.getLongitud());
         contentValues.put(UtilidadesSQLite.LATITUD, entidadTtrack.getLatitud());
         contentValues.put(UtilidadesSQLite.ALTURA, entidadTtrack.getAltura());
-        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_TR, entidadTtrack.getFk_idTransecto());
+        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_TR, entidadTtrack.getFk_IdTProyecto());
 
         long insert = db.insert(UtilidadesSQLite.TABLA_TRACK, null, contentValues);
 

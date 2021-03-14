@@ -147,14 +147,16 @@
                android:layout_marginLeft="4dp"
                android:layout_toRightOf="@+id/iconCardView"
                >
+
                <TextView
                    android:id="@+id/tv_rv_riquesa"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginBottom="2dp"
+                   android:text="--"
                    android:textColor="@color/black"
-                   android:textSize="14sp"
-                   android:text="--"/>
+                   android:textSize="14sp" />
+
                <TextView
                    android:id="@+id/tv_rv_densidad"
                    android:layout_width="match_parent"

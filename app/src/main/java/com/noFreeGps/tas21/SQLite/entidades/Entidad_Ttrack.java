@@ -14,17 +14,17 @@ public class Entidad_Ttrack {
     private float longitud;
     private float latitud;
     private int altura;
-    private String fk_idTransecto;
+    private String fk_IdTProyecto;
 
 
-    public Entidad_Ttrack(String id_track, String fecha, String hora, float longitud, float latitud, int altura, String fk_idTransecto) {
+    public Entidad_Ttrack(String id_track, String fecha, String hora, float longitud, float latitud, int altura, String fk_IdTProyecto) {
         this.id_track = id_track;
         this.fecha = fecha;
         this.hora = hora;
         this.longitud = longitud;
         this.latitud = latitud;
         this.altura = altura;
-        this.fk_idTransecto = fk_idTransecto;
+        this.fk_IdTProyecto = fk_IdTProyecto;
     }
 
     public Entidad_Ttrack() {
@@ -34,12 +34,13 @@ public class Entidad_Ttrack {
     @Override
     public String toString() {
         return "Entidad_Ttrack{" +
-                "id_track=" + id_track +
+                "id_track='" + id_track + '\'' +
                 ", fecha='" + fecha + '\'' +
                 ", hora='" + hora + '\'' +
                 ", longitud=" + longitud +
                 ", latitud=" + latitud +
                 ", altura=" + altura +
+                ", fk_IdTProyecto='" + fk_IdTProyecto + '\'' +
                 '}';
     }
 
@@ -68,40 +69,39 @@ public class Entidad_Ttrack {
         return altura;
     }
 
-    public String getFk_idTransecto(){
+    public String getFk_IdTProyecto(){
 
-        return fk_idTransecto;
+        return fk_IdTProyecto;
     }
  ///////////////////////////////////////////////////////
 
-    public void setId_track(String id_track) {
 
+    public void setId_track(String id_track) {
         this.id_track = id_track;
     }
 
     public void setFecha(String fecha) {
-
         this.fecha = fecha;
     }
 
     public void setHora(String hora) {
-
         this.hora = hora;
     }
 
-    public void setLongitud(float longitud){
-    this.longitud = longitud;
+    public void setLongitud(float longitud) {
+        this.longitud = longitud;
     }
 
     public void setLatitud(float latitud) {
-
         this.latitud = latitud;
     }
 
     public void setAltura(int altura) {
-
         this.altura = altura;
     }
 
+    public void setFk_IdTProyecto(String fk_IdTProyecto) {
+        this.fk_IdTProyecto = fk_IdTProyecto;
+    }
 }
 
