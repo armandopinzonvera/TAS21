@@ -58,7 +58,7 @@
                 android:id="@+id/bt_consultar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/orange"
+                android:background="@color/grey"
                 android:text="Consultar - Descargar"
                 android:textColor="@color/black" />
 

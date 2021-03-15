@@ -11,10 +11,9 @@ package com.noFreeGps.tas21.ui;
  * activity for this new register:
  * So here we can find the following methods:
  * > @Override - onCreate()
- *
+ * > llenadoTargetas() : it receives de information from method's ConexionSQLite.java dataNombreProyecto()
+ *                       as ArrayList<Entidad_Ttrack> and put it on the RecyclerView
  */
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +35,7 @@ public class Continuar extends AppCompatActivity {
 
     TextView tv_c_transecto, tv_c_sumaTransecto;
     ConexionSQLite conexionSQLite;
-
+    ArrayList<Entidad_Ttrack> listTrack;
     //************************************  RecyclerView
     RecyclerView recyclerView;
 
@@ -54,19 +53,19 @@ public class Continuar extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         llenadoTargetas();
     }
-                                               //////////////////////////////////////
-    ///////////////////////////////           //     Fill RecyclerView Method
-                                              ///////////////////////////////////////
+                                        //////////////////////////////////////
+    ///////////////////////////////   //     Fill RecyclerView Method
+                                         ///////////////////////////////////////
 
-    ArrayList<Entidad_Ttrack> listTrack;
+
 
     private void llenadoTargetas() {
 
-        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(dataNombreProyecto());
+        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(conexionSQLite.dataNombreProyecto());
         recyclerView.setAdapter(adaptadorRecycler);
     }
 
-    private ArrayList<Entidad_Ttrack> dataNombreProyecto(){
+ /*   private ArrayList<Entidad_Ttrack> dataNombreProyecto(){
 
         SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();
         Entidad_Ttrack entidadTtrack =null;
@@ -86,7 +85,7 @@ public class Continuar extends AppCompatActivity {
             listTrack.add(entidadTtrack);
         }
         return listTrack;
-    }
+    }*/
 
 
 

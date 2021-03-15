@@ -17,9 +17,6 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
 
     ArrayList<Entidad_Ttrack> listaEntidadTrack;
 
-
-
-
     public AdaptadorRecycler(ArrayList<Entidad_Ttrack> listaEntidadTrack) {
         this.listaEntidadTrack = listaEntidadTrack;
     }
@@ -29,27 +26,21 @@ public class AdaptadorRecycler extends RecyclerView.Adapter<AdaptadorRecycler.Vi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_recycler, null, false);
         return new ViewHolderDatos(view);
     }
-    int cantidad;
+    //int cantidad;
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
         Entidad_Ttrack campo = listaEntidadTrack.get(position);
        // cantidad =campo.getFk_IdTProyecto().length();
         holder.tv_rv_nombreProyecto.setText(campo.getFk_IdTProyecto());
         holder.tv_rv_transectos.setText(campo.getId_track());
-
-
     }
-    
     @Override
     public int getItemCount() {
-
         return listaEntidadTrack.size();
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
         TextView tv_rv_nombreProyecto, tv_rv_transectos, tv_rv_riquesa, tv_rv_densidad;
-
-
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);

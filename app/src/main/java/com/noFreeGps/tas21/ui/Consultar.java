@@ -8,7 +8,7 @@ package com.noFreeGps.tas21.ui;
  * also it gives the option to download the info in .xlsx
  * So here we can find the following methods:
  *
- * 
+ *
  */
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +36,6 @@ import java.util.ArrayList;
 
 public class Consultar extends AppCompatActivity {
 
-
     TextView tv_c_transecto; // cantidad de transectos en el proyecto
     TextView tv_inicio;// fecha de inicio
     TextView tv_fin;// fecha finalizacion
@@ -48,11 +47,9 @@ public class Consultar extends AppCompatActivity {
     TextView tv_abundancia; // cantidad de ind
 
     String busquedaProyecto;
-
     ConexionSQLite conexionSQLite;
-    // Spinner
+    //************************************ Spinner
     Spinner spinnerProyecto;
-
     ArrayAdapter entidadArrayAdapter;
     ArrayList<String> listaProyectos;
     ArrayList<Entidad_Tproyecto> entidadTproyectoArrayList;
@@ -76,11 +73,11 @@ public class Consultar extends AppCompatActivity {
         tv_abundancia = findViewById(R.id.tv_abundancia);
 
         spinnerProyecto = (Spinner)findViewById(R.id.spinnerProyecto);
-
         spinnerProyecto();
-
     }
-
+                                          //////////////////////////////////////
+    ///////////////////////////////     //     Fill Spinner Method
+                                         ///////////////////////////////////////
     private void spinnerProyecto() {
         SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
         Entidad_Tproyecto entidadTproyecto = null;
@@ -105,16 +102,16 @@ public class Consultar extends AppCompatActivity {
 
                int cantidad =  conexionSQLite.cantidadtransectos(busquedaProyecto);
                tv_c_transecto.setText(Integer.toString(cantidad));
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
     }
-
+                                         //////////////////////////////////////
+    ///////////////////////////////     //     Fill Spinner Method
+                                         ///////////////////////////////////////
     private void spinnerlistProyect() {
         listaProyectos = new ArrayList<String>();
         for(int i = 0; i<entidadTproyectoArrayList.size(); i++){

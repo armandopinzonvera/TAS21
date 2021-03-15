@@ -1,4 +1,7 @@
 package com.noFreeGps.tas21.SQLite;
+/**
+ *
+ */
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,6 +20,9 @@ import java.util.List;
 
 public class ConexionSQLite extends SQLiteOpenHelper {
 
+
+
+
     public ConexionSQLite(@Nullable Context context) {
         super(context, UtilidadesSQLite.DDBB_NAME, null, 2);
     }
@@ -27,6 +33,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
+
+
     }
 
     @Override
@@ -42,6 +50,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
       ///////////////////////////////           //     Add Data Methods
                                                 ///////////////////////////////////////
 
+    //************************************  Add data to tabla_proyecto
+
     public boolean addDatoTproyecto(Entidad_Tproyecto entidadTproyecto){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -56,6 +66,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return true;
         }
     }
+    //************************************  Add data to tabla_track
 
     public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -75,6 +86,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         else
             return true;
     }
+    //************************************  Add data to tabla_Especies
 
     public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -96,10 +108,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     ///////////////////////////////           //     Fill ListView with Species Method
                                                  ///////////////////////////////////////
 
-
        public List<Entidad_Tespecies> getEveryoneEspecie(){
         List<Entidad_Tespecies> returnList = new ArrayList<>();
-
         String queryString = "SELECT * FROM "+UtilidadesSQLite.TABLA_ESPECIES;
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -155,6 +165,34 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             largoArray = entidadTtrackArrayList.size();
         }
         return largoArray;
+    }
+                                                //////////////////////////////////////
+    ///////////////////////////////           //     Fill recyclerView in continuarActivity
+                                               ///////////////////////////////////////
+
+    ArrayList<Entidad_Ttrack> listTrackx = new ArrayList<Entidad_Ttrack>();
+
+    public ArrayList<Entidad_Ttrack> dataNombreProyecto(){
+
+        SQLiteDatabase ddbb = this.getReadableDatabase();
+        Entidad_Ttrack entidadTtrack =null;
+
+        Cursor cursor = ddbb.rawQuery("SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
+                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
+                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO, null);
+
+        int indexColumnProject = cursor.getColumnIndex(UtilidadesSQLite.FK_ID_PROYECTO_TR);
+        int indexColumnTrack = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);
+
+        while(cursor.moveToNext()){
+            entidadTtrack = new Entidad_Ttrack();
+
+            entidadTtrack.setFk_IdTProyecto (cursor.getString(indexColumnProject));
+            entidadTtrack.setId_track(cursor.getString(indexColumnTrack));
+            listTrackx.add(entidadTtrack);
+        }
+
+        return listTrackx;
     }
 
 
