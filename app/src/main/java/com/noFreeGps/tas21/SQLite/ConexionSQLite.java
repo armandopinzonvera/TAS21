@@ -189,10 +189,18 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
             entidadTtrack.setFk_IdTProyecto (cursor.getString(indexColumnProject));
             entidadTtrack.setId_track(cursor.getString(indexColumnTrack));
+            /////*************
+            //entidadTtrack.setId_track(cursor.getInt(indexColumnTrack));
+
+            /////*************
             listTrackx.add(entidadTtrack);
+            System.out.println("     xxx********************************xxx       ");
+            System.out.println("         "+listTrackx+"                  ");
+            System.out.println("     ********************************       ");
         }
 
         return listTrackx;
+
     }
 
 
