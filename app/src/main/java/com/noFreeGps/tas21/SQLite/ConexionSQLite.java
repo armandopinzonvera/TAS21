@@ -164,41 +164,50 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             entidadTtrackArrayList.add(entidadTtrack);
             largoArray = entidadTtrackArrayList.size();
         }
+        cursor.close();
+        ddbb.close();
         return largoArray;
     }
                                                 //////////////////////////////////////
     ///////////////////////////////           //     Fill recyclerView in continuarActivity
                                                ///////////////////////////////////////
 
-    ArrayList<Entidad_Ttrack> listTrackx = new ArrayList<Entidad_Ttrack>();
-
-    public ArrayList<Entidad_Ttrack> dataNombreProyecto(){
+    ArrayList<Entidad_Tespecies> listTrackx = new ArrayList<Entidad_Tespecies>();
+    public ArrayList<Entidad_Tespecies> dataNombreProyecto(){
 
         SQLiteDatabase ddbb = this.getReadableDatabase();
-        Entidad_Ttrack entidadTtrack =null;
+        Entidad_Tespecies entidadTespecies =null;
 
-        Cursor cursor = ddbb.rawQuery("SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
+        String queryEspecies = "SELECT "+UtilidadesSQLite.NOMBRE_PROYECTO+
+                                ", COUNT("+UtilidadesSQLite.ID_TRACK+
+                                "), COUNT("+UtilidadesSQLite.ESPECIE+
+                                "), SUM ("+UtilidadesSQLite.DENSIDAD+
+                                ") FROM "+ UtilidadesSQLite.TABLA_ESPECIES+
+                                " JOIN "+UtilidadesSQLite.TABLA_TRACK+" ON "+UtilidadesSQLite.ID_TRACK+" = "+UtilidadesSQLite.FK_ID_TRACK+
+                                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+" ON "+UtilidadesSQLite.NOMBRE_PROYECTO+" = "+UtilidadesSQLite.FK_ID_PROYECTO_SP+
+                                " GROUP BY "+UtilidadesSQLite.NOMBRE_PROYECTO;
+
+       /* Cursor cursor = ddbb.rawQuery("SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
                 " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
-                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO, null);
+                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO, null);*/
 
-        int indexColumnProject = cursor.getColumnIndex(UtilidadesSQLite.FK_ID_PROYECTO_TR);
-        int indexColumnTrack = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);
+        Cursor cursor = ddbb.rawQuery(queryEspecies, null);
+
+       /* int indexColumnProject = cursor.getColumnIndex(UtilidadesSQLite.FK_ID_PROYECTO_TR);
+        int indexColumnTrack = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);*/
 
         while(cursor.moveToNext()){
-            entidadTtrack = new Entidad_Ttrack();
 
-            entidadTtrack.setFk_IdTProyecto (cursor.getString(indexColumnProject));
-            entidadTtrack.setId_track(cursor.getString(indexColumnTrack));
-            /////*************
-            //entidadTtrack.setId_track(cursor.getInt(indexColumnTrack));
+            entidadTespecies = new Entidad_Tespecies();
+            entidadTespecies.setfk_IdSProyecto (cursor.getString(0));
+            entidadTespecies.setFk_idTrack(cursor.getString(1));
+            entidadTespecies.setEspecie(cursor.getString(2));
+            entidadTespecies.setDensidad(cursor.getInt(3));
 
-            /////*************
-            listTrackx.add(entidadTtrack);
-            System.out.println("     xxx********************************xxx       ");
-            System.out.println("         "+listTrackx+"                  ");
-            System.out.println("     ********************************       ");
+            listTrackx.add(entidadTespecies);
         }
-
+        cursor.close();
+        ddbb.close();
         return listTrackx;
 
     }

@@ -39,9 +39,7 @@ public class Iniciar extends AppCompatActivity  {
 
         et_nombreProyecto = findViewById(R.id.et_nombreProyecto);
         et_IdTrack = findViewById(R.id.et_idTransecto);
-
     }
-
                                           //////////////////////////////////////
     ///////////////////////////////     //     Function buttons
                                          ////////////////////////////////////////
@@ -76,11 +74,9 @@ public class Iniciar extends AppCompatActivity  {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
-
                                            //////////////////////////////////////
     ///////////////////////////////     //     Validation EditText
                                           ///////////////////////////////////////
-
     public String validar(){
 
         String validacion ="bien";
@@ -96,7 +92,6 @@ public class Iniciar extends AppCompatActivity  {
             validacion = "existe";
         }
         return validacion;
-
     }
 //************************************   Verficar Proyecto no Exista en la BBDD
     ArrayList<Entidad_Tproyecto> arrayNombreProyecto;
@@ -160,7 +155,6 @@ public class Iniciar extends AppCompatActivity  {
                                      //     - Begin Location - Service
                                      //     - Continue to next activity: VistaTransecto.java
                                          ///////////////////////////////////////
-
     private void iniciarProyecto() {
         Entidad_Tproyecto entidadTproyecto;
         Entidad_Ttrack entidadTtrack;
@@ -169,16 +163,13 @@ public class Iniciar extends AppCompatActivity  {
             entidadTtrack = new Entidad_Ttrack(et_IdTrack.getText().toString(),"fecha", "hora", 1.111f, 2.222f,2222, et_nombreProyecto.getText().toString());
             entidadTproyecto = new Entidad_Tproyecto(et_nombreProyecto.getText().toString());
 
-
         } catch (Exception e) {
             entidadTproyecto = new Entidad_Tproyecto("error");
             entidadTtrack = new Entidad_Ttrack("error","error", "error", 1.111f, 2.222f,1, " error");
         }
-
         ConexionSQLite conexionSQLite = new ConexionSQLite(this);
 
         boolean success1 = conexionSQLite.addDatoTproyecto(entidadTproyecto);
-      //  boolean success2 = conexionSQLite.addDatoTtransecto(entidadTtransecto);
         boolean success3 = conexionSQLite.addDatoTtrack(entidadTtrack);
 
         Toast.makeText(Iniciar.this, "Exito: "+success1+ ", "+success3, Toast.LENGTH_SHORT).show();
@@ -192,7 +183,6 @@ public class Iniciar extends AppCompatActivity  {
         et_IdTrack.setText("");
         startActivity(intent);
     }
-
     public void showMessage(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);

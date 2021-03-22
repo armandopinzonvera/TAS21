@@ -56,9 +56,6 @@ public class Continuar extends AppCompatActivity {
                                         //////////////////////////////////////
     ///////////////////////////////   //     Fill RecyclerView Method
                                          ///////////////////////////////////////
-
-
-
     private void llenadoTargetas() {
 
         AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(conexionSQLite.dataNombreProyecto());
