@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher1_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
-        <activity android:name=".ui.Consultar"></activity>
+        <activity android:name=".ui.ContinuarIniciar"></activity>
+        <activity android:name=".ui.Consultar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

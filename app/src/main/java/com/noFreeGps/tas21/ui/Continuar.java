@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -73,8 +75,27 @@ public class Continuar extends AppCompatActivity {
     public void showMessage(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("CONTINUAR PROYECTO "+conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
+        builder.setTitle("Continuar proyecto: "+conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
         builder.setMessage("nombre del nuevo transecto");
+
+        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Continuar.this, ContinuarIniciar.class);
+                intent.putExtra("extra_proyecto", conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
+
+                startActivity(intent);
+            }
+        })
+        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+
+
 
         builder.show();
     }

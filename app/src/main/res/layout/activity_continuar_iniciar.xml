@@ -8,7 +8,7 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:textAlignment="center"
-    tools:context=".ui.Iniciar">
+    tools:context=".ui.ContinuarIniciar">
 
 
     <LinearLayout
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv1"
+            android:id="@+id/tv1ci"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv1"
@@ -32,18 +32,20 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_nombreProyecto"
+        <TextView
+            android:id="@+id/et_ci_nombreProyecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="@string/et1"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_idTransecto"
+            android:id="@+id/et_ci_idTransecto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -55,14 +57,14 @@
             android:id="@+id/bt_iniciar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClickIniciar"
+            android:onClick="onClickContinuarIniciar"
             android:text="@string/bt1" />
 
         <Button
             android:id="@+id/bt_volver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onClickvolver"
+            android:onClick="onClickContinuarvolver"
             android:text="@string/bt2" />
     </LinearLayout>
 </RelativeLayout>
