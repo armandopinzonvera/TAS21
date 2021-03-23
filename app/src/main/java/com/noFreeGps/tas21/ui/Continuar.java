@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.config.AdaptadorRecycler;
 import com.noFreeGps.tas21.R;
@@ -63,17 +64,18 @@ public class Continuar extends AppCompatActivity {
         AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(conexionSQLite.dataNombreProyecto());
         adaptadorRecycler.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                showMessage();
+            public void onClick(View view) {
+                showMessage(view);
             }
         });
         recyclerView.setAdapter(adaptadorRecycler);
     }
-    public void showMessage(){
+    public void showMessage(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("CONTINUAR PROYECTO");
+        builder.setTitle("CONTINUAR PROYECTO "+conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
         builder.setMessage("nombre del nuevo transecto");
+
         builder.show();
     }
 
