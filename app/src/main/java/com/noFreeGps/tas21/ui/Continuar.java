@@ -14,6 +14,7 @@ package com.noFreeGps.tas21.ui;
  * > llenadoTargetas() : it receives de information from method's ConexionSQLite.java dataNombreProyecto()
  *                       as ArrayList<Entidad_Ttrack> and put it on the RecyclerView
  */
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
@@ -59,8 +61,24 @@ public class Continuar extends AppCompatActivity {
     private void llenadoTargetas() {
 
         AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(conexionSQLite.dataNombreProyecto());
+        adaptadorRecycler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMessage();
+            }
+        });
         recyclerView.setAdapter(adaptadorRecycler);
     }
+    public void showMessage(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("CONTINUAR PROYECTO");
+        builder.setMessage("nombre del nuevo transecto");
+        builder.show();
+    }
+
+
+
 
  /*   private ArrayList<Entidad_Ttrack> dataNombreProyecto(){
 
@@ -83,8 +101,4 @@ public class Continuar extends AppCompatActivity {
         }
         return listTrack;
     }*/
-
-
-
-
 }

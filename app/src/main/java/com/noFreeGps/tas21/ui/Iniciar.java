@@ -118,25 +118,6 @@ public class Iniciar extends AppCompatActivity  {
             toast.show();
             return "existe";
         }
-
-       /* while(cursor.moveToNext()){
-            entidadTproyecto = new Entidad_Tproyecto();
-            entidadTproyecto.setNombre_proyecto(cursor.getString(columIndex));
-            arrayNombreProyecto.add(entidadTproyecto);
-
-        }
-        String Pregunta =String.valueOf(arrayNombreProyecto.contains(entidadTproyectoxx)); *//*******//* //el parametro ingresado, es el raro creado como objeto de la entidad
-
-        if(!arrayNombreProyecto.contains(nombreProyecto)) {
-            Toast toast = Toast.makeText(getApplicationContext(), "EXISTE", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0,0);
-            toast.show();
-            System.out.println("                                                                        ");
-            System.out.println("                                "+Pregunta+"                            ");
-            System.out.println("                                                                        ");
-        }
-*/
-
                  return "";
 
     }
