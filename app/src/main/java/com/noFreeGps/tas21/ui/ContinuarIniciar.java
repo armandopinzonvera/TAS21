@@ -18,14 +18,21 @@ import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
+import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
 
 public class ContinuarIniciar extends AppCompatActivity {
 
     TextView et_ci_nombreProyecto;
-    EditText et_ci_idTransecto;
-    String data1;
+    EditText et_ci_idTrack;
+    Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
+    Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
+    String data1, nombreProyecto,  idTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +40,33 @@ public class ContinuarIniciar extends AppCompatActivity {
         setContentView(R.layout.activity_continuar_iniciar);
 
         et_ci_nombreProyecto = findViewById(R.id.et_ci_nombreProyecto);
-        et_ci_idTransecto = findViewById(R.id.et_ci_idTransecto);
+        et_ci_idTrack = findViewById(R.id.et_ci_idTransecto);
         data1 = getIntent().getStringExtra("extra_proyecto");
         et_ci_nombreProyecto.setText(data1);
     }
 
     public void onClickContinuarIniciar(View view) {
-        verificarNuevoTrack(et_ci_idTransecto.getText().toString().trim());
 
+        nombreProyecto = et_ci_nombreProyecto.getText().toString().trim();
+        idTrack = et_ci_idTrack.getText().toString().trim();
+
+        ValidarEditText validarEditText = new ValidarEditText(this);
+
+        if (validarEditText.compararEditText(nombreProyecto, idTrack)) {
+            if (!daoTtrack.verificarNuevoTrack(et_ci_idTrack.getText().toString().trim()).equals("existe")) {
+                daoTproyecto.iniciarProyecto(nombreProyecto);
+                daoTtrack.iniciarTrack(nombreProyecto, idTrack);
+                Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+                intent.putExtra("extra_1", et_ci_nombreProyecto.getText().toString());
+                intent.putExtra("extra_2", et_ci_idTrack.getText().toString());
+
+                et_ci_idTrack.setText("");
+                startActivity(intent);
+            }
+        }
+    }
+      //  verificarNuevoTrack(et_ci_idTrack.getText().toString().trim());
+/*
         switch (validar()){
             case "vacio":
                 Toast.makeText(this, "No pueden estar vacios", Toast.LENGTH_LONG).show();
@@ -60,7 +86,7 @@ public class ContinuarIniciar extends AppCompatActivity {
             default:   iniciarProyecto();
         }
 
-    }
+    }*/
 
     public void onClickContinuarvolver(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -69,22 +95,22 @@ public class ContinuarIniciar extends AppCompatActivity {
                                          //////////////////////////////////////
     ///////////////////////////////     //     Validation EditText
                                         ///////////////////////////////////////
-    public String validar(){
+ /*   public String validar(){
 
         String validacion ="bien";
         String campo1 = et_ci_nombreProyecto.getText().toString().trim();
-        String campo2 = et_ci_idTransecto.getText().toString().trim();
+        String campo2 = et_ci_idTrack.getText().toString().trim();
         if(campo1.isEmpty() || campo2.isEmpty()){
             validacion = "vacio";
         }else if (campo1.equals(campo2)){
             validacion = "iguales";
         } else if (campo1.length() > 10 || campo2.length() > 10){
             validacion = "largo";
-        } else if(verificarNuevoTrack(et_ci_idTransecto.getText().toString().trim()).equals("existe")) {
+        } else if(verificarNuevoTrack(et_ci_idTrack.getText().toString().trim()).equals("existe")) {
             validacion = "existe";
         }
         return validacion;
-    }
+    }*/
     //************************************   Verficar Proyecto no Exista en la BBDD
     ArrayList<Entidad_Ttrack> arrayIdTrack;
 
@@ -119,12 +145,12 @@ public class ContinuarIniciar extends AppCompatActivity {
                                           //     - Continue to next activity: VistaTransecto.java
                                              ///////////////////////////////////////
 
-    private void iniciarProyecto() {
+   /* private void iniciarProyecto() {
         Entidad_Tproyecto entidadTproyecto;
         Entidad_Ttrack entidadTtrack;
 
         try {
-            entidadTtrack = new Entidad_Ttrack( et_ci_idTransecto.getText().toString(),"fecha", "hora", 1.111f, 2.222f,2222, et_ci_nombreProyecto.getText().toString());
+            entidadTtrack = new Entidad_Ttrack( et_ci_idTrack.getText().toString(),"fecha", "hora", 1.111f, 2.222f,2222, et_ci_nombreProyecto.getText().toString());
             entidadTproyecto = new Entidad_Tproyecto(et_ci_nombreProyecto.getText().toString());
 
         } catch (Exception e) {
@@ -140,13 +166,13 @@ public class ContinuarIniciar extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_ci_nombreProyecto.getText().toString());
-        intent.putExtra("extra_2", et_ci_idTransecto.getText().toString());
+        intent.putExtra("extra_2", et_ci_idTrack.getText().toString());
 
         //showMessage("Nuevo proyecto creado: ", et_nombreProyecto.getText().toString());
 
-        et_ci_idTransecto.setText("");
+        et_ci_idTrack.setText("");
         startActivity(intent);
     }
-
+*/
 
 }

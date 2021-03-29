@@ -26,7 +26,9 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
 import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class Iniciar extends AppCompatActivity  {
     EditText et_nombreProyecto, et_IdTrack;
     String nombreProyecto, idTrack;
     Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
+    Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
     ConexionSQLite conexionSQLite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,10 @@ public class Iniciar extends AppCompatActivity  {
 
         if (validarEditText.compararEditText(nombreProyecto, idTrack)){
             if( !daoTproyecto.verificarExiteProyecto(et_nombreProyecto.getText().toString().trim()).equals("existe")){
-                daoTproyecto.iniciarProyecto(nombreProyecto, idTrack);
+                daoTproyecto.iniciarProyecto(nombreProyecto);
+                daoTtrack.iniciarTrack(nombreProyecto, idTrack);
+            }
+
                 Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
                 intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
                 intent.putExtra("extra_2", et_IdTrack.getText().toString());
@@ -69,7 +75,7 @@ public class Iniciar extends AppCompatActivity  {
                 startActivity(intent);
             }
         }
-    }
+
 
     public void onClickvolver(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

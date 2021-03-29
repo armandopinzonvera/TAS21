@@ -49,8 +49,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                                                 //////////////////////////////////////
       ///////////////////////////////           //     Add Data Methods
                                                 ///////////////////////////////////////
-
-    //************************************  Add data to tabla_proyecto
+/*
+   //************************************  Add data to tabla_proyecto
 
     public boolean addDatoTproyecto(Entidad_Tproyecto entidadTproyecto){
 
@@ -65,10 +65,10 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         }else{
             return true;
         }
-    }
+    }*/
     //************************************  Add data to tabla_track
 
-    public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
+/*    public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(UtilidadesSQLite.ID_TRACK, entidadTtrack.getId_track());
@@ -85,7 +85,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return false;
         else
             return true;
-    }
+    }*/
     //************************************  Add data to tabla_Especies
 
     public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
