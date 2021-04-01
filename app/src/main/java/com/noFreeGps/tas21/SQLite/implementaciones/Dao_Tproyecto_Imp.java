@@ -57,23 +57,18 @@ public class Dao_Tproyecto_Imp implements Dao_Tproyecto {
     }
     //************************************   Crear Proyecto con Nombre y track
 
-    public void iniciarProyecto( String nombreProyecto/*, String idTrack*/){
+    public void iniciarProyecto( String nombreProyecto){
         ConexionSQLite conexionSQLite = new ConexionSQLite(context);
         Entidad_Tproyecto entidadTproyecto;
-        //Entidad_Ttrack entidadTtrack;
 
         try {
-           // entidadTtrack = new Entidad_Ttrack(idTrack,"fecha", "hora", 1.111f, 2.222f,2222, nombreProyecto);
             entidadTproyecto = new Entidad_Tproyecto(nombreProyecto);
 
         } catch (Exception e) {
             entidadTproyecto = new Entidad_Tproyecto("error");
-           // entidadTtrack = new Entidad_Ttrack("error","error", "error", 1.111f, 2.222f,1, " error");
         }
 
         boolean success1 = addDatoTproyecto(entidadTproyecto);
-      //  boolean success3 = daoTtrack.addDatoTtrack(entidadTtrack);
-
         Toast.makeText(context, "Exito: "+success1+",  ", Toast.LENGTH_SHORT).show();
 
     }
@@ -103,8 +98,29 @@ public class Dao_Tproyecto_Imp implements Dao_Tproyecto {
         }
     }
 
+    //************************************   Fill spinner proyecto
+     ArrayList<Entidad_Tproyecto> arrayListEntidadTproyecto;
 
+     public ArrayList<Entidad_Tproyecto> llenarSpinnerProyecto(){
 
+         ConexionSQLite conexionSQlite = new ConexionSQLite(context);
+         SQLiteDatabase ddbb = conexionSQlite.getReadableDatabase();
+
+         Entidad_Tproyecto entidadTproyecto = null;
+         arrayListEntidadTproyecto = new ArrayList<>();
+
+         String consultaNombreProyecto = "SELECT nombre_proyecto FROM "+UtilidadesSQLite.TABLA_PROYECTO;
+
+         Cursor cursor = ddbb.rawQuery(consultaNombreProyecto, null);
+         while(cursor.moveToNext()){
+             entidadTproyecto = new Entidad_Tproyecto();
+             entidadTproyecto.setNombre_proyecto(cursor.getString(0));
+             arrayListEntidadTproyecto.add(entidadTproyecto);
+         }
+         cursor.close();
+         ddbb.close();
+         return arrayListEntidadTproyecto;
+     }
 
 
 

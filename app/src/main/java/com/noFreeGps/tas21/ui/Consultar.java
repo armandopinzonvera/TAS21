@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.contentcapture.DataShareWriteAdapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
 
 import java.util.ArrayList;
 
@@ -79,18 +82,14 @@ public class Consultar extends AppCompatActivity {
     ///////////////////////////////     //     Fill Spinner Method
                                          ///////////////////////////////////////
     private void spinnerProyecto() {
-        SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
-        Entidad_Tproyecto entidadTproyecto = null;
-        entidadTproyectoArrayList = new ArrayList<Entidad_Tproyecto>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT nombre_proyecto FROM "+ UtilidadesSQLite.TABLA_PROYECTO, null);
-        while(cursor.moveToNext()){
-            entidadTproyecto = new Entidad_Tproyecto();
-            entidadTproyecto.setNombre_proyecto(cursor.getString(0));
-            entidadTproyectoArrayList.add(entidadTproyecto);
+        Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
+
+        listaProyectos = new ArrayList<String>();
+        for(int i = 0; i<daoTproyecto.llenarSpinnerProyecto().size(); i++){
+            listaProyectos.add(daoTproyecto.llenarSpinnerProyecto().get(i).getNombre_proyecto());
         }
-
-        spinnerlistProyect();
+       // spinnerlistProyect();
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaProyectos);
         spinnerProyecto.setAdapter(adapter);
         spinnerProyecto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,12 +111,7 @@ public class Consultar extends AppCompatActivity {
                                          //////////////////////////////////////
     ///////////////////////////////     //     Fill Spinner Method
                                          ///////////////////////////////////////
-    private void spinnerlistProyect() {
-        listaProyectos = new ArrayList<String>();
-        for(int i = 0; i<entidadTproyectoArrayList.size(); i++){
-            listaProyectos.add(entidadTproyectoArrayList.get(i).getNombre_proyecto());
-        }
-    }
+
 
         public void buscar(View view) {
             SQLiteDatabase db = conexionSQLite.getReadableDatabase();
@@ -139,36 +133,5 @@ public class Consultar extends AppCompatActivity {
         }
         ///////////////////////////////////////////////////////////////////
 
-   /*     ArrayList<Entidad_Ttrack> entidadTtrackArrayList;
-
-        public void cantidadTransectos(){
-
-            SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
-            Entidad_Ttrack entidad_Ttrack =  null;
-            entidadTtrackArrayList = new ArrayList<Entidad_Ttrack>();
-
-            // Hace la busqueda en la tabla con el nombre de proyecto seleccionado "String busquedaProyecto"
-
-            String consultaCantidadTranck = "SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
-                    " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
-                    " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO+
-                    " WHERE "+UtilidadesSQLite.NOMBRE_PROYECTO+" = '"+busquedaProyecto+"'; ";
-
-            Cursor cursor = ddbb.rawQuery(consultaCantidadTranck, null);
-
-            int indexColumna = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);
-
-            while(cursor.moveToNext()){
-                entidad_Ttrack = new Entidad_Ttrack();
-                entidad_Ttrack.setId_track(cursor.getString(indexColumna));
-                entidadTtrackArrayList.add(entidad_Ttrack);
-                int largoArray = entidadTtrackArrayList.size();
-
-              //  Toast.makeText(Consultar.this, Integer.toString(largoArray) , Toast.LENGTH_LONG).show();
-                tv_c_transecto.setText(Integer.toString(largoArray));
-            }
-
-        }*/
-
-
+ 
 }
