@@ -11,7 +11,7 @@ package com.noFreeGps.tas21.ui;
  * activity for this new register:
  * So here we can find the following methods:
  * > @Override - onCreate()
- * > llenadoTargetas() : it receives de information from method's ConexionSQLite.java dataNombreProyecto()
+ * > llenadoTargetas() : it receives de information from method's
  *                       as ArrayList<Entidad_Ttrack> and put it on the RecyclerView
  */
 import androidx.appcompat.app.AlertDialog;
@@ -66,7 +66,7 @@ public class Continuar extends AppCompatActivity {
                                          ///////////////////////////////////////
     private void llenadoTargetas() {
 
-        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(conexionSQLite.dataNombreProyecto());
+        AdaptadorRecycler adaptadorRecycler = new AdaptadorRecycler(daoTespecie.datosParaReciclerView());
         adaptadorRecycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
