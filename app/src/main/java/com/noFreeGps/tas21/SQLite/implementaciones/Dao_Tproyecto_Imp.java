@@ -26,6 +26,7 @@ public class Dao_Tproyecto_Imp implements Dao_Tproyecto {
 
     private final Context context;
     public Dao_Tproyecto_Imp(Context context) {
+
         this.context = context;
     }
 

@@ -32,8 +32,12 @@ import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
 
 import java.util.ArrayList;
 
@@ -56,6 +60,9 @@ public class Consultar extends AppCompatActivity {
     ArrayAdapter entidadArrayAdapter;
     ArrayList<String> listaProyectos;
     ArrayList<Entidad_Tproyecto> entidadTproyectoArrayList;
+
+    Dao_Ttrack dao_ttrack = new Dao_Ttrack_Imp(this);
+    Dao_Tespecie dao_tespecie = new Dao_Tespecies_Imp(this);
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -89,7 +96,6 @@ public class Consultar extends AppCompatActivity {
         for(int i = 0; i<daoTproyecto.llenarSpinnerProyecto().size(); i++){
             listaProyectos.add(daoTproyecto.llenarSpinnerProyecto().get(i).getNombre_proyecto());
         }
-       // spinnerlistProyect();
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaProyectos);
         spinnerProyecto.setAdapter(adapter);
         spinnerProyecto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -97,10 +103,31 @@ public class Consultar extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
              busquedaProyecto = parent.getItemAtPosition(position).toString();
-              //  Toast.makeText(Consultar.this, "Seleccion: "+busquedaProyecto, Toast.LENGTH_LONG).show();
+               //int cantidad =  conexionSQLite.cantidadtransectos(busquedaProyecto);
+                Entidad_Ttrack cantidadT = dao_ttrack.resultadoconsultarTrack(busquedaProyecto).get(0);
+                Entidad_Ttrack inicioT = dao_ttrack.resultadoconsultarTrack(busquedaProyecto).get(1);
+                Entidad_Ttrack finT = dao_ttrack.resultadoconsultarTrack(busquedaProyecto).get(2);
 
-               int cantidad =  conexionSQLite.cantidadtransectos(busquedaProyecto);
-               tv_c_transecto.setText(Integer.toString(cantidad));
+
+
+
+
+                tv_c_transecto.setText(cantidadT.getId_track());
+                tv_inicio.setText(inicioT.getFecha());
+                tv_fin.setText(finT.getFecha());
+                /*tv_distancia
+                tv_tiempo*/
+               // tv_alturaMax.setText(alturaMaxT.getAltura());
+               // tv_alturaMin.setText(alturaMinT.getAltura());
+
+                Entidad_Tespecies riqueza = dao_tespecie.resultadoConsultar(busquedaProyecto).get(0);
+              //  Entidad_Tespecies abundancia = dao_tespecie.resultadoConsultar(busquedaProyecto).get(1);
+                tv_riqueza.setText(riqueza.getEspecie());
+                //tv_abundancia.setText(abundancia.getDensidad());
+
+
+
+                //tv_c_transecto.setText(Integer.toString(cantidad));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -114,9 +141,10 @@ public class Consultar extends AppCompatActivity {
 
 
         public void buscar(View view) {
-            SQLiteDatabase db = conexionSQLite.getReadableDatabase();
-            String[] parametros = {/*et_c_nombreproyecto.getText().toString()*/};
+       /*     SQLiteDatabase db = conexionSQLite.getReadableDatabase();
+            String[] parametros = {et_c_nombreproyecto.getText().toString()};
             String[] campos = {UtilidadesSQLite.ID_TRACK};
+
 
             try {
                 Cursor cursor = db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO + "=?",
@@ -128,10 +156,10 @@ public class Consultar extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 ;
-               /* et_c_nombreproyecto.setText("");*/
-            }
+               *//* et_c_nombreproyecto.setText("");*//*
+            }*/
         }
         ///////////////////////////////////////////////////////////////////
 
- 
+
 }

@@ -187,14 +187,11 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                                 " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+" ON "+UtilidadesSQLite.NOMBRE_PROYECTO+" = "+UtilidadesSQLite.FK_ID_PROYECTO_SP+
                                 " GROUP BY "+UtilidadesSQLite.NOMBRE_PROYECTO;
 
-       /* Cursor cursor = ddbb.rawQuery("SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
-                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
-                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO, null);*/
 
         Cursor cursor = ddbb.rawQuery(queryEspecies, null);
 
        /* int indexColumnProject = cursor.getColumnIndex(UtilidadesSQLite.FK_ID_PROYECTO_TR);
-        int indexColumnTrack = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);*/
+      */
 
         while(cursor.moveToNext()){
 

@@ -103,25 +103,5 @@ public class Continuar extends AppCompatActivity {
 
 
 
- /*   private ArrayList<Entidad_Ttrack> dataNombreProyecto(){
 
-        SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();
-        Entidad_Ttrack entidadTtrack =null;
-
-        Cursor cursor2 = ddbb.rawQuery("SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
-                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
-                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO, null);
-
-        int indexColumnTrack = cursor2.getColumnIndex(UtilidadesSQLite.ID_TRACK);
-        int indexColumnProject = cursor2.getColumnIndex(UtilidadesSQLite.FK_ID_PROYECTO_TR);
-
-        while(cursor2.moveToNext()){
-            entidadTtrack = new Entidad_Ttrack();
-
-            entidadTtrack.setFk_IdTProyecto (cursor2.getString(indexColumnProject));
-            entidadTtrack.setId_track(cursor2.getString(indexColumnTrack));
-            listTrack.add(entidadTtrack);
-        }
-        return listTrack;
-    }*/
 }
