@@ -49,44 +49,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                                                 //////////////////////////////////////
       ///////////////////////////////           //     Add Data Methods
                                                 ///////////////////////////////////////
-/*
-   //************************************  Add data to tabla_proyecto
 
-    public boolean addDatoTproyecto(Entidad_Tproyecto entidadTproyecto){
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UtilidadesSQLite.NOMBRE_PROYECTO, entidadTproyecto.getNombre_proyecto());
-
-        long insert = db.insert(UtilidadesSQLite.TABLA_PROYECTO, null, contentValues);
-
-        if(insert == -1){
-            return false;
-        }else{
-            return true;
-        }
-    }*/
-    //************************************  Add data to tabla_track
-
-/*    public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UtilidadesSQLite.ID_TRACK, entidadTtrack.getId_track());
-        contentValues.put(UtilidadesSQLite.FECHA, entidadTtrack.getFecha());
-        contentValues.put(UtilidadesSQLite.HORA, entidadTtrack.getHora());
-        contentValues.put(UtilidadesSQLite.LONGITUD, entidadTtrack.getLongitud());
-        contentValues.put(UtilidadesSQLite.LATITUD, entidadTtrack.getLatitud());
-        contentValues.put(UtilidadesSQLite.ALTURA, entidadTtrack.getAltura());
-        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_TR, entidadTtrack.getFk_IdTProyecto());
-
-        long insert = db.insert(UtilidadesSQLite.TABLA_TRACK, null, contentValues);
-
-        if (insert == -1)
-            return false;
-        else
-            return true;
-    }*/
-    //************************************  Add data to tabla_Especies
+   /* //************************************  Add data to tabla_Especies
 
     public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -103,7 +67,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             return false;
         else
             return true;
-    }
+    }*/
                                                  //////////////////////////////////////
     ///////////////////////////////           //     Fill ListView with Species Method
                                                  ///////////////////////////////////////

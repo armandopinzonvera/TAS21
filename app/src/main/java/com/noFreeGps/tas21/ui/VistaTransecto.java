@@ -22,6 +22,8 @@ import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -179,8 +181,11 @@ VistaTransecto extends AppCompatActivity {
         } catch (NumberFormatException e) {
             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
         }
-        conexionSQLite = new ConexionSQLite(this);
-        conexionSQLite.addDatoTespecies(entidadTespecies);
+        Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
+        daoTespecie.addDatoEspecie(entidadTespecies);
+
+        /*conexionSQLite = new ConexionSQLite(this);
+        conexionSQLite.addDatoTespecies(entidadTespecies);*/
 
 
 

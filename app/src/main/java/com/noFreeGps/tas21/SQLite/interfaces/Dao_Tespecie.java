@@ -8,4 +8,5 @@ public interface Dao_Tespecie {
 
     ArrayList<Entidad_Tespecies> resultadoConsultar(String nombreProyecto);
 
+    boolean addDatoEspecie(Entidad_Tespecies entidadTespecie);
 }

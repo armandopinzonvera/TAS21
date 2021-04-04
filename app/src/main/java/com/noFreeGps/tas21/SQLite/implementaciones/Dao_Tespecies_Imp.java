@@ -1,5 +1,6 @@
 package com.noFreeGps.tas21.SQLite.implementaciones;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +22,32 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         this.context = context;
     }
 
+    public boolean addDatoEspecie(Entidad_Tespecies entidadTespecie){
+
+        ConexionSQLite conexion = new ConexionSQLite(context);
+        SQLiteDatabase ddbb = conexion.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(UtilidadesSQLite.ESPECIE, entidadTespecie.getEspecie());
+        contentValues.put(UtilidadesSQLite.DENSIDAD, entidadTespecie.getDensidad());
+        contentValues.put(UtilidadesSQLite.FK_ID_TRACK, entidadTespecie.getFk_idTrack());
+        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_SP, entidadTespecie.getfk_IdSProyecto());
+
+        long insert = ddbb.insert(UtilidadesSQLite.TABLA_ESPECIES, null, contentValues);
+
+        if(insert == -1) return false;
+        else
+
+        return true;
+    }
+
+
+
+
+
     ArrayList<Entidad_Tespecies> listDataProjectEspecies = new ArrayList<Entidad_Tespecies>();
+
     public ArrayList<Entidad_Tespecies> resultadoConsultar(String nombreProyecto){
 
         ConexionSQLite conexionSQLite = new ConexionSQLite(context);
@@ -47,6 +73,6 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         return listDataProjectEspecies;
     }
 
-    
+
 
 }

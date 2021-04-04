@@ -21,7 +21,7 @@
 
     <!--Activity Consultar-->
     <string name="consultar">Consultar Proyecto</string>
-    <string name="buscar">Buscar</string>
+    <string name="editar">Editar</string>
 
     <string name="limpiar">Limpiar</string>
     <string name="vacio">      - - </string>

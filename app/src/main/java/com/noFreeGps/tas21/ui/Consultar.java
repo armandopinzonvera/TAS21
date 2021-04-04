@@ -141,23 +141,7 @@ public class Consultar extends AppCompatActivity {
 
 
         public void buscar(View view) {
-       /*     SQLiteDatabase db = conexionSQLite.getReadableDatabase();
-            String[] parametros = {et_c_nombreproyecto.getText().toString()};
-            String[] campos = {UtilidadesSQLite.ID_TRACK};
 
-
-            try {
-                Cursor cursor = db.query(UtilidadesSQLite.TABLA_PROYECTO, campos, UtilidadesSQLite.NOMBRE_PROYECTO + "=?",
-                        parametros, null, null, null);
-                cursor.moveToFirst();
-                tv_c_transecto.setText(cursor.getString(0));
-
-                cursor.close();
-            } catch (Exception e) {
-                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-                ;
-               *//* et_c_nombreproyecto.setText("");*//*
-            }*/
         }
         ///////////////////////////////////////////////////////////////////
 
