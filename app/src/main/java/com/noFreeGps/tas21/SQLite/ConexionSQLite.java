@@ -20,9 +20,6 @@ import java.util.List;
 
 public class ConexionSQLite extends SQLiteOpenHelper {
 
-
-
-
     public ConexionSQLite(@Nullable Context context) {
         super(context, UtilidadesSQLite.DDBB_NAME, null, 2);
     }
@@ -33,8 +30,6 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_TRACK);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_PROYECTO);
         db.execSQL(UtilidadesSQLite.CREAR_TABLA_ESPECIES);
-
-
     }
 
     @Override
@@ -46,95 +41,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-                                                //////////////////////////////////////
-      ///////////////////////////////           //     Add Data Methods
-                                                ///////////////////////////////////////
 
-   /* //************************************  Add data to tabla_Especies
-
-    public boolean addDatoTespecies(Entidad_Tespecies entidadTespecies){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UtilidadesSQLite.ID_ESPECIES, entidadTespecies.getEspecie());
-        contentValues.put(UtilidadesSQLite.ESPECIE, entidadTespecies.getEspecie());
-        contentValues.put(UtilidadesSQLite.DENSIDAD, entidadTespecies.getDensidad());
-        contentValues.put(UtilidadesSQLite.FK_ID_TRACK, entidadTespecies.getFk_idTrack());
-        contentValues.put(UtilidadesSQLite.FK_ID_PROYECTO_SP, entidadTespecies.getfk_IdSProyecto());
-
-        long insert = db.insert(UtilidadesSQLite.TABLA_ESPECIES, null, contentValues);
-
-        if(insert == -1)
-            return false;
-        else
-            return true;
-    }*/
-                                                 //////////////////////////////////////
-    ///////////////////////////////           //     Fill ListView with Species Method
-                                                 ///////////////////////////////////////
-
-       public List<Entidad_Tespecies> getEveryoneEspecie(){
-        List<Entidad_Tespecies> returnList = new ArrayList<>();
-        String queryString = "SELECT * FROM "+UtilidadesSQLite.TABLA_ESPECIES;
-
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
-        if(cursor.moveToFirst()){
-            do{
-                int id = cursor.getInt(0);
-                String especie = cursor.getString(1);
-                int densidad = cursor.getInt(2);
-                String fk_IdTrack= cursor.getString(3);
-                String fk_IdSProyecto= cursor.getString(4);
-
-                Entidad_Tespecies entidadTespecies = new Entidad_Tespecies(id, especie, densidad, fk_IdTrack, fk_IdSProyecto);
-
-                entidadTespecies.getEspecie();
-                returnList.add(entidadTespecies);
-
-
-            }while(cursor.moveToNext());
-        }else{
-
-        }
-        cursor.close();
-        sqLiteDatabase.close();
-
-        return returnList;
-    }
-
-                                                 //////////////////////////////////////
-    ///////////////////////////////           //     Amount of tracks per project Method
-                                                ///////////////////////////////////////
-    ArrayList<Entidad_Ttrack> entidadTtrackArrayList;
-
-    public int cantidadtransectos(String busquedaProyecto){
-
-        SQLiteDatabase ddbb = this.getReadableDatabase();
-        Entidad_Ttrack entidadTtrack = null;
-        entidadTtrackArrayList = new ArrayList<Entidad_Ttrack>();
-
-        String consultaCantidadTrack = "SELECT * FROM "+UtilidadesSQLite.TABLA_TRACK+
-                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+
-                " ON "+UtilidadesSQLite.FK_ID_PROYECTO_TR+" = "+UtilidadesSQLite.NOMBRE_PROYECTO+
-                " WHERE "+UtilidadesSQLite.NOMBRE_PROYECTO+" = '"+busquedaProyecto+"'; ";
-
-        Cursor cursor = ddbb.rawQuery(consultaCantidadTrack, null);
-
-        int indexColumna = cursor.getColumnIndex(UtilidadesSQLite.ID_TRACK);
-        int largoArray = 0;
-        while(cursor.moveToNext()){
-            entidadTtrack = new Entidad_Ttrack();
-            entidadTtrack.setId_track(cursor.getString(indexColumna));
-            entidadTtrackArrayList.add(entidadTtrack);
-            largoArray = entidadTtrackArrayList.size();
-        }
-        cursor.close();
-        ddbb.close();
-        return largoArray;
-    }
-                                                //////////////////////////////////////
-    ///////////////////////////////           //     Fill recyclerView in continuarActivity
-                                               ///////////////////////////////////////
 
     ArrayList<Entidad_Tespecies> listTrackx = new ArrayList<Entidad_Tespecies>();
     public ArrayList<Entidad_Tespecies> dataNombreProyecto(){

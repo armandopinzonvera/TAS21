@@ -42,10 +42,6 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         return true;
     }
 
-
-
-
-
     ArrayList<Entidad_Tespecies> listDataProjectEspecies = new ArrayList<Entidad_Tespecies>();
 
     public ArrayList<Entidad_Tespecies> resultadoConsultar(String nombreProyecto){
@@ -72,6 +68,8 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         ddbb.close();
         return listDataProjectEspecies;
     }
+
+
 
 
 
