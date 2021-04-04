@@ -11,4 +11,6 @@ public interface Dao_Tespecie {
     boolean addDatoEspecie(Entidad_Tespecies entidadTespecie);
 
     ArrayList<Entidad_Tespecies> datosParaReciclerView();
+
+    ArrayList<Entidad_Tespecies> datosParaSpinner();
 }

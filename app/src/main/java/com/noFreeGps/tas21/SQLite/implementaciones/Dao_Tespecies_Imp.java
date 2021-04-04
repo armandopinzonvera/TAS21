@@ -18,7 +18,6 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
     private final Context context;
 
     public Dao_Tespecies_Imp(Context context) {
-
         this.context = context;
     }
 
@@ -103,6 +102,31 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         ddbb.close();
         return listaDatosParaReciclerView;
     }
+
+    ArrayList<Entidad_Tespecies> listadoEspecies;
+    public ArrayList<Entidad_Tespecies> datosParaSpinner(){
+
+        ConexionSQLite conexion = new ConexionSQLite(context);
+        SQLiteDatabase ddbb = conexion.getReadableDatabase();
+
+        Entidad_Tespecies entidadTespecies = null;
+        listadoEspecies = new ArrayList<Entidad_Tespecies>();
+
+        String querySpecies = "SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES;
+
+        Cursor cursor = ddbb.rawQuery(querySpecies, null);
+
+        while(cursor.moveToNext()){
+            entidadTespecies = new Entidad_Tespecies();
+            entidadTespecies.setEspecie(cursor.getString(0));
+            listadoEspecies.add(entidadTespecies);
+        }
+        return listadoEspecies;
+    }
+
+
+
+
 
 
 

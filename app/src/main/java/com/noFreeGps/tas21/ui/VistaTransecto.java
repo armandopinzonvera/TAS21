@@ -73,34 +73,19 @@ VistaTransecto extends AppCompatActivity {
         conexionSQLite = new ConexionSQLite(this);
 
         spinnersqlite();
-
     }
 
        ArrayList<String> listaEspecies;
-       ArrayList<Entidad_Tespecies> entidadesEspecies;
 
-    private void spinnerlist() {
-        listaEspecies = new ArrayList<String>();
-        listaEspecies.add(" ");
 
-        for(int i = 0; i<entidadesEspecies.size(); i++){
-           listaEspecies.add(entidadesEspecies.get(i).getEspecie());
-        }
-    }
+
     public void spinnersqlite(){
-        // SQLite
-        SQLiteDatabase ddbb =conexionSQLite.getReadableDatabase();
-        Entidad_Tespecies entidad_ttrack= null;
-        entidadesEspecies = new ArrayList<Entidad_Tespecies>();
 
-        Cursor cursor = ddbb.rawQuery("SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES, null);
-        while(cursor.moveToNext()){
-            entidad_ttrack = new Entidad_Tespecies();
-            entidad_ttrack.setEspecie(cursor.getString(0));
-
-            entidadesEspecies.add(entidad_ttrack);
+        Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
+        listaEspecies = new ArrayList<String>();
+        for(int i = 0; i<daoTespecie.datosParaSpinner().size(); i++){
+            listaEspecies.add(daoTespecie.datosParaSpinner().get(i).getEspecie());
         }
-        spinnerlist();
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter( adapter);
@@ -116,15 +101,9 @@ VistaTransecto extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
     }
 
-
-
-    //  Funcionalidad Botones
-
     public void terminar(View view) {
-
 
         Intent intent = new Intent(this, MainActivity.class);
         Toast.makeText(getApplicationContext(), "BBDD cerrada", Toast.LENGTH_LONG).show();
@@ -140,9 +119,7 @@ VistaTransecto extends AppCompatActivity {
         if(validarEditText.compararEditText(campo1, campo2)){
             enviarInformacion();
         }
-
     }
-
 
     private void enviarInformacion() {
         Entidad_Tespecies entidadTespecies;

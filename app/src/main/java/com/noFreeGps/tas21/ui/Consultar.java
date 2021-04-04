@@ -108,10 +108,6 @@ public class Consultar extends AppCompatActivity {
                 Entidad_Ttrack inicioT = dao_ttrack.resultadoconsultarTrack(busquedaProyecto).get(1);
                 Entidad_Ttrack finT = dao_ttrack.resultadoconsultarTrack(busquedaProyecto).get(2);
 
-
-
-
-
                 tv_c_transecto.setText(cantidadT.getId_track());
                 tv_inicio.setText(inicioT.getFecha());
                 tv_fin.setText(finT.getFecha());
@@ -135,15 +131,11 @@ public class Consultar extends AppCompatActivity {
             }
         });
     }
-                                         //////////////////////////////////////
-    ///////////////////////////////     //     Fill Spinner Method
-                                         ///////////////////////////////////////
-
 
         public void buscar(View view) {
 
         }
-        ///////////////////////////////////////////////////////////////////
+
 
 
 }
