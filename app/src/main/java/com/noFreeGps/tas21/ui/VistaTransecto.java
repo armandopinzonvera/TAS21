@@ -24,6 +24,7 @@ import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
+import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,24 +33,26 @@ import java.util.Set;
 public class
 VistaTransecto extends AppCompatActivity {
 
-    // GUI elements
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-    // Fragment
+
     Fragment fragment_mapa;
-    // SQLite
+
     ConexionSQLite conexionSQLite;
-    // Spinner
+
     Spinner spinner_especies;
     ArrayAdapter entidadArrayAdapter;
 
     String data1;
     String data2;
+
+    String campo1;
+    String campo2;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_transecto);
 
-        // GUI elements
         tv_lat = findViewById(R.id.tv_lat);
         tv_long = findViewById(R.id.tv_lon);
         et_especie = findViewById(R.id.et_especie);
@@ -57,7 +60,6 @@ VistaTransecto extends AppCompatActivity {
         tv_idTransecto = findViewById(R.id.tv_idTransecto);
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
-
         // Extra information
          data1 = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: "+ data1);
@@ -67,14 +69,13 @@ VistaTransecto extends AppCompatActivity {
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.marco_fragment, fragment_mapa).commit();
-        // SQLite
+
         conexionSQLite = new ConexionSQLite(this);
 
-        // methods
-      spinnersqlite();
+        spinnersqlite();
+
     }
 
-    //     Spinner funciones
        ArrayList<String> listaEspecies;
        ArrayList<Entidad_Tespecies> entidadesEspecies;
 
@@ -120,26 +121,6 @@ VistaTransecto extends AppCompatActivity {
 
 
 
-    /**********************************
-    *******  Validar EditText **********
-    ***********************************/
-    public String validar(){
-
-        String validacion ="bien";
-        String campo1 = et_especie.getText().toString();
-        String campo2 = et_cantidad.getText().toString();
-        if(campo1.isEmpty() || campo2.isEmpty()){
-            validacion = "vacio";
-
-        } else if (campo1.length() > 10 || campo2.length() > 4) {
-            validacion = "largo";
-         }else if (Integer.parseInt(campo2) < 1){
-            validacion = "cero";
-
-        }
-        return validacion;
-    }
-
     //  Funcionalidad Botones
 
     public void terminar(View view) {
@@ -151,25 +132,17 @@ VistaTransecto extends AppCompatActivity {
 
     }
     public void enviar(View view) {
-            switch (validar()){
-            case "vacio":
-                Toast.makeText(this, "debes colocar un identificador", Toast.LENGTH_LONG).show();
-                break;
 
-            case "largo":
-                Toast.makeText(this, "debes colocar cantidad", Toast.LENGTH_LONG).show();
-                et_especie.setText("");
-                et_cantidad.setText("");
-                break;
+        campo1 = et_especie.getText().toString().trim();
+        campo2 = et_cantidad.getText().toString().trim();
 
-                case "cero"   :
-                    Toast.makeText(this, "no puede ser menor de 1", Toast.LENGTH_LONG).show();
-                    et_cantidad.setText("");
-                    break;
-            default:   enviarInformacion();
+        ValidarEditText validarEditText = new ValidarEditText(this);
+        if(validarEditText.compararEditText(campo1, campo2)){
+            enviarInformacion();
         }
+
     }
-    //   Enviar a BBDD
+
 
     private void enviarInformacion() {
         Entidad_Tespecies entidadTespecies;
@@ -184,10 +157,6 @@ VistaTransecto extends AppCompatActivity {
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         daoTespecie.addDatoEspecie(entidadTespecies);
 
-        /*conexionSQLite = new ConexionSQLite(this);
-        conexionSQLite.addDatoTespecies(entidadTespecies);*/
-
-
 
         listaEspecies.add(et_especie.getText().toString().trim());
         Set<String> hashSet = new HashSet<String>(listaEspecies);
@@ -197,11 +166,6 @@ VistaTransecto extends AppCompatActivity {
         et_especie.setText("");
         et_cantidad.setText("");
     }
-    public void mostrarListView(ConexionSQLite conexionSQLite1){
 
-       // entidadArrayAdapter = new ArrayAdapter<Entidad_Tespecies>(VistaTransecto.this, android.R.layout.simple_expandable_list_item_1, conexionSQLite1.getEveryoneEspecie());
-
-      //    spinner_especies.setAdapter(entidadArrayAdapter);
-    }
 
 }

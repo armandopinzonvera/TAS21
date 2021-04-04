@@ -10,24 +10,26 @@ public class ValidarEditText {
         this.context = context;
     }
 
-    public boolean compararEditText(String nombreProyecto, String idTrack) {
+    public boolean compararEditText(String campo1validar, String campo2validar) {
 
 
-        if (nombreProyecto.isEmpty() || idTrack.isEmpty()) {
+        if (campo1validar.isEmpty() || campo2validar.isEmpty()) {
             Toast.makeText(context, "No pueden estar vacios", Toast.LENGTH_LONG).show();
             return false;
 
-        } else if (nombreProyecto.equals(idTrack)) {
+        } else if (campo1validar.equals(campo2validar)) {
             Toast.makeText(context, "No pueden ser iguales", Toast.LENGTH_LONG).show();
             return false;
 
-        } else if (nombreProyecto.length() > 20 || idTrack.length() > 20) {
+        } else if (campo1validar.length() > 20 || campo2validar.length() > 20) {
             Toast.makeText(context, "no pueden ser tan grandes", Toast.LENGTH_LONG).show();
             return false;
 
         }
         return true;
     }
+
+
 
 
 
