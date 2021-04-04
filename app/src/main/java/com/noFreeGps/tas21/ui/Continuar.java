@@ -29,6 +29,8 @@ import android.widget.TextView;
 
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.config.AdaptadorRecycler;
 import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
@@ -41,6 +43,7 @@ public class Continuar extends AppCompatActivity {
     TextView tv_c_transecto, tv_c_sumaTransecto;
     ConexionSQLite conexionSQLite;
     ArrayList<Entidad_Ttrack> listTrack;
+    Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
     //************************************  RecyclerView
     RecyclerView recyclerView;
 
@@ -75,14 +78,14 @@ public class Continuar extends AppCompatActivity {
     public void showMessage(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("Continuar proyecto: "+conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
+        builder.setTitle("Continuar proyecto: "+daoTespecie.datosParaReciclerView().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
         builder.setMessage("nombre del nuevo transecto");
 
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Continuar.this, ContinuarIniciar.class);
-                intent.putExtra("extra_proyecto", conexionSQLite.dataNombreProyecto().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
+                intent.putExtra("extra_proyecto", daoTespecie.datosParaReciclerView().get(recyclerView.getChildAdapterPosition(view)).getfk_IdSProyecto());
 
                 startActivity(intent);
             }

@@ -70,6 +70,39 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
     }
 
 
+    ArrayList<Entidad_Tespecies> listaDatosParaReciclerView = new ArrayList<>();
+    public ArrayList<Entidad_Tespecies> datosParaReciclerView(){
+
+        ConexionSQLite conexion = new ConexionSQLite(context);
+        SQLiteDatabase ddbb = conexion.getReadableDatabase();
+
+        Entidad_Tespecies entidadTespecies = null;
+
+        String queryEspecies = "SELECT "+UtilidadesSQLite.NOMBRE_PROYECTO+
+                ", COUNT("+UtilidadesSQLite.ID_TRACK+
+                "), COUNT("+UtilidadesSQLite.ESPECIE+
+                "), SUM ("+UtilidadesSQLite.DENSIDAD+
+                ") FROM "+ UtilidadesSQLite.TABLA_ESPECIES+
+                " JOIN "+UtilidadesSQLite.TABLA_TRACK+" ON "+UtilidadesSQLite.ID_TRACK+" = "+UtilidadesSQLite.FK_ID_TRACK+
+                " JOIN "+UtilidadesSQLite.TABLA_PROYECTO+" ON "+UtilidadesSQLite.NOMBRE_PROYECTO+" = "+UtilidadesSQLite.FK_ID_PROYECTO_SP+
+                " GROUP BY "+UtilidadesSQLite.NOMBRE_PROYECTO;
+
+        Cursor cursor = ddbb.rawQuery(queryEspecies, null);
+
+        while(cursor.moveToNext()){
+
+            entidadTespecies = new Entidad_Tespecies();
+            entidadTespecies.setfk_IdSProyecto (cursor.getString(0));
+            entidadTespecies.setFk_idTrack(cursor.getString(1));
+            entidadTespecies.setEspecie(cursor.getString(2));
+            entidadTespecies.setDensidad(cursor.getInt(3));
+
+            listaDatosParaReciclerView.add(entidadTespecies);
+        }
+        cursor.close();
+        ddbb.close();
+        return listaDatosParaReciclerView;
+    }
 
 
 
