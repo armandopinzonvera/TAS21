@@ -23,7 +23,8 @@
             android:value="AIzaSyDdxLAWjk_BUBqFCwEBTVzwYqo8b3FsV88" />
 
         <activity android:name=".ui.Continuar" />
-        <activity android:name=".ui.VistaTransecto" />
+        <activity android:name=".ui.VistaTransecto"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".config.ServiceLocation"
