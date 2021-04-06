@@ -14,25 +14,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher1_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Design.Light.NoActionBar">
-        <activity android:name=".ui.ContinuarIniciar"></activity>
-        <activity android:name=".ui.Consultar" />
+        android:theme="@style/Theme.Design.Light.NoActionBar"
+
+        >
+        <activity android:name=".ui.ContinuarIniciar"
+            android:screenOrientation="portrait"  ></activity>
+        <activity android:name=".ui.Consultar"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdxLAWjk_BUBqFCwEBTVzwYqo8b3FsV88" />
 
-        <activity android:name=".ui.Continuar" />
+        <activity android:name=".ui.Continuar"
+            android:screenOrientation="portrait"  />
         <activity android:name=".ui.VistaTransecto"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".config.ServiceLocation"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.Iniciar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.Iniciar"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
