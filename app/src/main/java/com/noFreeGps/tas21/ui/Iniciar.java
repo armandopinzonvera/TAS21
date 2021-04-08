@@ -9,10 +9,14 @@ package com.noFreeGps.tas21.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -29,17 +33,22 @@ import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
+import com.noFreeGps.tas21.config.PermisoLocation;
 import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
 
 public class Iniciar extends AppCompatActivity  {
 
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    private static final int PERMISSIONS_FINE_LOCATION = 99;
     EditText et_nombreProyecto, et_IdTrack;
     String nombreProyecto, idTrack;
     Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
     Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
     ConexionSQLite conexionSQLite;
+
+    PermisoLocation permisoLocation = new PermisoLocation(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,18 +71,13 @@ public class Iniciar extends AppCompatActivity  {
 
         if (validarEditText.compararEditText(nombreProyecto, idTrack)){
             if( !daoTproyecto.verificarExiteProyecto(et_nombreProyecto.getText().toString().trim()).equals("existe")){
+
                 daoTproyecto.iniciarProyecto(nombreProyecto);
                 daoTtrack.iniciarTrack(nombreProyecto, idTrack);
-            }
 
-                Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
-                intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
-                intent.putExtra("extra_2", et_IdTrack.getText().toString());
-
-                et_nombreProyecto.setText("");
-                et_IdTrack.setText("");
-                startActivity(intent);
             }
+            }
+        iniciarLocalizacion();
         }
 
 
@@ -82,7 +86,47 @@ public class Iniciar extends AppCompatActivity  {
         startActivity(intent);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
 
+            }
+        }else{
+            Toast.makeText(this, "SE REQUIERE PERMISO", Toast.LENGTH_SHORT).show();
+        }
 
+    }
+
+    public void iniciarLocalizacion(){
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(
+                    Iniciar.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION
+
+            );
+
+        }else{
+            // ACA DEBE IR:
+            // INICIO DEL SERVICIO
+            //
+            Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+            intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
+            intent.putExtra("extra_2", et_IdTrack.getText().toString());
+
+            et_nombreProyecto.setText("");
+            et_IdTrack.setText("");
+            startActivity(intent);
+
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,}, PERMISSIONS_FINE_LOCATION);
+                permisoLocation.verificarPermisoLocation();
+            }*/
+
+        }
+    }
 }
