@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -56,8 +57,6 @@ public class Iniciar extends AppCompatActivity  {
 
         et_nombreProyecto = findViewById(R.id.et_nombreProyecto);
         et_IdTrack = findViewById(R.id.et_idTransecto);
-
-
     }
                                           //////////////////////////////////////
     ///////////////////////////////     //     Function buttons
@@ -97,7 +96,6 @@ public class Iniciar extends AppCompatActivity  {
         }else{
             Toast.makeText(this, "SE REQUIERE PERMISO", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void iniciarLocalizacion(){
@@ -111,9 +109,7 @@ public class Iniciar extends AppCompatActivity  {
             );
 
         }else{
-            // ACA DEBE IR:
-            // INICIO DEL SERVICIO
-            //
+
             Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
             intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
             intent.putExtra("extra_2", et_IdTrack.getText().toString());
@@ -121,12 +117,7 @@ public class Iniciar extends AppCompatActivity  {
             et_nombreProyecto.setText("");
             et_IdTrack.setText("");
             startActivity(intent);
-
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,}, PERMISSIONS_FINE_LOCATION);
-                permisoLocation.verificarPermisoLocation();
-            }*/
-
         }
-    }
+        }
+       
 }

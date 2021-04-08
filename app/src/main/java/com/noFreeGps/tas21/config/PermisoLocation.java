@@ -16,7 +16,7 @@ public class PermisoLocation {
         this.context = context;
     }
 
-    public void verificarPermisoLocation() {
+    public boolean verificarPermisoLocation() {
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context,
@@ -36,14 +36,12 @@ public class PermisoLocation {
                 ActivityCompat.requestPermissions((Activity) context,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
-            //metodos inicio servicio
-            // aca debajo
-            //
-        }
+
+        } return true;
     }
 
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    /*public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -54,6 +52,6 @@ public class PermisoLocation {
                 return;
             }
         }
-    }
+    }*/
 
 }
