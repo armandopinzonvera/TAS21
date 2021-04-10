@@ -34,7 +34,7 @@ import java.util.Set;
 public class
 VistaTransecto extends AppCompatActivity {
 
-    private static final int PERMISSION_FINE_LOCATION = 69;
+
 
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
@@ -51,6 +51,13 @@ VistaTransecto extends AppCompatActivity {
 
     String campo1;
     String campo2;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +86,6 @@ VistaTransecto extends AppCompatActivity {
     }
 
     ArrayList<String> listaEspecies;
-
-
     public void spinnersqlite() {
 
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
@@ -150,22 +155,5 @@ VistaTransecto extends AppCompatActivity {
 
     }
 
-/*    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-            case PERMISSION_FINE_LOCATION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    PermisoLocation permisoLocation = new PermisoLocation(this);
-                    permisoLocation.verificarPermisoLocation();
-                } else {
-                    Toast.makeText(this, "Se requieren Permisos de Ubicacion", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-        }
-
-
-    }*/
 }

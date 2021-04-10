@@ -41,8 +41,6 @@ import java.util.ArrayList;
 
 public class Iniciar extends AppCompatActivity  {
 
-    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private static final int PERMISSIONS_FINE_LOCATION = 99;
     EditText et_nombreProyecto, et_IdTrack;
     String nombreProyecto, idTrack;
     Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
@@ -50,6 +48,7 @@ public class Iniciar extends AppCompatActivity  {
     ConexionSQLite conexionSQLite;
 
     PermisoLocation permisoLocation = new PermisoLocation(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,21 +84,9 @@ public class Iniciar extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            }
-        }else{
-            Toast.makeText(this, "SE REQUIERE PERMISO", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public void iniciarLocalizacion(){
-        if (ActivityCompat.checkSelfPermission(this,
+       /* if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
 
             ActivityCompat.requestPermissions(
@@ -108,16 +95,40 @@ public class Iniciar extends AppCompatActivity  {
 
             );
 
-        }else{
+        }else{*/
 
-            Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
-            intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
-            intent.putExtra("extra_2", et_IdTrack.getText().toString());
+            if(permisoLocation.verificacionInicialPermiso()){
+                pasoaVistatransecto();
+            } else {
+                permisoLocation.solicitarPermisoLocation(101);
+            }
+        }
 
-            et_nombreProyecto.setText("");
-            et_IdTrack.setText("");
-            startActivity(intent);
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+      if(permisoLocation.verificacionFinalPermisoLocation(requestCode, grantResults)){
+
+          Toast.makeText(this, "      PERMISO NEGADO     ", Toast.LENGTH_SHORT).show();
+          Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+          startActivity(intent);
+
+      } else {
+          pasoaVistatransecto();
         }
-        }
+    }
+
+    public void pasoaVistatransecto(){
+        Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
+        intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
+        intent.putExtra("extra_2", et_IdTrack.getText().toString());
+
+        et_nombreProyecto.setText("");
+        et_IdTrack.setText("");
+        startActivity(intent);
+    }
+
 
 }
