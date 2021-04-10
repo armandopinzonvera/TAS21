@@ -46,8 +46,6 @@ public class PermisoLocation {
     }
 
     public boolean verificacionFinalPermisoLocation( int requestCode, int[] grantResult){
-
-
         if(requestCode == LOCATION_REQUEST_CODE){
             if(grantResult.length > 0 && grantResult[0] == PackageManager.PERMISSION_DENIED){
                 return true;

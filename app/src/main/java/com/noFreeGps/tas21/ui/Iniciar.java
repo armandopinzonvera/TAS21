@@ -86,16 +86,6 @@ public class Iniciar extends AppCompatActivity  {
 
 
     public void iniciarLocalizacion(){
-       /* if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-            ActivityCompat.requestPermissions(
-                    Iniciar.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION
-
-            );
-
-        }else{*/
 
             if(permisoLocation.verificacionInicialPermiso()){
                 pasoaVistatransecto();
