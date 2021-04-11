@@ -35,6 +35,7 @@ import com.noFreeGps.tas21.config.AdaptadorRecycler;
 import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
+import com.noFreeGps.tas21.config.PermisoLocation;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class Continuar extends AppCompatActivity {
     ConexionSQLite conexionSQLite;
     ArrayList<Entidad_Ttrack> listTrack;
     Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
+
     //************************************  RecyclerView
     RecyclerView recyclerView;
 
@@ -96,10 +98,6 @@ public class Continuar extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
-
-
-
         builder.show();
     }
 
