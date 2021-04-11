@@ -30,8 +30,10 @@ import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tproyecto;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
+import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tproyecto_Imp;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
+import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
 import com.noFreeGps.tas21.config.PermisoLocation;
@@ -45,6 +47,7 @@ public class Iniciar extends AppCompatActivity  {
     String nombreProyecto, idTrack;
     Dao_Tproyecto daoTproyecto = new Dao_Tproyecto_Imp(this);
     Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
+    Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
     ConexionSQLite conexionSQLite;
 
     PermisoLocation permisoLocation = new PermisoLocation(this);
@@ -65,17 +68,15 @@ public class Iniciar extends AppCompatActivity  {
         nombreProyecto = et_nombreProyecto.getText().toString().trim();
         idTrack = et_IdTrack.getText().toString().trim();
 
+
         ValidarEditText validarEditText = new ValidarEditText(this);
 
         if (validarEditText.compararEditText(nombreProyecto, idTrack)){
             if( !daoTproyecto.verificarExiteProyecto(et_nombreProyecto.getText().toString().trim()).equals("existe")){
-
-                daoTproyecto.iniciarProyecto(nombreProyecto);
-                daoTtrack.iniciarTrack(nombreProyecto, idTrack);
-
+                iniciarLocalizacion();
             }
             }
-        iniciarLocalizacion();
+
         }
 
 
@@ -83,7 +84,6 @@ public class Iniciar extends AppCompatActivity  {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
-
 
     public void iniciarLocalizacion(){
 
@@ -93,7 +93,6 @@ public class Iniciar extends AppCompatActivity  {
                 permisoLocation.solicitarPermisoLocation(101);
             }
         }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -114,6 +113,10 @@ public class Iniciar extends AppCompatActivity  {
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTrack.getText().toString());
+
+        daoTproyecto.iniciarProyecto(nombreProyecto);
+        daoTtrack.iniciarTrack(nombreProyecto, idTrack);
+        daoTespecie.iniciarTespecies(idTrack, nombreProyecto);
 
         et_nombreProyecto.setText("");
         et_IdTrack.setText("");

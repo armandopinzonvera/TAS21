@@ -97,6 +97,7 @@ public class Dao_Tproyecto_Imp implements Dao_Tproyecto {
         }else{
             return true;
         }
+
     }
 
     //************************************   Fill spinner proyecto

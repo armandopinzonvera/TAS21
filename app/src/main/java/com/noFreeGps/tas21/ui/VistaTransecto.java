@@ -101,8 +101,8 @@ VistaTransecto extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 et_especie.setText(parent.getItemAtPosition(position).toString());
-                Toast.makeText(VistaTransecto.this,
-                        "Seleccion: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(VistaTransecto.this,
+                        "Seleccion: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -131,7 +131,7 @@ VistaTransecto extends AppCompatActivity {
     }
 
     private void enviarInformacion() {
-        Entidad_Tespecies entidadTespecies;
+        Entidad_Tespecies entidadTespecies = null;
         Entidad_Ttrack entidadTtrack = null;
         Entidad_Tproyecto entidadTproyecto = null;
         try {

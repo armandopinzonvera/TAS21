@@ -121,10 +121,21 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
             entidadTespecies.setEspecie(cursor.getString(0));
             listadoEspecies.add(entidadTespecies);
         }
+
         return listadoEspecies;
     }
 
+    public void iniciarTespecies(String idTrack, String nombreProyecto){
 
+        Entidad_Tespecies entidadTespecies;
+
+        try {
+            entidadTespecies = new Entidad_Tespecies(0, "null", 0, idTrack, nombreProyecto);
+        } catch (Exception e) {
+            entidadTespecies = new Entidad_Tespecies(0, "error", 0, "idTrack", "nombreProyecto");
+        }
+        boolean success = this.addDatoEspecie(entidadTespecies);
+    }
 
 
 

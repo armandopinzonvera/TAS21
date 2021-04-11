@@ -13,4 +13,6 @@ public interface Dao_Tespecie {
     ArrayList<Entidad_Tespecies> datosParaReciclerView();
 
     ArrayList<Entidad_Tespecies> datosParaSpinner();
+
+    void iniciarTespecies(String idTrack, String nombreProyecto);
 }
