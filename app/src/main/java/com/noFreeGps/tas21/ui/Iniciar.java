@@ -37,6 +37,7 @@ import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tproyecto;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
 import com.noFreeGps.tas21.config.PermisoLocation;
+import com.noFreeGps.tas21.config.ServiceLocation;
 import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class Iniciar extends AppCompatActivity  {
     ConexionSQLite conexionSQLite;
 
     PermisoLocation permisoLocation = new PermisoLocation(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,11 @@ public class Iniciar extends AppCompatActivity  {
     }
 
     public void pasoaVistatransecto(){
+
+        Intent intentService = new Intent(getApplicationContext(), ServiceLocation.class);
+        intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
+        startService(intentService);
+
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());
         intent.putExtra("extra_2", et_IdTrack.getText().toString());

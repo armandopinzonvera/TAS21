@@ -63,7 +63,7 @@ public class ContinuarIniciar extends AppCompatActivity {
             if (!daoTtrack.verificarNuevoTrack(et_ci_idTrack.getText().toString().trim()).equals("existe")) {
 
                 iniciarLocalizacion();
-             
+
             }
         }
     }
