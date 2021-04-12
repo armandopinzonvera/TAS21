@@ -1,6 +1,9 @@
 package com.noFreeGps.tas21.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -25,32 +28,31 @@ import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.config.PermisoLocation;
+import com.noFreeGps.tas21.config.ServiceLocation;
 import com.noFreeGps.tas21.config.ValidarEditText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_TIEMPO;
+
 public class
 VistaTransecto extends AppCompatActivity {
 
-
-
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
     EditText et_especie, et_cantidad;
-
     Fragment fragment_mapa;
-
     ConexionSQLite conexionSQLite;
-
     Spinner spinner_especies;
     ArrayAdapter entidadArrayAdapter;
 
     String data1;
     String data2;
-
     String campo1;
     String campo2;
+
+    private BroadcastReceiver broadcastReceiver;
 
 
     @Override
@@ -83,7 +85,10 @@ VistaTransecto extends AppCompatActivity {
         conexionSQLite = new ConexionSQLite(this);
 
         spinnersqlite();
+        llenarWigets();
     }
+
+
 
     ArrayList<String> listaEspecies;
     public void spinnersqlite() {
@@ -152,8 +157,29 @@ VistaTransecto extends AppCompatActivity {
         et_especie.setText("");
         et_cantidad.setText("");
 
-
     }
 
 
+    private void llenarWigets() {
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                tv_lat.setText(intent.getStringExtra(DATO_TIEMPO));
+            }
+        };
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(broadcastReceiver, new IntentFilter(ServiceLocation.INTENT_RECEIVER));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
+    }
 }

@@ -114,7 +114,8 @@ public class Iniciar extends AppCompatActivity  {
     public void pasoaVistatransecto(){
 
         Intent intentService = new Intent(getApplicationContext(), ServiceLocation.class);
-        intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
+       // intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
+        stopService(intentService);
         startService(intentService);
 
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
