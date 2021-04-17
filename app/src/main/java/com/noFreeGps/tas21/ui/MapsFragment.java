@@ -2,8 +2,11 @@ package com.noFreeGps.tas21.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,10 @@ import com.noFreeGps.tas21.R;
 
 public class MapsFragment extends Fragment {
 
+    GoogleMap miMapa;
+
+
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -32,9 +39,22 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            miMapa = googleMap;
+            if (ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+
+            }
+            miMapa.setMyLocationEnabled(true);
+            miMapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            LatLng miPosicion = new LatLng(4.5,-74);
+
+            miMapa.addMarker(new MarkerOptions()
+                    .position(miPosicion)
+                    .title("Colombia"));
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(miPosicion));
         }
     };
 

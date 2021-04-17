@@ -50,6 +50,7 @@ public class Iniciar extends AppCompatActivity  {
     Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
     Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
     ConexionSQLite conexionSQLite;
+    Intent intentService;
 
     PermisoLocation permisoLocation = new PermisoLocation(this);
 
@@ -113,10 +114,14 @@ public class Iniciar extends AppCompatActivity  {
 
     public void pasoaVistatransecto(){
 
-        Intent intentService = new Intent(getApplicationContext(), ServiceLocation.class);
-       // intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
-        stopService(intentService);
+        intentService = new Intent(getApplicationContext(), ServiceLocation.class);
+        intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
+        //stopService(intentService);
         startService(intentService);
+
+        Toast toast = Toast.makeText(this, "Servicio de localizacion iniciado ", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
 
         Intent intent = new Intent(getApplicationContext(), VistaTransecto.class);
         intent.putExtra("extra_1", et_nombreProyecto.getText().toString());

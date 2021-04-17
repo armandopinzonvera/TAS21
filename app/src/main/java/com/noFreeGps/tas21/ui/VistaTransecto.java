@@ -35,7 +35,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.noFreeGps.tas21.config.ServiceLocation.DATO_TIEMPO;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LATITUD;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
+
 
 public class
 VistaTransecto extends AppCompatActivity {
@@ -45,7 +47,6 @@ VistaTransecto extends AppCompatActivity {
     Fragment fragment_mapa;
     ConexionSQLite conexionSQLite;
     Spinner spinner_especies;
-    ArrayAdapter entidadArrayAdapter;
 
     String data1;
     String data2;
@@ -54,11 +55,9 @@ VistaTransecto extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
-
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,9 @@ VistaTransecto extends AppCompatActivity {
         tv_nombreProyecto.setText("Proyecto: " + data1);
         data2 = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + data2);
+
+      /*  tv_long.setText(getIntent().getStringExtra("dato_longitud"));
+        tv_lat.setText(getIntent().getStringExtra("dato_latitud"));*/
         // Fragment
         fragment_mapa = new MapsFragment();
         getSupportFragmentManager().beginTransaction()
@@ -85,10 +87,8 @@ VistaTransecto extends AppCompatActivity {
         conexionSQLite = new ConexionSQLite(this);
 
         spinnersqlite();
-        llenarWigets();
+
     }
-
-
 
     ArrayList<String> listaEspecies;
     public void spinnersqlite() {
@@ -109,13 +109,11 @@ VistaTransecto extends AppCompatActivity {
                /* Toast.makeText(VistaTransecto.this,
                         "Seleccion: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();*/
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
-
     public void terminar(View view) {
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -156,30 +154,68 @@ VistaTransecto extends AppCompatActivity {
 
         et_especie.setText("");
         et_cantidad.setText("");
-
     }
 
 
-    private void llenarWigets() {
+    public void llenarWigets( String latitud, String longitud) {
+        tv_lat.setText(latitud);
+        tv_long.setText(longitud);
 
-        broadcastReceiver = new BroadcastReceiver() {
+       broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                tv_lat.setText(intent.getStringExtra(DATO_TIEMPO));
+
+                /*String latitudString = String.valueOf(intent.getStringExtra("dato_latitud"));
+                String longitudString = String.valueOf(intent.getStringExtra("dato_longitud"));*/
+
             }
         };
-
+        registerReceiver(broadcastReceiver, new IntentFilter("longitud_update"));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(broadcastReceiver, new IntentFilter(ServiceLocation.INTENT_RECEIVER));
+
+        if(broadcastReceiver == null){
+            broadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    String latitudString = String.valueOf(intent.getStringExtra("dato_latitud"));
+                    String longitudString = String.valueOf(intent.getStringExtra("dato_longitud"));
+                    //String alturaString = String.valueOf(intent.getStringExtra("dato_altura"));
+
+                    tv_long.setText(longitudString);
+                    tv_lat.setText(latitudString);
+                }
+            };
+        }
+        registerReceiver(broadcastReceiver, new IntentFilter("longitud_update"));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(broadcastReceiver != null){
+            unregisterReceiver(broadcastReceiver);
+        }
+        Intent intentService = new Intent(getApplicationContext(), ServiceLocation.class);
+        stopService(intentService);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       Iniciar iniciar = new Iniciar();
+       stopService(iniciar.intentService);
+
     }
 }
