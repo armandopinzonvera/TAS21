@@ -115,8 +115,8 @@ public class Iniciar extends AppCompatActivity  {
     public void pasoaVistatransecto(){
 
         intentService = new Intent(getApplicationContext(), ServiceLocation.class);
-        intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
-        //stopService(intentService);
+       // intentService.setAction(ServiceLocation.START_LOCATION_SERVICE);
+        stopService(intentService);
         startService(intentService);
 
         Toast toast = Toast.makeText(this, "Servicio de localizacion iniciado ", Toast.LENGTH_SHORT);
