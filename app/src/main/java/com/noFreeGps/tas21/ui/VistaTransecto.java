@@ -35,7 +35,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.noFreeGps.tas21.config.ServiceLocation.DATO_TIEMPO;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LATITUD;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
+
 
 public class
 VistaTransecto extends AppCompatActivity {
@@ -165,7 +167,8 @@ VistaTransecto extends AppCompatActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                tv_lat.setText(intent.getStringExtra(DATO_TIEMPO));
+                tv_lat.setText(intent.getStringExtra(DATO_LATITUD));
+                tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
             }
         };
 
