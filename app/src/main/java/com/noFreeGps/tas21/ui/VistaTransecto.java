@@ -169,8 +169,9 @@ public class VistaTransecto extends AppCompatActivity {
                 tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
             }
         };
-
     }
+
+
 
     @Override
     protected void onResume() {

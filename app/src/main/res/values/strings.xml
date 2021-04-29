@@ -40,4 +40,10 @@
     <string name="descargar">Descargar</string>
     <string name="eliminar">Eliminar</string>
 
+    <!--ServiceLocation-->
+    <string name="notificacion_servicio_titulo">Servicio de ubicacion </string>
+    <string name="notificacion_servicio_contenido">Registrando ubicacion para la appliacion TAS21 </string>
+    <string name="buscando">buscando</string>
+
+
 </resources>

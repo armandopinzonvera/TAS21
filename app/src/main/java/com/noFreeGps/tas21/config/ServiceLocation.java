@@ -7,8 +7,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 
-import android.annotation.SuppressLint;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -24,15 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.Gravity;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 
 import com.noFreeGps.tas21.R;
@@ -52,11 +42,11 @@ public class ServiceLocation extends Service {
     LocationListener locationListener;
 
     private String longitudString, latitudString;
-    private boolean checkTimer;
+    private boolean checkLocation;
+    private boolean isGpsActivo = false ;
     public static final String INTENT_RECEIVER = "intent_receiver";
 
-    PendingIntent pendingIntent;
-    private Intent intent;
+    private Intent intentBroadcast;
     private int time;
     private Thread thread;
 
@@ -67,8 +57,8 @@ public class ServiceLocation extends Service {
     public void onCreate() {
         super.onCreate();
 
-        checkTimer = true;  // para solo tener un servicio activo
-        intent = new Intent(INTENT_RECEIVER);
+        checkLocation = true;  // para solo tener un servicio activo
+        intentBroadcast = new Intent(INTENT_RECEIVER);
         time = 200; // tiempo al que inicia
 
         decimalFormat = new DecimalFormat("#.#####");
@@ -83,8 +73,31 @@ public class ServiceLocation extends Service {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                while (time > 0) {
-                    if (checkTimer == true) {
+               for(int i = 0; i < 120; i++){
+                   try {
+                       Thread.sleep(2000);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+
+                   if (latitudString == null) {
+                       updateUInullData();
+                   } else {
+                       try {
+                           TimeUnit.SECONDS.sleep(5);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       time = time - 1;
+                       updateUI(latitudString, longitudString);
+                   }
+
+
+
+               }
+
+                    /*            while (time > 0) {
+                    if (checkLocation == true) {
                         try {
                             TimeUnit.SECONDS.sleep(2);
                         } catch (InterruptedException e) {
@@ -95,8 +108,7 @@ public class ServiceLocation extends Service {
                     } else {
                         break;
                     }
-                }
-                // showNotification();
+                }*/
                 stopSelf();
             }
         };
@@ -120,9 +132,9 @@ public class ServiceLocation extends Service {
         Intent resultIntent = new Intent(this, VistaTransecto.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("TITULO")
-                .setContentText("Contenido")
-                .setSmallIcon(R.drawable.ic_down)
+                .setContentTitle(getString(R.string.notificacion_servicio_titulo))
+                .setContentText(getString(R.string.notificacion_servicio_contenido))
+                .setSmallIcon(R.drawable.ic_gps_fixed_black_24dp)
                 .setContentIntent(pendingIntent)
                 .build();
         startForeground(1, notification);
@@ -139,7 +151,7 @@ public class ServiceLocation extends Service {
                 longitudString = decimalFormat.format(location.getLongitude());
                 latitudString = decimalFormat.format(location.getLatitude());
 
-                //Toast.makeText(ServiceLocation.this, "Lat: "+latitudString , Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiceLocation.this, "Lat: "+isGpsActivo , Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -149,29 +161,33 @@ public class ServiceLocation extends Service {
                 return;
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, locationListener);
+            isGpsActivo = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 /*************************************************************/
-    /*************************************************************/
+/*************************************************************/
     private void updateUI(String latitudString, String longitudString) {
-        intent.putExtra(DATO_LATITUD, latitudString);
-        intent.putExtra(DATO_LONGITUD, longitudString);
-        sendBroadcast(intent);  // para enviar la info
-
-      /*
-      intent.putExtra(DATO_TIEMPO, String.valueOf(time));
-      sendBroadcast(intent);  // para enviar la info
-        */
+        intentBroadcast.putExtra(DATO_LATITUD, latitudString);
+        intentBroadcast.putExtra(DATO_LONGITUD, longitudString);
+        sendBroadcast(intentBroadcast);  // para enviar la info
     }
+
+   // Para usar en cuando aun no se obtienen los datos de ubicacion
+    private void updateUInullData() {
+        intentBroadcast.putExtra(DATO_LATITUD, getString(R.string.buscando));
+        intentBroadcast.putExtra(DATO_LONGITUD,  getString(R.string.buscando));
+        sendBroadcast(intentBroadcast);  // para enviar la info
+    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        checkTimer = false;
+        checkLocation = false;
     }
 
     @Override
