@@ -37,11 +37,12 @@ public class ServiceLocation extends Service {
     private static final String CHANNEL_ID = "Notificacion de canal de Localizacion";
     public static final String DATO_LONGITUD = "longitud";
     public static final String DATO_LATITUD = "latitud";
+    public static final String DATO_ALTURA = "altura";
     DecimalFormat decimalFormat;
     private LocationManager locationManager;
     LocationListener locationListener;
 
-    private String longitudString, latitudString;
+    private String longitudString, latitudString, msnmString;
     private boolean checkLocation;
     private boolean isGpsActivo = false ;
     public static final String INTENT_RECEIVER = "intent_receiver";
@@ -68,55 +69,55 @@ public class ServiceLocation extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        notificacionServicio();   /*************************/
-        datosUbicacion(); /*************************/
+        notificacionServicio();
+        datosUbicacion();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-               for(int i = 0; i < 120; i++){
-                   try {
-                       Thread.sleep(2000);
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
-                   }
 
-                   if (latitudString == null) {
-                       updateUInullData();
-                   } else {
-                       try {
-                           TimeUnit.SECONDS.sleep(5);
-                       } catch (InterruptedException e) {
-                           e.printStackTrace();
-                       }
-                       time = time - 1;
-                       updateUI(latitudString, longitudString);
-                   }
-
-
-
-               }
-
-                    /*            while (time > 0) {
-                    if (checkLocation == true) {
+                if(checkLocation == true){
+                    for (int i = 0; i < 36000; i++) {
                         try {
-                            TimeUnit.SECONDS.sleep(2);
+                            Thread.sleep(2000);
+
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        time = time - 1;
-                        updateUI(latitudString, longitudString);
-                    } else {
-                        break;
+                        if (latitudString == null) {
+                            updateUInullData();
+                        } else {
+                            try {
+                                TimeUnit.SECONDS.sleep(5);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            time = time - 1;
+                            updateUI(latitudString, longitudString);
+                        }
+                        // para continuar con la ubicacion luego que se hizo la verificacion de inicio
+                        while (isGpsActivo) {
+                            try {
+                                TimeUnit.SECONDS.sleep(5);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            time = time - 1;
+                            updateUI(latitudString, longitudString);
+                        }
                     }
-                }*/
-                stopSelf();
-            }
-        };
-        thread = new Thread(runnable);
+
+                    //stopSelf();
+                }
+            } //cierre primer if
+            };
+            thread =new
+
+            Thread(runnable);
         thread.start();
 
         return Service.START_STICKY;
-    }
+        }
+
 /*************************************************************/
     /*************************************************************/
 
@@ -150,6 +151,7 @@ public class ServiceLocation extends Service {
             public void onLocationChanged(@NonNull Location location) {
                 longitudString = decimalFormat.format(location.getLongitude());
                 latitudString = decimalFormat.format(location.getLatitude());
+                msnmString = String.valueOf(location.getAltitude());
 
                 Toast.makeText(ServiceLocation.this, "Lat: "+isGpsActivo , Toast.LENGTH_SHORT).show();
             }
@@ -170,8 +172,11 @@ public class ServiceLocation extends Service {
 /*************************************************************/
 /*************************************************************/
     private void updateUI(String latitudString, String longitudString) {
+
         intentBroadcast.putExtra(DATO_LATITUD, latitudString);
         intentBroadcast.putExtra(DATO_LONGITUD, longitudString);
+        intentBroadcast.putExtra(DATO_ALTURA, msnmString);
+
         sendBroadcast(intentBroadcast);  // para enviar la info
     }
 
