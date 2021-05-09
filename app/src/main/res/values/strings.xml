@@ -45,5 +45,9 @@
     <string name="notificacion_servicio_contenido">Registrando ubicacion para la appliacion TAS21 </string>
     <string name="buscando">buscando</string>
 
+    <!-- VerficarGPS -->
+    <string name="mensaje_prender_GPS">Tu GPS debe estar habilitado, Quieres iniciarlo?</string>
+
+
 
 </resources>

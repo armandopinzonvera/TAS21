@@ -13,10 +13,12 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -39,6 +41,7 @@ import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
 import com.noFreeGps.tas21.config.PermisoLocation;
 import com.noFreeGps.tas21.config.ServiceLocation;
 import com.noFreeGps.tas21.config.ValidarEditText;
+import com.noFreeGps.tas21.config.VerificarGps;
 
 import java.util.ArrayList;
 
@@ -51,6 +54,7 @@ public class Iniciar extends AppCompatActivity  {
     Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
     ConexionSQLite conexionSQLite;
     Intent intentService;
+    VerificarGps verificarGps = new VerificarGps(this);
 
     PermisoLocation permisoLocation = new PermisoLocation(this);
 
@@ -62,6 +66,11 @@ public class Iniciar extends AppCompatActivity  {
 
         et_nombreProyecto = findViewById(R.id.et_nombreProyecto);
         et_IdTrack = findViewById(R.id.et_idTransecto);
+
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            verificarGps.buildAlertMessageNoGps();
+        }
     }
                                           //////////////////////////////////////
     ///////////////////////////////     //     Function buttons
