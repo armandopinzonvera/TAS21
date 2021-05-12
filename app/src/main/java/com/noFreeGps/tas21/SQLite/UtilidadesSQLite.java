@@ -60,12 +60,13 @@ public class UtilidadesSQLite {
 
     public static final String CREAR_TABLA_TRACK = "CREATE TABLE "
             +TABLA_TRACK+" ("
-            +ID_TRACK+" TEXT PRIMARY KEY NOT NULL, "
-            +FECHA+" DATE, "
-            +HORA+" TIME, "
-            +LONGITUD+" INTEGER, "
-            +LATITUD+" INTEGER, "
-            +ALTURA+"  INTEGER, "
+            //+ID_TRACK+" TEXT PRIMARY KEY NOT NULL, "
+            +ID_TRACK+" TEXT, "
+            +FECHA+" TEXT, "
+            +HORA+" TEXT, "
+            +LONGITUD+" TEXT, "
+            +LATITUD+" TEXT, "
+            +ALTURA+"  TEXT, "
             + FK_ID_PROYECTO_TR + " TEXT, "
             +" FOREIGN KEY("+ FK_ID_PROYECTO_TR +") REFERENCES "+TABLA_PROYECTO+"( "+NOMBRE_PROYECTO+") );";
 

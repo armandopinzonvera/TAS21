@@ -11,13 +11,13 @@ public class Entidad_Ttrack {
     public String id_track;
     private String fecha;
     private String hora;
-    private float longitud;
-    private float latitud;
+    private String longitud;
+    private String latitud;
     private int altura;
     private String fk_IdTProyecto;
 
 
-    public Entidad_Ttrack(String id_track, String fecha, String hora, float longitud, float latitud, int altura, String fk_IdTProyecto) {
+    public Entidad_Ttrack(String id_track, String fecha, String hora, String longitud, String latitud, int altura, String fk_IdTProyecto) {
         this.id_track = id_track;
         this.fecha = fecha;
         this.hora = hora;
@@ -57,11 +57,11 @@ public class Entidad_Ttrack {
         return hora;
     }
 
-    public float getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public float getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
@@ -89,11 +89,12 @@ public class Entidad_Ttrack {
         this.hora = hora;
     }
 
-    public void setLongitud(float longitud) {
-        this.longitud = longitud;
+    public void setLongitud(String longitud){
+    this.longitud = longitud;
     }
 
-    public void setLatitud(float latitud) {
+    public void setLatitud(String latitud)
+    {
         this.latitud = latitud;
     }
 

@@ -53,7 +53,7 @@ public class Iniciar extends AppCompatActivity  {
     Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
     Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
     ConexionSQLite conexionSQLite;
-    Intent intentService;
+     Intent intentService;
     VerificarGps verificarGps = new VerificarGps(this);
 
     PermisoLocation permisoLocation = new PermisoLocation(this);

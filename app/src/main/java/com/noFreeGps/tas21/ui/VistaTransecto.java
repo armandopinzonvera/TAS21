@@ -140,15 +140,19 @@ public class VistaTransecto extends AppCompatActivity {
         Entidad_Tproyecto entidadTproyecto = null;
         try {
             entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
-            Toast.makeText(this, entidadTespecies.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, entidadTespecies.toString(), Toast.LENGTH_LONG).show();
         } catch (NumberFormatException e) {
             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
         }
 
         try {
-            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", Float.parseFloat(tv_long.getText().toString()), Float.parseFloat(tv_lat.getText().toString()), Integer.parseInt(msnmString), nombreProyectoString);
+           //entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", Float.parseFloat(tv_long.getText().toString()), Float.parseFloat(tv_lat.getText().toString()), Integer.parseInt(msnmString), nombreProyectoString);
+            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), 2600, nombreProyectoString);
+            Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
         } catch (NumberFormatException e) {
-             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", 0.0f, 0.0f, 1, " ");
+            e.printStackTrace();
+             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", 1, " ");
+             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
@@ -195,7 +199,13 @@ public class VistaTransecto extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intentService = new Intent(this, ServiceLocation.class);
+        stopService(intentService);
     }
 }
