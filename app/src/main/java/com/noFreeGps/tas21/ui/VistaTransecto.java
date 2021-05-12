@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Tespecies_Imp;
 import com.noFreeGps.tas21.SQLite.implementaciones.Dao_Ttrack_Imp;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Ttrack;
+import com.noFreeGps.tas21.config.FechayCronometro;
 import com.noFreeGps.tas21.config.ServiceLocation;
 import com.noFreeGps.tas21.config.ValidarEditText;
 
@@ -40,10 +42,12 @@ import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
 
 
 public class VistaTransecto extends AppCompatActivity {
-    TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto;
+    TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto, tv_msnm;
     EditText et_especie, et_cantidad;
+    Chronometer tv_chronometer;
     Fragment fragment_mapa;
     ConexionSQLite conexionSQLite;
+    FechayCronometro fechayCronometro;
     Spinner spinner_especies;
     ArrayAdapter entidadArrayAdapter;
 
@@ -65,6 +69,8 @@ public class VistaTransecto extends AppCompatActivity {
 
         tv_lat = findViewById(R.id.tv_lat);
         tv_long = findViewById(R.id.tv_lon);
+        tv_msnm = findViewById(R.id.tv_msnm);
+        tv_chronometer = findViewById(R.id.tv_chronometer);
         et_especie = findViewById(R.id.et_especie);
         et_cantidad = findViewById(R.id.et_cantidad);
         tv_idTransecto = findViewById(R.id.tv_idTransecto);
@@ -81,6 +87,7 @@ public class VistaTransecto extends AppCompatActivity {
                 .add(R.id.marco_fragment, fragment_mapa).commit();
         //class
         conexionSQLite = new ConexionSQLite(this);
+        fechayCronometro = new FechayCronometro();
         //methods
         spinnersqlite();
         llenarWigets();
@@ -180,6 +187,7 @@ public class VistaTransecto extends AppCompatActivity {
                 msnmString = intent.getStringExtra(DATO_ALTURA);
             }
         };
+        tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
     }
 
 

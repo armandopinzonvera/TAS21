@@ -18,6 +18,8 @@
     <string name="terminar">Terminar</string>
     <string name="latitud">Lat:</string>
     <string name="logitud">Lon:</string>
+    <string name="altura">msnm:</string>
+    <string name="tiempo">tiempo:</string>
 
     <!--Activity Consultar-->
     <string name="consultar">Consultar Proyecto</string>
