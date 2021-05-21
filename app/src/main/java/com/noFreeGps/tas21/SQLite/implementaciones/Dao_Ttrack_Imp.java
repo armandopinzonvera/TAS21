@@ -80,10 +80,10 @@ public class Dao_Ttrack_Imp implements Dao_Ttrack {
         Entidad_Ttrack entidadTtrack;
 
         try {
-            entidadTtrack = new Entidad_Ttrack(idTrack,"fecha", "hora", "1.111f", "2.222f",2222, nombreProyecto);
+            entidadTtrack = new Entidad_Ttrack(idTrack,"fecha", "hora", "1.111f", "2.222f", "Altura", nombreProyecto);
 
         } catch (Exception e) {
-            entidadTtrack = new Entidad_Ttrack("error","error", "error", "1.111f", "2.222f",1, " error");
+            entidadTtrack = new Entidad_Ttrack("error","error", "error", "1.111f", "2.222f","altura", " error");
         }
         boolean success3 = this.addDatoTtrack(entidadTtrack);
         Toast.makeText(context, "Exito:   "+success3, Toast.LENGTH_SHORT).show();
@@ -112,8 +112,8 @@ public class Dao_Ttrack_Imp implements Dao_Ttrack {
             entidadTtrack.setId_track(cursor.getString(0));
             entidadTtrack.setFecha(cursor.getString(1));
             entidadTtrack.setFecha(cursor.getString(2));
-            entidadTtrack.setAltura(cursor.getInt(3));
-            entidadTtrack.setAltura(cursor.getInt(4));
+            entidadTtrack.setAltura(cursor.getString(3));
+            entidadTtrack.setAltura(cursor.getString(4));
 
         }
         listaProjectTrack.add(entidadTtrack);

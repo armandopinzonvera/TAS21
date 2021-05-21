@@ -11,11 +11,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,10 @@ import com.noFreeGps.tas21.R;
 import com.noFreeGps.tas21.ui.VistaTransecto;
 
 import java.text.DecimalFormat;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -76,7 +82,8 @@ public class ServiceLocation extends Service {
             public void run() {
 
                 if(checkLocation == true){
-                    for (int i = 0; i < 36000; i++) {
+                    //for (int i = 0; i < 36000; i++) {
+                    while(checkLocation == true){
                         try {
                             Thread.sleep(2000);
 
@@ -119,41 +126,64 @@ public class ServiceLocation extends Service {
         }
 
 /*************************************************************/
-    /*************************************************************/
+/*************************************************************/
 
-    private void notificacionServicio() {
+    public void setProvedorLocation(){
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "Location Service", NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(notificationChannel);
 
-        }
-        Intent resultIntent = new Intent(this, VistaTransecto.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle(getString(R.string.notificacion_servicio_titulo))
-                .setContentText(getString(R.string.notificacion_servicio_contenido))
-                .setSmallIcon(R.drawable.ic_gps_fixed_black_24dp)
-                .setContentIntent(pendingIntent)
-                .build();
-        startForeground(1, notification);
     }
 
-/*************************************************************/
-    /*************************************************************/
 
+
+/*************************************************************/
+/*************************************************************/
+
+ private void notificacionServicio() {
+
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "Location Service", NotificationManager.IMPORTANCE_HIGH);
+         NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
+         notificationManager.createNotificationChannel(notificationChannel);
+
+     }
+     Intent resultIntent = new Intent(this, VistaTransecto.class);
+     PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+     Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+             .setContentTitle(getString(R.string.notificacion_servicio_titulo))
+             .setContentText(getString(R.string.notificacion_servicio_contenido))
+             .setSmallIcon(R.drawable.ic_gps_fixed_black_24dp)
+             .setContentIntent(pendingIntent)
+             .build();
+     startForeground(1, notification);
+ }
+
+
+
+
+    String provedorGps;
     private void datosUbicacion() {
 
+        provedorGps = LocationManager.GPS_PROVIDER;
         locationListener = new LocationListener() {
+
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+
+
+            }
+
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                longitudString = decimalFormat.format(location.getLongitude());
+
+               longitudString = decimalFormat.format(location.getLongitude());
                 latitudString = decimalFormat.format(location.getLatitude());
                 msnmString = String.valueOf(location.getAltitude());
 
                 Toast.makeText(ServiceLocation.this, "Lat: "+isGpsActivo , Toast.LENGTH_SHORT).show();
+
             }
         };
 
@@ -162,11 +192,16 @@ public class ServiceLocation extends Service {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, locationListener);
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 5, locationListener);
             isGpsActivo = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
 
     }
 /*************************************************************/

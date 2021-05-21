@@ -24,11 +24,18 @@ public class MapsFragment extends Fragment {
 
     GoogleMap miMapa;
 
+    double longitudDouble, latitudDouble;
+
+    public void getLocationdata(String longitud, String latitud){
+
+        longitudDouble = Double.parseDouble(longitud);
+        latitudDouble = Double.parseDouble(latitud);
+
+    }
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
+            /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
          * This is where we can add markers or lines, add listeners or move the camera.
@@ -43,12 +50,11 @@ public class MapsFragment extends Fragment {
             if (ActivityCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                             getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-
             }
             miMapa.setMyLocationEnabled(true);
             miMapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            LatLng miPosicion = new LatLng(4.5,-74);
+            LatLng miPosicion = new LatLng(latitudDouble,longitudDouble);
+            
 
             miMapa.addMarker(new MarkerOptions()
                     .position(miPosicion)
