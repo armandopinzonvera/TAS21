@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 
 import com.noFreeGps.tas21.R;
+import com.noFreeGps.tas21.ui.MapsFragment;
 import com.noFreeGps.tas21.ui.VistaTransecto;
 
 import java.text.DecimalFormat;
@@ -44,16 +45,29 @@ public class ServiceLocation extends Service {
     public static final String DATO_LONGITUD = "longitud";
     public static final String DATO_LATITUD = "latitud";
     public static final String DATO_ALTURA = "altura";
-    DecimalFormat decimalFormat;
+    private static final String DATO_LAT_MAP = "dato_lat_map";
+    private static final String DATO_LONG_MAP = "dato_lat_map";
+
+    DecimalFormat decimalFormat, decimalFormat2;
     private LocationManager locationManager;
     LocationListener locationListener;
 
+    /****************************************/
+
+    Intent intentLocationData;
+
+    /*******************************************/
     private String longitudString, latitudString, msnmString;
+    private double longitudDouble, latitudDouble;
+
     private boolean checkLocation;
     private boolean isGpsActivo = false ;
     public static final String INTENT_RECEIVER = "intent_receiver";
+    private static final String INTENT_RECEIVER_MAP = "intent_receiver_map";
 
     private Intent intentBroadcast;
+
+
     private int time;
     private Thread thread;
 
@@ -64,11 +78,20 @@ public class ServiceLocation extends Service {
     public void onCreate() {
         super.onCreate();
 
+        /****************************************/
+
+        //mapsFragment = new MapsFragment(getApplicationContext());
+
+        /*******************************************/
+
         checkLocation = true;  // para solo tener un servicio activo
         intentBroadcast = new Intent(INTENT_RECEIVER);
+        intentLocationData = new Intent(getApplicationContext(), MapsFragment.class);
+
         time = 200; // tiempo al que inicia
 
         decimalFormat = new DecimalFormat("#.#####");
+        decimalFormat2 = new DecimalFormat("#.#");
 
     }
 
@@ -100,6 +123,9 @@ public class ServiceLocation extends Service {
                             }
                             time = time - 1;
                             updateUI(latitudString, longitudString);
+                            /***************************/
+                           // mapsFragment.updateLocationMap(latitudDouble, longitudDouble);
+                            /*****************************/
                         }
                         // para continuar con la ubicacion luego que se hizo la verificacion de inicio
                         while (isGpsActivo) {
@@ -178,9 +204,13 @@ public class ServiceLocation extends Service {
             @Override
             public void onLocationChanged(@NonNull Location location) {
 
-               longitudString = decimalFormat.format(location.getLongitude());
+                longitudString = decimalFormat.format(location.getLongitude());
                 latitudString = decimalFormat.format(location.getLatitude());
-                msnmString = String.valueOf(location.getAltitude());
+                msnmString = decimalFormat2.format(location.getAltitude());
+
+                latitudDouble = location.getLatitude();
+                longitudDouble = location.getLongitude();
+                       // String.valueOf(location.getAltitude());
 
                 Toast.makeText(ServiceLocation.this, "Lat: "+isGpsActivo , Toast.LENGTH_SHORT).show();
 
@@ -213,6 +243,9 @@ public class ServiceLocation extends Service {
         intentBroadcast.putExtra(DATO_ALTURA, msnmString);
 
         sendBroadcast(intentBroadcast);  // para enviar la info
+
+        intentLocationData.putExtra("latitud_map", latitudDouble);
+        intentLocationData.putExtra("longitud_map", longitudDouble);
     }
 
    // Para usar en cuando aun no se obtienen los datos de ubicacion
@@ -221,6 +254,10 @@ public class ServiceLocation extends Service {
         intentBroadcast.putExtra(DATO_LONGITUD,  getString(R.string.buscando));
         sendBroadcast(intentBroadcast);  // para enviar la info
     }
+
+
+
+
 
 
     @Override

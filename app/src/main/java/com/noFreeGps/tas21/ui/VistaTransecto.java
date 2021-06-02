@@ -1,5 +1,6 @@
-package com.noFreeGps.tas21.ui;
+ package com.noFreeGps.tas21.ui;
 
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -45,12 +46,13 @@ public class VistaTransecto extends AppCompatActivity {
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto, tv_msnm;
     EditText et_especie, et_cantidad;
     Chronometer tv_chronometer;
-    MapsFragment mapsFragment;
+
     Fragment fragment_mapa;
+
     ConexionSQLite conexionSQLite;
     FechayCronometro fechayCronometro;
     Spinner spinner_especies;
-    ArrayAdapter entidadArrayAdapter;
+
 
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
 
@@ -77,22 +79,33 @@ public class VistaTransecto extends AppCompatActivity {
         tv_idTransecto = findViewById(R.id.tv_idTransecto);
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
+
         // Extra information
         nombreProyectoString = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: " + nombreProyectoString);
         idTransectoString = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + idTransectoString);
+
         // Fragment
-        mapsFragment = new MapsFragment();
         fragment_mapa = new MapsFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.marco_fragment, fragment_mapa).commit();
+        Bundle bundleLocationData  = new Bundle();
+        bundleLocationData.putString("latitud", tv_lat.getText().toString());
+        bundleLocationData.putString("longitud", tv_long.getText().toString());
+        fragment_mapa.setArguments(bundleLocationData);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
+        // Enviar location al Fragment mapa
+
+
+
         //class
         conexionSQLite = new ConexionSQLite(this);
         fechayCronometro = new FechayCronometro();
         //methods
         spinnersqlite();
         llenarWigets();
+
+
     }
 
 
@@ -114,8 +127,7 @@ public class VistaTransecto extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 et_especie.setText(parent.getItemAtPosition(position).toString());
-               /* Toast.makeText(VistaTransecto.this,
-                        "Seleccion: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();*/
+
             }
 
             @Override
@@ -144,7 +156,7 @@ public class VistaTransecto extends AppCompatActivity {
     }
 
     private void enviarInformacion() {
-        mapsFragment.getLocationdata(tv_long.getText().toString(), tv_lat.getText().toString());
+
         Entidad_Tespecies entidadTespecies = null;
         Entidad_Ttrack entidadTtrack = null;
         Entidad_Tproyecto entidadTproyecto = null;

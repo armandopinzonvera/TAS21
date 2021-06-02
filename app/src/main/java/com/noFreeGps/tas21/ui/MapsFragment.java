@@ -4,48 +4,64 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.noFreeGps.tas21.R;
+
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_ALTURA;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LATITUD;
+import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
 
 public class MapsFragment extends Fragment {
 
     GoogleMap miMapa;
+    Marker marker;
+    double longitudDouble = 1.0;
+    double latitudDouble = 1.0;
+    String latitudString, longitudString;
+    private BroadcastReceiver broadcastReceiver;
 
-    double longitudDouble, latitudDouble;
+    Context context;
+    Intent intent;
 
-    public void getLocationdata(String longitud, String latitud){
 
-        longitudDouble = Double.parseDouble(longitud);
-        latitudDouble = Double.parseDouble(latitud);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        /***********        NOOOOO   FUNCIONA
+         * aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!
+         *
+         *
+         * ************/
+        longitudDouble = getActivity().getIntent().getDoubleExtra("longitud_map", 0.0);
+        latitudDouble = getActivity().getIntent().getDoubleExtra("latitud_map", 0.0);
+       /***************************/
     }
 
-
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-            /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
             miMapa = googleMap;
             if (ActivityCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -56,9 +72,12 @@ public class MapsFragment extends Fragment {
             LatLng miPosicion = new LatLng(latitudDouble,longitudDouble);
             
 
-            miMapa.addMarker(new MarkerOptions()
+            marker = miMapa.addMarker(new MarkerOptions()
                     .position(miPosicion)
-                    .title("Colombia"));
+                    .alpha(0.5f)
+                    .snippet(latitudString+", "+longitudString)
+                    .title("Colombia")
+            );
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(miPosicion));
         }
@@ -69,7 +88,13 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+
+        View viewFragment = inflater.inflate(R.layout.fragment_maps, container, false);
+
+
+
+
+        return viewFragment;
     }
 
     @Override
@@ -81,4 +106,13 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
     }
+
+/**********************************/
+    public void updateLocationMap(double latitudDouble, double longitudDouble){
+        this.latitudDouble = latitudDouble;
+        this.longitudDouble = longitudDouble;
+    }
+
+/**********************************/
+
 }
