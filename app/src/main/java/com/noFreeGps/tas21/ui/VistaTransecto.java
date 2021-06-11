@@ -55,7 +55,7 @@ public class VistaTransecto extends AppCompatActivity {
 
 
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
-
+    Bundle bundleLocationData;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -88,12 +88,12 @@ public class VistaTransecto extends AppCompatActivity {
 
         // Fragment
         fragment_mapa = new MapsFragment();
-        Bundle bundleLocationData  = new Bundle();
-        bundleLocationData.putString("latitud", tv_lat.getText().toString());
-        bundleLocationData.putString("longitud", tv_long.getText().toString());
+        bundleLocationData  = new Bundle();
+        /*bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
+        bundleLocationData.putString("longitudKey", tv_long.getText().toString());
         fragment_mapa.setArguments(bundleLocationData);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();*/
         // Enviar location al Fragment mapa
 
 
@@ -104,8 +104,6 @@ public class VistaTransecto extends AppCompatActivity {
         //methods
         spinnersqlite();
         llenarWigets();
-
-
     }
 
 
@@ -168,7 +166,6 @@ public class VistaTransecto extends AppCompatActivity {
         }
 
         try {
-
             entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), tv_msnm.getText().toString(), nombreProyectoString);
             Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
         } catch (NumberFormatException e) {
@@ -201,9 +198,23 @@ public class VistaTransecto extends AppCompatActivity {
                 tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
                 msnmString = intent.getStringExtra(DATO_ALTURA);
                 tv_msnm.setText(msnmString);
+                System.out.println("XXX11: "+ tv_lat.getText().toString().isEmpty());
+                /******************************/
+                if(tv_lat.getText().toString().isEmpty()) {
+                    System.out.println("XXX11 - VistaTransecto - llenarWigets(): "+ "VACIOOO");  /***/
+                } else{
+                    bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
+                    bundleLocationData.putString("longitudKey", tv_long.getText().toString());
+
+                    System.out.println("XXX11 - VistaTransecto - llenarWigets(): "+ "TIENEDATOS"); /***/
+                    fragment_mapa.setArguments(bundleLocationData);
+                }
+                /******************************/
+
             }
         };
         tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
+        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
     }
 
 

@@ -5,17 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,17 +23,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.noFreeGps.tas21.R;
 
-import static com.noFreeGps.tas21.config.ServiceLocation.DATO_ALTURA;
-import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LATITUD;
-import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
-
 public class MapsFragment extends Fragment {
 
     GoogleMap miMapa;
-    Marker marker;
+    Marker markerUbicacion;
     double longitudDouble = 1.0;
     double latitudDouble = 1.0;
-    String latitudString, longitudString;
+    String latitudString = "36.0";
+    String longitudString = "-4.0";
     private BroadcastReceiver broadcastReceiver;
 
     Context context;
@@ -47,20 +41,24 @@ public class MapsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /***********        NOOOOO   FUNCIONA
-         * aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!
-         *
-         *
-         * ************/
-        longitudDouble = getActivity().getIntent().getDoubleExtra("longitud_map", 0.0);
-        latitudDouble = getActivity().getIntent().getDoubleExtra("latitud_map", 0.0);
-       /***************************/
+
+
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
+
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
+            try {
+                /*latitudDouble = Double.parseDouble(latitudString);
+                longitudDouble = Double.parseDouble(longitudString);*/
+                System.out.println("XXX22: "+ latitudDouble);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             miMapa = googleMap;
             if (ActivityCompat.checkSelfPermission(getContext(),
@@ -69,10 +67,20 @@ public class MapsFragment extends Fragment {
             }
             miMapa.setMyLocationEnabled(true);
             miMapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            LatLng miPosicion = new LatLng(latitudDouble,longitudDouble);
+            LatLng miPosicion = new LatLng(6, -74);
             
+            /*while(latitudDouble > 0){
+                try {
+                    Thread.sl
+                    eep(2000);
 
-            marker = miMapa.addMarker(new MarkerOptions()
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getContext(), "Lat: "+ latitudDouble, Toast.LENGTH_SHORT).show();
+            }
+*/
+            markerUbicacion = miMapa.addMarker(new MarkerOptions()
                     .position(miPosicion)
                     .alpha(0.5f)
                     .snippet(latitudString+", "+longitudString)
@@ -91,8 +99,11 @@ public class MapsFragment extends Fragment {
 
         View viewFragment = inflater.inflate(R.layout.fragment_maps, container, false);
 
-
-
+        if(getArguments() != null){
+        latitudString = getArguments().getString("latitudKey");
+        longitudString = getArguments().getString("longitudKey");
+        System.out.println("XXXNNN - ServiceLocation - onCreateView(), Se reciben Datos: " + latitudString + longitudString);//
+        }
 
         return viewFragment;
     }

@@ -2,6 +2,7 @@ package com.noFreeGps.tas21.config;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -61,7 +62,7 @@ public class ServiceLocation extends Service {
     private double longitudDouble, latitudDouble;
 
     private boolean checkLocation;
-    private boolean isGpsActivo = false ;
+    private boolean isGpsActivo = false;
     public static final String INTENT_RECEIVER = "intent_receiver";
     private static final String INTENT_RECEIVER_MAP = "intent_receiver_map";
 
@@ -78,12 +79,6 @@ public class ServiceLocation extends Service {
     public void onCreate() {
         super.onCreate();
 
-        /****************************************/
-
-        //mapsFragment = new MapsFragment(getApplicationContext());
-
-        /*******************************************/
-
         checkLocation = true;  // para solo tener un servicio activo
         intentBroadcast = new Intent(INTENT_RECEIVER);
         intentLocationData = new Intent(getApplicationContext(), MapsFragment.class);
@@ -99,14 +94,15 @@ public class ServiceLocation extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         notificacionServicio();
-        datosUbicacion();
+        //datosUbicacion();
+        datosUbicacionBestProvider();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
 
-                if(checkLocation == true){
-                    //for (int i = 0; i < 36000; i++) {
-                    while(checkLocation == true){
+                if (checkLocation == true) {
+
+                    while (checkLocation == true) {
                         try {
                             Thread.sleep(2000);
 
@@ -123,9 +119,7 @@ public class ServiceLocation extends Service {
                             }
                             time = time - 1;
                             updateUI(latitudString, longitudString);
-                            /***************************/
-                           // mapsFragment.updateLocationMap(latitudDouble, longitudDouble);
-                            /*****************************/
+
                         }
                         // para continuar con la ubicacion luego que se hizo la verificacion de inicio
                         while (isGpsActivo) {
@@ -138,66 +132,46 @@ public class ServiceLocation extends Service {
                             updateUI(latitudString, longitudString);
                         }
                     }
-
                     //stopSelf();
                 }
             } //cierre primer if
-            };
-            thread =new
+        };
+        thread = new
 
-            Thread(runnable);
+                Thread(runnable);
         thread.start();
 
         return Service.START_STICKY;
+    }
+    private void notificacionServicio() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "Location Service", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+
         }
-
-/*************************************************************/
-/*************************************************************/
-
-    public void setProvedorLocation(){
-
-
-
+        Intent resultIntent = new Intent(this, VistaTransecto.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.notificacion_servicio_titulo))
+                .setContentText(getString(R.string.notificacion_servicio_contenido))
+                .setSmallIcon(R.drawable.ic_gps_fixed_black_24dp)
+                .setContentIntent(pendingIntent)
+                .build();
+        startForeground(1, notification);
     }
 
-
-
-/*************************************************************/
-/*************************************************************/
-
- private void notificacionServicio() {
-
-     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "Location Service", NotificationManager.IMPORTANCE_HIGH);
-         NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
-         notificationManager.createNotificationChannel(notificationChannel);
-
-     }
-     Intent resultIntent = new Intent(this, VistaTransecto.class);
-     PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-     Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-             .setContentTitle(getString(R.string.notificacion_servicio_titulo))
-             .setContentText(getString(R.string.notificacion_servicio_contenido))
-             .setSmallIcon(R.drawable.ic_gps_fixed_black_24dp)
-             .setContentIntent(pendingIntent)
-             .build();
-     startForeground(1, notification);
- }
-
-
-
-
     String provedorGps;
+
     private void datosUbicacion() {
 
         provedorGps = LocationManager.GPS_PROVIDER;
         locationListener = new LocationListener() {
 
-
             @Override
             public void onProviderEnabled(@NonNull String provider) {
-
 
             }
 
@@ -210,32 +184,69 @@ public class ServiceLocation extends Service {
 
                 latitudDouble = location.getLatitude();
                 longitudDouble = location.getLongitude();
-                       // String.valueOf(location.getAltitude());
-
-                Toast.makeText(ServiceLocation.this, "Lat: "+isGpsActivo , Toast.LENGTH_SHORT).show();
-
+/***/
+                Toast.makeText(ServiceLocation.this, "Lat: " + isGpsActivo, Toast.LENGTH_SHORT).show();
+/***/
             }
         };
 
         try {
             locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 5, locationListener);
             isGpsActivo = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+            /***************************/
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, locationListener);
+            /***************************/
+            System.out.println("XXX-ServiceLocation- PROVEDOR: GPS");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+/********************************************/
+/********************************************/
+    private void datosUbicacionBestProvider() {
 
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+           return;
+        }
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+
+            }
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+
+            }
+
+        };
+        locationManager.requestLocationUpdates(bestProvider, 0, 0, locationListener);
+        location = locationManager.getLastKnownLocation(bestProvider);
+
+
+        try {
+            longitudString = decimalFormat.format(location.getLongitude());
+            latitudString = decimalFormat.format(location.getLatitude());
+            msnmString = decimalFormat2.format(location.getAltitude());
+
+            latitudDouble = location.getLatitude();
+            longitudDouble = location.getLongitude();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-
     }
-/*************************************************************/
-/*************************************************************/
+/********************************************/
+/********************************************/
+
+
     private void updateUI(String latitudString, String longitudString) {
 
         intentBroadcast.putExtra(DATO_LATITUD, latitudString);
