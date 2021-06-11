@@ -94,8 +94,12 @@ public class ServiceLocation extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         notificacionServicio();
+        /******************/
+        /******************/
         //datosUbicacion();
         datosUbicacionBestProvider();
+        /******************/
+        /******************/
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
