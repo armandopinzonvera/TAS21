@@ -109,7 +109,7 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         ConexionSQLite conexion = new ConexionSQLite(context);
         SQLiteDatabase ddbb = conexion.getReadableDatabase();
 
-        Entidad_Tespecies entidadTespecies = null;
+        Entidad_Tespecies entidadTespecies;
         listadoEspecies = new ArrayList<Entidad_Tespecies>();
 
         String querySpecies = "SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES;

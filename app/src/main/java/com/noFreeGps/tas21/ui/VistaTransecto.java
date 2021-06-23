@@ -1,6 +1,5 @@
  package com.noFreeGps.tas21.ui;
 
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,14 +45,11 @@ public class VistaTransecto extends AppCompatActivity {
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto, tv_msnm;
     EditText et_especie, et_cantidad;
     Chronometer tv_chronometer;
-
     Fragment fragment_mapa;
-
     ConexionSQLite conexionSQLite;
     FechayCronometro fechayCronometro;
     Spinner spinner_especies;
-
-
+    private static final String TAG = "VistaTransecto";
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
     Bundle bundleLocationData;
 
@@ -87,15 +83,9 @@ public class VistaTransecto extends AppCompatActivity {
         tv_idTransecto.setText("transecto: " + idTransectoString);
 
         // Fragment
-        fragment_mapa = new MapsFragment();
+
+        fragment_mapa = new MapsFragment(); /** Conecta con el fragemtn a USar.. rECUERDA QUE HAY UN CLON**/
         bundleLocationData  = new Bundle();
-        /*bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
-        bundleLocationData.putString("longitudKey", tv_long.getText().toString());
-        fragment_mapa.setArguments(bundleLocationData);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();*/
-        // Enviar location al Fragment mapa
-
 
 
         //class
@@ -113,7 +103,7 @@ public class VistaTransecto extends AppCompatActivity {
 
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         listaEspecies = new ArrayList<String>();
-        listaEspecies.add(" ");
+        //listaEspecies.add(" ");
         for (int i = 0; i < daoTespecie.datosParaSpinner().size(); i++) {
             listaEspecies.add(daoTespecie.datosParaSpinner().get(i).getEspecie());
         }
@@ -156,7 +146,7 @@ public class VistaTransecto extends AppCompatActivity {
     private void enviarInformacion() {
 
         Entidad_Tespecies entidadTespecies = null;
-        Entidad_Ttrack entidadTtrack = null;
+        Entidad_Ttrack entidadTtrack;
         Entidad_Tproyecto entidadTproyecto = null;
         try {
             entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
@@ -187,7 +177,25 @@ public class VistaTransecto extends AppCompatActivity {
 
         et_especie.setText("");
         et_cantidad.setText("");
+
+        //sendLocationToMap();
     }
+
+    public void sendLocationToMap(){
+
+        // fragment_mapa.
+        MapsFragment mapsFragment = new MapsFragment();
+        /******************************/
+
+            bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
+            bundleLocationData.putString("longitudKey", tv_long.getText().toString());
+
+            fragment_mapa.setArguments(bundleLocationData);
+            /******************************/
+
+        mapsFragment.getlocationData();
+    }
+
 
     private void llenarWigets() {
 
@@ -199,25 +207,11 @@ public class VistaTransecto extends AppCompatActivity {
                 msnmString = intent.getStringExtra(DATO_ALTURA);
                 tv_msnm.setText(msnmString);
                 System.out.println("XXX11: "+ tv_lat.getText().toString().isEmpty());
-                /******************************/
-                if(tv_lat.getText().toString().isEmpty()) {
-                    System.out.println("XXX11 - VistaTransecto - llenarWigets(): "+ "VACIOOO");  /***/
-                } else{
-                    bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
-                    bundleLocationData.putString("longitudKey", tv_long.getText().toString());
-
-                    System.out.println("XXX11 - VistaTransecto - llenarWigets(): "+ "TIENEDATOS"); /***/
-                    fragment_mapa.setArguments(bundleLocationData);
-                }
-                /******************************/
-
             }
         };
         tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
-        getSupportFragmentManager().beginTransaction().add(R.id.marco_fragment, fragment_mapa).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.marco_fragment, fragment_mapa).commit();
     }
-
-
 
     @Override
     protected void onResume() {

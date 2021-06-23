@@ -48,7 +48,8 @@ public class ServiceLocation extends Service {
     public static final String DATO_ALTURA = "altura";
     private static final String DATO_LAT_MAP = "dato_lat_map";
     private static final String DATO_LONG_MAP = "dato_lat_map";
-
+    private static final String TAG = "ServiceLocation";
+    
     DecimalFormat decimalFormat, decimalFormat2;
     private LocationManager locationManager;
     LocationListener locationListener;
@@ -261,12 +262,16 @@ public class ServiceLocation extends Service {
 
         intentLocationData.putExtra("latitud_map", latitudDouble);
         intentLocationData.putExtra("longitud_map", longitudDouble);
+
+
     }
 
    // Para usar en cuando aun no se obtienen los datos de ubicacion
     private void updateUInullData() {
-        intentBroadcast.putExtra(DATO_LATITUD, getString(R.string.buscando));
-        intentBroadcast.putExtra(DATO_LONGITUD,  getString(R.string.buscando));
+     /*   intentBroadcast.putExtra(DATO_LATITUD, getString(R.string.buscando));
+        intentBroadcast.putExtra(DATO_LONGITUD,  getString(R.string.buscando));*/
+        intentBroadcast.putExtra(DATO_LATITUD, 0.0);
+        intentBroadcast.putExtra(DATO_LONGITUD,  0.0);
         sendBroadcast(intentBroadcast);  // para enviar la info
     }
 
