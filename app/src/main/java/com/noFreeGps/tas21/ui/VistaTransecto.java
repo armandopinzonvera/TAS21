@@ -148,13 +148,14 @@ public class VistaTransecto extends AppCompatActivity {
         Entidad_Tespecies entidadTespecies = null;
         Entidad_Ttrack entidadTtrack;
         Entidad_Tproyecto entidadTproyecto = null;
+        if(et_especie.getText().toString().trim() != "null"){
         try {
             entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
 
         } catch (NumberFormatException e) {
             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
         }
-
+        } // cierre if - not null
         try {
             entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), tv_msnm.getText().toString(), nombreProyectoString);
             Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();

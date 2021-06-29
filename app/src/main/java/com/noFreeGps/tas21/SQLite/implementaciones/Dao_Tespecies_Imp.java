@@ -112,7 +112,7 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         Entidad_Tespecies entidadTespecies;
         listadoEspecies = new ArrayList<Entidad_Tespecies>();
 
-        String querySpecies = "SELECT DISTINCT especie FROM "+ UtilidadesSQLite.TABLA_ESPECIES;
+        String querySpecies = "SELECT DISTINCT especie FROM "+UtilidadesSQLite.TABLA_ESPECIES+" WHERE NOT NULL";
 
         Cursor cursor = ddbb.rawQuery(querySpecies, null);
 
