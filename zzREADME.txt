@@ -1,17 +1,46 @@
 **README**
+Me toco hacer una minuta, para ver si logro avanzar
+------------------------------------------------------------------------
+> 4 / julio / 2021
 
-1. Brach: MASTER Esqueleto
- Con el Template General de clases y con solo funciones de desplazamiento
-: MainActivity, 3 clases SQL(Conexion, Entidades, Utilidades), Iniciar,
-MapFragment, ServiceLocation y VistaTransecto.
-en total 8 clases: 
-MainActiviy -- Iniciar
-iniciar -- VistaTransecto >>
-VistaTransecto -- **MapFragment**ServiceLocation**SQLite
-> la clase Iniciar Arranca el Servicio de localizacion
-> la clase VistaTransecto Inicia la conexion a la BBDD
+	Objetivo: Pasar datos de localizacion de VistaTransecto a MapFragment
+	Tecnica: He usado objeto bundle, y ahora ultimo cree un objeto bundle
+		en el fragment para recibir,
+
+	problema:  pero no recibe datos y marca null
+
+	Considerar: Segun StackOverflow, se debe recibir en un objeto bundle,
+		Revisar todo el foro..
+
+	https://stackoverflow.com/search?q=data+from+activity+to+fragment
+	https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+	https://stackoverflow.com/questions/30846973/getting-arguments-from-a-bundle
+-----------------------------------------------------------------------------
 
 
 
-2. Brach SQLite
- Con la BBDD funcinando, con ingreso de la informacion del proyecto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

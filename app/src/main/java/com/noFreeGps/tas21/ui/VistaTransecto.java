@@ -51,6 +51,7 @@ public class VistaTransecto extends AppCompatActivity {
     Spinner spinner_especies;
     private static final String TAG = "VistaTransecto";
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
+    String latitudString, longitudString;
     Bundle bundleLocationData;
 
     private BroadcastReceiver broadcastReceiver;
@@ -85,7 +86,7 @@ public class VistaTransecto extends AppCompatActivity {
         // Fragment
 
         fragment_mapa = new MapsFragment(); /** Conecta con el fragemtn a USar.. rECUERDA QUE HAY UN CLON**/
-        bundleLocationData  = new Bundle();
+
 
 
         //class
@@ -179,20 +180,23 @@ public class VistaTransecto extends AppCompatActivity {
         et_especie.setText("");
         et_cantidad.setText("");
 
-        //sendLocationToMap();
+        latitudString = tv_lat.getText().toString();
+        longitudString = tv_long.getText().toString();
+        sendLocationToMap();
     }
+
+    //  This method send the Data To the Fragment
 
     public void sendLocationToMap(){
 
-        // fragment_mapa.
+        Bundle bundleLocationData  = new Bundle();
         MapsFragment mapsFragment = new MapsFragment();
         /******************************/
+            bundleLocationData.putString("latitudKey", latitudString);
+            bundleLocationData.putString("longitudKey", longitudString);
 
-            bundleLocationData.putString("latitudKey", tv_lat.getText().toString());
-            bundleLocationData.putString("longitudKey", tv_long.getText().toString());
-
-            fragment_mapa.setArguments(bundleLocationData);
-            /******************************/
+        fragment_mapa.setArguments(bundleLocationData);
+        /******************************/
 
         mapsFragment.getlocationData();
     }

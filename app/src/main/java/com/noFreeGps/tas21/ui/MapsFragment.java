@@ -68,18 +68,21 @@ public class MapsFragment extends Fragment {
         }
     };
 
+    Bundle catcherData = getArguments();
     public void getlocationData(){
 
-            latitudString = getArguments().getString("latitudKey", "0.0");
-            longitudString = getArguments().getString("longitudKey", "0.0");
-            System.out.println("XXXXX - XMapFragmentX - onCreate(): " +latitudString);
+        try {
+            latitudString = catcherData.getString("latitudKey", "0.0");
+            longitudString = catcherData.getString("longitudKey", "0.0");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("XXXXX - XMapFragmentX - onCreate(): " +latitudString);
+         //ponerMarker(latitudString, longitudString);
 
    }
 
     public void ponerMarker(String latitudString, String longitudString ){
-
-        this.latitudString = latitudString;
-        this.longitudString = longitudString;
 
         latitudDouble = Double.parseDouble(latitudString);
         longitudDouble = Double.parseDouble(longitudString);
