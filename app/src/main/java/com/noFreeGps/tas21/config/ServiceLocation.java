@@ -1,4 +1,4 @@
-package com.noFreeGps.tas21.config;
+ package com.noFreeGps.tas21.config;
 
 
 import android.Manifest;
@@ -263,7 +263,6 @@ public class ServiceLocation extends Service {
         intentLocationData.putExtra("latitud_map", latitudDouble);
         intentLocationData.putExtra("longitud_map", longitudDouble);
 
-
     }
 
    // Para usar en cuando aun no se obtienen los datos de ubicacion
@@ -274,11 +273,6 @@ public class ServiceLocation extends Service {
         intentBroadcast.putExtra(DATO_LONGITUD,  0.0);
         sendBroadcast(intentBroadcast);  // para enviar la info
     }
-
-
-
-
-
 
     @Override
     public void onDestroy() {

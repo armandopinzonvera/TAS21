@@ -1,10 +1,11 @@
- package com.noFreeGps.tas21.ui;
+  package com.noFreeGps.tas21.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -54,6 +55,7 @@ public class VistaTransecto extends AppCompatActivity {
     String latitudString, longitudString;
     Bundle bundleLocationData;
 
+
     private BroadcastReceiver broadcastReceiver;
 
 
@@ -85,7 +87,7 @@ public class VistaTransecto extends AppCompatActivity {
 
         // Fragment
 
-        fragment_mapa = new MapsFragment(); /** Conecta con el fragemtn a USar.. rECUERDA QUE HAY UN CLON**/
+        fragment_mapa = new MapsFragment(); /** **/
 
 
 
@@ -108,7 +110,6 @@ public class VistaTransecto extends AppCompatActivity {
         for (int i = 0; i < daoTespecie.datosParaSpinner().size(); i++) {
             listaEspecies.add(daoTespecie.datosParaSpinner().get(i).getEspecie());
         }
-
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter(adapter);
 
@@ -189,11 +190,9 @@ public class VistaTransecto extends AppCompatActivity {
 
     public void sendLocationToMap(){
 
-        Bundle bundleLocationData  = new Bundle();
+
         MapsFragment mapsFragment = new MapsFragment();
         /******************************/
-            bundleLocationData.putString("latitudKey", latitudString);
-            bundleLocationData.putString("longitudKey", longitudString);
 
         fragment_mapa.setArguments(bundleLocationData);
         /******************************/
@@ -208,13 +207,26 @@ public class VistaTransecto extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 tv_lat.setText(intent.getStringExtra(DATO_LATITUD));
+                
                 tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
                 msnmString = intent.getStringExtra(DATO_ALTURA);
                 tv_msnm.setText(msnmString);
+
                 System.out.println("XXX11: "+ tv_lat.getText().toString().isEmpty());
             }
         };
         tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
+ /**     // // / // / /      ***/
+
+    // OJO: LO traje de sendLocationToMap(), para establecer el bundle antes del fragment
+        Bundle bundleLocationData  = new Bundle();
+        bundleLocationData.putString("latitudKey", latitudString);
+        bundleLocationData.putString("longitudKey", longitudString);
+
+        System.out.println(TAG +":  " +  latitudString + ", "+ latitudString);
+
+  /***     / / // / / // /      ***/
+
         getSupportFragmentManager().beginTransaction().replace(R.id.marco_fragment, fragment_mapa).commit();
     }
 

@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class MapsFragment extends Fragment {
     String latitudString, longitudString;
     private BroadcastReceiver broadcastReceiver;
     private static final String TAG = "MapsFragment";
+
     boolean ciclo = true;
 
     @Override
@@ -71,13 +73,15 @@ public class MapsFragment extends Fragment {
     Bundle catcherData = getArguments();
     public void getlocationData(){
 
+        System.out.println(TAG+ " WORK");
+
         try {
             latitudString = catcherData.getString("latitudKey", "0.0");
             longitudString = catcherData.getString("longitudKey", "0.0");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("XXXXX - XMapFragmentX - onCreate(): " +latitudString);
+        System.out.println(TAG + "  " + latitudString);
          //ponerMarker(latitudString, longitudString);
 
    }
