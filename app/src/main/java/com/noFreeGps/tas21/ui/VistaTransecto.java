@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -88,9 +89,6 @@ public class VistaTransecto extends AppCompatActivity {
         // Fragment
 
         fragment_mapa = new MapsFragment(); /** **/
-
-
-
         //class
         conexionSQLite = new ConexionSQLite(this);
         fechayCronometro = new FechayCronometro();
@@ -98,7 +96,6 @@ public class VistaTransecto extends AppCompatActivity {
         spinnersqlite();
         llenarWigets();
     }
-
 
     ArrayList<String> listaEspecies;
 
@@ -147,17 +144,17 @@ public class VistaTransecto extends AppCompatActivity {
 
     private void enviarInformacion() {
 
-        Entidad_Tespecies entidadTespecies = null;
+        Entidad_Tespecies entidadTespecies;
         Entidad_Ttrack entidadTtrack;
         Entidad_Tproyecto entidadTproyecto = null;
-        if(et_especie.getText().toString().trim() != "null"){
+
         try {
             entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
 
         } catch (NumberFormatException e) {
             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
         }
-        } // cierre if - not null
+         // cierre if - not null
         try {
             entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), tv_msnm.getText().toString(), nombreProyectoString);
             Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
@@ -199,7 +196,6 @@ public class VistaTransecto extends AppCompatActivity {
 
         mapsFragment.getlocationData();
     }
-
 
     private void llenarWigets() {
 
@@ -253,5 +249,19 @@ public class VistaTransecto extends AppCompatActivity {
         super.onDestroy();
         Intent intentService = new Intent(this, ServiceLocation.class);
         stopService(intentService);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(getApplicationContext(), "BBDD cerrada", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+
+
+
+
     }
 }

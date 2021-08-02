@@ -138,7 +138,7 @@ public class Iniciar extends AppCompatActivity  {
 
         daoTproyecto.iniciarProyecto(nombreProyecto);
         daoTtrack.iniciarTrack(nombreProyecto, idTrack);
-        daoTespecie.iniciarTespecies(idTrack, nombreProyecto);
+       // daoTespecie.iniciarTespecies(idTrack, nombreProyecto);
 
         et_nombreProyecto.setText("");
         et_IdTrack.setText("");
