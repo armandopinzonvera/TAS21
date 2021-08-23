@@ -47,7 +47,7 @@ public class UtilidadesSQLite {
    public static final String CREAR_TABLA_ESPECIES = "CREATE TABLE "
             +TABLA_ESPECIES+" ("
             +ID_ESPECIES+" INTEGER, "
-            +ESPECIE+" TEXT, "
+            +ESPECIE+" TEXT NOT NULL, "
             +DENSIDAD+" INTEGER, "
             +FK_ID_TRACK+ " TEXT NOT NULL, "
             +FK_ID_PROYECTO_SP+ " TEXT NOT NULL, "

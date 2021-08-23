@@ -52,7 +52,7 @@ public class VistaTransecto extends AppCompatActivity {
     ArrayAdapter entidadArrayAdapter;
 
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
-
+    String latitudString, longitudString, alturaString, especieString, cantidadString ;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -100,7 +100,7 @@ public class VistaTransecto extends AppCompatActivity {
 
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         listaEspecies = new ArrayList<String>();
-        listaEspecies.add(" ");
+
         for (int i = 0; i < daoTespecie.datosParaSpinner().size(); i++) {
             listaEspecies.add(daoTespecie.datosParaSpinner().get(i).getEspecie());
         }
@@ -111,9 +111,9 @@ public class VistaTransecto extends AppCompatActivity {
         spinner_especies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 et_especie.setText(parent.getItemAtPosition(position).toString());
-               /* Toast.makeText(VistaTransecto.this,
-                        "Seleccion: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();*/
+
             }
 
             @Override
@@ -132,35 +132,41 @@ public class VistaTransecto extends AppCompatActivity {
 
     public void enviar(View view) {
 
-        editTextunoValidarString = et_especie.getText().toString().trim();
-        editTextdosValidarString = et_cantidad.getText().toString().trim();
+        especieString = et_especie.getText().toString().trim();
+        cantidadString = et_cantidad.getText().toString().trim();
 
         ValidarEditText validarEditText = new ValidarEditText(this);
-        if (validarEditText.compararEditText(editTextunoValidarString, editTextdosValidarString)) {
+        if (validarEditText.compararEditText(especieString, cantidadString)) {
             enviarInformacion();
         }
     }
 
     private void enviarInformacion() {
+
+       latitudString = tv_lat.getText().toString();
+       longitudString = tv_long.getText().toString();
+       alturaString = tv_msnm.getText().toString();
+
         Entidad_Tespecies entidadTespecies = null;
         Entidad_Ttrack entidadTtrack = null;
-        Entidad_Tproyecto entidadTproyecto = null;
-        try {
-            entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
-            //Toast.makeText(this, entidadTespecies.toString(), Toast.LENGTH_LONG).show();
-        } catch (NumberFormatException e) {
-            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
-        }
 
-        try {
-           //entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", Float.parseFloat(tv_long.getText().toString()), Float.parseFloat(tv_lat.getText().toString()), Integer.parseInt(msnmString), nombreProyectoString);
-            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), 2600, nombreProyectoString);
-            Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", 1, " ");
-             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        }
+        if(et_especie.getText().toString() != null){
+
+            try {
+
+            entidadTespecies = new Entidad_Tespecies(1, especieString, Integer.parseInt(cantidadString), idTransectoString, nombreProyectoString);
+            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", longitudString, latitudString, alturaString, nombreProyectoString);
+
+
+            } catch (NumberFormatException e) {
+
+             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
+             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", "1", " ");
+
+            }
+
+        } // Cierre if(not null)
+
 
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
@@ -168,13 +174,15 @@ public class VistaTransecto extends AppCompatActivity {
         daoTespecie.addDatoEspecie(entidadTespecies);
         daoTtrack.addDatoTtrack(entidadTtrack);
 
-        listaEspecies.add(et_especie.getText().toString().trim());
+        listaEspecies.add(especieString);
         Set<String> hashSet = new HashSet<String>(listaEspecies);
         listaEspecies.clear();
         listaEspecies.addAll(hashSet);
 
         et_especie.setText("");
         et_cantidad.setText("");
+
+
     }
 
     private void llenarWigets() {

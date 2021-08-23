@@ -99,7 +99,7 @@ public class ContinuarIniciar extends AppCompatActivity {
 
         daoTproyecto.iniciarProyecto(nombreProyecto);
         daoTtrack.iniciarTrack(nombreProyecto, idTrack);
-        daoTespecie.iniciarTespecies(idTrack, nombreProyecto);
+       // daoTespecie.iniciarTespecies(idTrack, nombreProyecto); // Colocaba valor null en la BBDD
 
         et_ci_idTrack.setText("");
         startActivity(intent);

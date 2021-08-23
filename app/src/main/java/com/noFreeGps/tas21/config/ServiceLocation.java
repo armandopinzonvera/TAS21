@@ -86,8 +86,9 @@ public class ServiceLocation extends Service {
                         if (latitudString == null) {
                             updateUInullData();
                         } else {
+
                             try {
-                                TimeUnit.SECONDS.sleep(5);
+                                TimeUnit.SECONDS.sleep(2);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -97,7 +98,7 @@ public class ServiceLocation extends Service {
                         // para continuar con la ubicacion luego que se hizo la verificacion de inicio
                         while (isGpsActivo) {
                             try {
-                                TimeUnit.SECONDS.sleep(5);
+                                TimeUnit.SECONDS.sleep(2);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
