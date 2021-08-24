@@ -1,10 +1,12 @@
-package com.noFreeGps.tas21.ui;
+  package com.noFreeGps.tas21.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,10 +51,12 @@ public class VistaTransecto extends AppCompatActivity {
     ConexionSQLite conexionSQLite;
     FechayCronometro fechayCronometro;
     Spinner spinner_especies;
-    ArrayAdapter entidadArrayAdapter;
-
+    private static final String TAG = "VistaTransecto";
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
+
     String latitudString, longitudString, alturaString, especieString, cantidadString ;
+    Bundle bundleLocationData;
+
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -76,15 +80,16 @@ public class VistaTransecto extends AppCompatActivity {
         tv_idTransecto = findViewById(R.id.tv_idTransecto);
         tv_nombreProyecto = findViewById(R.id.tv_nombreProyecto);
         spinner_especies = (Spinner) findViewById(R.id.spinner_especies);
+
         // Extra information
         nombreProyectoString = getIntent().getStringExtra("extra_1");
         tv_nombreProyecto.setText("Proyecto: " + nombreProyectoString);
         idTransectoString = getIntent().getStringExtra("extra_2");
         tv_idTransecto.setText("transecto: " + idTransectoString);
+
         // Fragment
-        fragment_mapa = new MapsFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.marco_fragment, fragment_mapa).commit();
+
+        fragment_mapa = new MapsFragment(); /** **/
         //class
         conexionSQLite = new ConexionSQLite(this);
         fechayCronometro = new FechayCronometro();
@@ -93,7 +98,6 @@ public class VistaTransecto extends AppCompatActivity {
         llenarWigets();
     }
 
-
     ArrayList<String> listaEspecies;
 
     public void spinnersqlite() {
@@ -101,10 +105,11 @@ public class VistaTransecto extends AppCompatActivity {
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         listaEspecies = new ArrayList<String>();
 
+        //listaEspecies.add(" ");
+
         for (int i = 0; i < daoTespecie.datosParaSpinner().size(); i++) {
             listaEspecies.add(daoTespecie.datosParaSpinner().get(i).getEspecie());
         }
-
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaEspecies);
         spinner_especies.setAdapter(adapter);
 
@@ -143,6 +148,7 @@ public class VistaTransecto extends AppCompatActivity {
 
     private void enviarInformacion() {
 
+
        latitudString = tv_lat.getText().toString();
        longitudString = tv_long.getText().toString();
        alturaString = tv_msnm.getText().toString();
@@ -168,6 +174,26 @@ public class VistaTransecto extends AppCompatActivity {
         } // Cierre if(not null)
 
 
+
+        Entidad_Tproyecto entidadTproyecto = null;
+
+        try {
+            entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
+
+        } catch (NumberFormatException e) {
+            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
+        }
+         // cierre if - not null
+        try {
+            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), tv_msnm.getText().toString(), nombreProyectoString);
+            Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", " ", " ");
+             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+
         Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
         Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
 
@@ -182,6 +208,23 @@ public class VistaTransecto extends AppCompatActivity {
         et_especie.setText("");
         et_cantidad.setText("");
 
+        latitudString = tv_lat.getText().toString();
+        longitudString = tv_long.getText().toString();
+        sendLocationToMap();
+    }
+
+    //  This method send the Data To the Fragment
+
+    public void sendLocationToMap(){
+
+
+        MapsFragment mapsFragment = new MapsFragment();
+        /******************************/
+
+        fragment_mapa.setArguments(bundleLocationData);
+        /******************************/
+
+        mapsFragment.getlocationData();
 
     }
 
@@ -191,14 +234,28 @@ public class VistaTransecto extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 tv_lat.setText(intent.getStringExtra(DATO_LATITUD));
+                
                 tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
                 msnmString = intent.getStringExtra(DATO_ALTURA);
+                tv_msnm.setText(msnmString);
+
+                System.out.println("XXX11: "+ tv_lat.getText().toString().isEmpty());
             }
         };
         tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
+ /**     // // / // / /      ***/
+
+    // OJO: LO traje de sendLocationToMap(), para establecer el bundle antes del fragment
+        Bundle bundleLocationData  = new Bundle();
+        bundleLocationData.putString("latitudKey", latitudString);
+        bundleLocationData.putString("longitudKey", longitudString);
+
+        System.out.println(TAG +":  " +  latitudString + ", "+ latitudString);
+
+  /***     / / // / / // /      ***/
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.marco_fragment, fragment_mapa).commit();
     }
-
-
 
     @Override
     protected void onResume() {
@@ -223,5 +280,19 @@ public class VistaTransecto extends AppCompatActivity {
         super.onDestroy();
         Intent intentService = new Intent(this, ServiceLocation.class);
         stopService(intentService);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(getApplicationContext(), "BBDD cerrada", Toast.LENGTH_LONG).show();
+        startActivity(intent);
+
+
+
+
     }
 }

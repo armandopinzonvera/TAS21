@@ -80,10 +80,12 @@ public class Dao_Ttrack_Imp implements Dao_Ttrack {
         Entidad_Ttrack entidadTtrack;
 
         try {
+
             entidadTtrack = new Entidad_Ttrack(idTrack,"fecha", "hora", "1.111f", "2.222f","2222", nombreProyecto);
 
         } catch (Exception e) {
             entidadTtrack = new Entidad_Ttrack("error","error", "error", "1.111f", "2.222f","1", " error");
+
         }
         boolean success3 = this.addDatoTtrack(entidadTtrack);
         Toast.makeText(context, "Exito:   "+success3, Toast.LENGTH_SHORT).show();

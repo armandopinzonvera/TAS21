@@ -138,7 +138,11 @@ public class Iniciar extends AppCompatActivity  {
 
         daoTproyecto.iniciarProyecto(nombreProyecto);
         daoTtrack.iniciarTrack(nombreProyecto, idTrack);
+
        // daoTespecie.iniciarTespecies(idTrack, nombreProyecto); //   Este generaba el valor null en el Spinner y en la BBDD
+
+
+       // daoTespecie.iniciarTespecies(idTrack, nombreProyecto);
 
 
         et_nombreProyecto.setText("");

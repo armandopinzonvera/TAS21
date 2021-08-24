@@ -15,7 +15,10 @@ import androidx.annotation.Nullable;
 public class ConexionSQLite extends SQLiteOpenHelper {
 
     public ConexionSQLite(@Nullable Context context) {
+
         super(context, UtilidadesSQLite.DDBB_NAME, null, 5);
+
+
     }
 
     @Override
