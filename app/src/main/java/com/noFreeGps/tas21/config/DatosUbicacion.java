@@ -3,7 +3,7 @@ package com.noFreeGps.tas21.config;
 *  Esta clase Crea los datos de Location (longitud, latitud, altura)
 *  utiliza dos metodos, uno que se base en el mejor proveedor: "getBestProvider()"
 *  y el otro directamente para GPS
-*  ambos metodos returnan los valores como Arrays de String, ya con el formato
+*  ambos metodos retornan los valores como Arrays de String, ya con el formato
  *  para los decimales
  *
 *
@@ -57,6 +57,10 @@ class DatosUbicacion {
 
 
     public String[] bestProvider() {
+
+        longitudString = " ";
+        latitudString = " ";
+        msnmString = " ";
 
         bestProviderString = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

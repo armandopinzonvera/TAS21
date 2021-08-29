@@ -13,4 +13,6 @@ public interface Dao_Ttrack {
     void iniciarTrack(String nombreProyecto, String idTrack);
 
     ArrayList<Entidad_Ttrack> resultadoconsultarTrack(String nombreProyecto);
+
+    void createDatoTrack(String idTransectoString, String fecha, String hora, String longitudString,  String latitudString, String msnmString, String nombreProyectoString);
 }

@@ -19,10 +19,31 @@ public class Dao_Ttrack_Imp implements Dao_Ttrack {
 
 
     Context context;
+    Entidad_Ttrack entidadTtrack;
 
     public Dao_Ttrack_Imp(Context context) {
         this.context = context;
     }
+
+    /**
+     * Crea el objeto entidadTrack(con los valores de los campos de un registro)
+     * Que posteriormente sera enviado  a la BBDD, por el metodo addDatoTrack()
+     */
+    public void createDatoTrack(String idTransectoString, String fecha, String hora, String longitudString,  String latitudString, String msnmString, String nombreProyectoString){
+
+        entidadTtrack = null;
+
+        try {
+             entidadTtrack = new Entidad_Ttrack(idTransectoString, fecha, hora, longitudString, latitudString, msnmString, nombreProyectoString);
+
+        }catch (NumberFormatException e){
+
+            entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", " ", " ");
+
+        }
+        addDatoTtrack(entidadTtrack);
+    }
+
 
     @Override
     public boolean addDatoTtrack(Entidad_Ttrack entidadTtrack) {
@@ -77,7 +98,7 @@ public class Dao_Ttrack_Imp implements Dao_Ttrack {
     public void iniciarTrack(String nombreProyecto, String idTrack){
         ConexionSQLite conexionSQLite = new ConexionSQLite(context);
       //  Entidad_Tproyecto entidadTproyecto;
-        Entidad_Ttrack entidadTtrack;
+
 
         try {
 

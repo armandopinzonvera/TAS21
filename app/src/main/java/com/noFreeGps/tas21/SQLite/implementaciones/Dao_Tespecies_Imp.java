@@ -1,18 +1,38 @@
 package com.noFreeGps.tas21.SQLite.implementaciones;
 
+/**
+ * Esta clase contiee la logica de interracion con la tabla_especies de la BBDD
+ *
+ * */
+
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.noFreeGps.tas21.SQLite.ConexionSQLite;
 import com.noFreeGps.tas21.SQLite.UtilidadesSQLite;
 import com.noFreeGps.tas21.SQLite.entidades.Entidad_Tespecies;
+import com.noFreeGps.tas21.SQLite.entidades.Entidad_Ttrack;
 import com.noFreeGps.tas21.SQLite.interfaces.Dao_Tespecie;
+import com.noFreeGps.tas21.ui.VistaTransecto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Dao_Tespecies_Imp implements Dao_Tespecie {
+
+    Entidad_Tespecies entidadTespecies;
+    Entidad_Ttrack entidadTtrack;
+    ArrayList<String> listaEspecies;
+    ArrayList<Entidad_Tespecies> listDataProjectEspecies = new ArrayList<Entidad_Tespecies>();
+    VistaTransecto vistaTransecto;
 
 
     private final Context context;
@@ -20,8 +40,33 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
     public Dao_Tespecies_Imp(Context context) {
 
         this.context = context;
+        vistaTransecto = new VistaTransecto();
     }
+    /**
+     * Crea el objeto entidadEspecie(con los valores de los campos de un registro)
+     * Que posteriormente sera enviado  a la BBDD, por el metodo addDatoEspecie()
+     */
 
+    public void createDatoEspecie(String especieString, int cantidadInt, String idTransectoString, String nombreProyectoString){
+
+        entidadTespecies = null;
+
+          try{
+              entidadTespecies = new Entidad_Tespecies(1, especieString, cantidadInt, idTransectoString, nombreProyectoString );
+          }catch (NumberFormatException e){
+              entidadTespecies = new Entidad_Tespecies(-1, "Error", 0, "Error", "Error" );
+          }
+         
+          addDatoEspecie(entidadTespecies);
+
+      }
+
+
+
+    /**
+    *Agrega el objeto entidadEspecie(con los valores de los campos de un registro)
+     * a la BBDD
+    */
     public boolean addDatoEspecie(Entidad_Tespecies entidadTespecie){
 
         ConexionSQLite conexion = new ConexionSQLite(context);
@@ -42,13 +87,13 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         return true;
     }
 
-    ArrayList<Entidad_Tespecies> listDataProjectEspecies = new ArrayList<Entidad_Tespecies>();
+
 
     public ArrayList<Entidad_Tespecies> resultadoConsultar(String nombreProyecto){
 
         ConexionSQLite conexionSQLite = new ConexionSQLite(context);
         SQLiteDatabase ddbb = conexionSQLite.getReadableDatabase();
-        Entidad_Tespecies entidadTespecies = null;
+        entidadTespecies = null;
 
         String sentenciaConsulta = "SELECT "+ UtilidadesSQLite.NOMBRE_PROYECTO+
                 ", COUNT("+UtilidadesSQLite.ESPECIE+
@@ -76,7 +121,7 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         ConexionSQLite conexion = new ConexionSQLite(context);
         SQLiteDatabase ddbb = conexion.getReadableDatabase();
 
-        Entidad_Tespecies entidadTespecies = null;
+         entidadTespecies = null;
 
         String queryEspecies = "SELECT "+UtilidadesSQLite.NOMBRE_PROYECTO+
                 ", COUNT("+UtilidadesSQLite.ID_TRACK+
@@ -110,7 +155,7 @@ public class Dao_Tespecies_Imp implements Dao_Tespecie {
         ConexionSQLite conexion = new ConexionSQLite(context);
         SQLiteDatabase ddbb = conexion.getReadableDatabase();
 
-        Entidad_Tespecies entidadTespecies;
+
         listadoEspecies = new ArrayList<Entidad_Tespecies>();
 
         String querySpecies = "SELECT DISTINCT especie FROM "+UtilidadesSQLite.TABLA_ESPECIES+" WHERE NOT NULL";

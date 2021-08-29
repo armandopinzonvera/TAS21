@@ -1,4 +1,12 @@
 package com.noFreeGps.tas21.config;
+/**
+ * Contiene tres metodos
+ * 1.> verificacionInicialPermiso()
+ *
+ */
+
+
+
 
 import android.Manifest;
 import android.app.Activity;

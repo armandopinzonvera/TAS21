@@ -1,4 +1,8 @@
 package com.noFreeGps.tas21.config;
+/**
+ *
+ * */
+
 
 import android.view.LayoutInflater;
 import android.view.View;

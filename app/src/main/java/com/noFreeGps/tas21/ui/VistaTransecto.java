@@ -1,4 +1,4 @@
-  package com.noFreeGps.tas21.ui;
+package com.noFreeGps.tas21.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -44,6 +44,7 @@ import static com.noFreeGps.tas21.config.ServiceLocation.DATO_LONGITUD;
 
 
 public class VistaTransecto extends AppCompatActivity {
+
     TextView tv_lat, tv_long, tv_nombreProyecto, tv_idTransecto, tv_msnm;
     EditText et_especie, et_cantidad;
     Chronometer tv_chronometer;
@@ -53,10 +54,12 @@ public class VistaTransecto extends AppCompatActivity {
     Spinner spinner_especies;
     private static final String TAG = "VistaTransecto";
     String nombreProyectoString, idTransectoString, editTextunoValidarString, editTextdosValidarString, msnmString;
-
-    String latitudString, longitudString, alturaString, especieString, cantidadString ;
+    int cantidadInt;
+    String latitudString, longitudString, alturaString, especieString, cantidadString;
     Bundle bundleLocationData;
 
+    Dao_Tespecie daoTespecie;
+    Dao_Ttrack daoTtrack;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -93,12 +96,15 @@ public class VistaTransecto extends AppCompatActivity {
         //class
         conexionSQLite = new ConexionSQLite(this);
         fechayCronometro = new FechayCronometro();
+        daoTespecie = new Dao_Tespecies_Imp(this);
+        daoTtrack = new Dao_Ttrack_Imp(this);
+
         //methods
         spinnersqlite();
         llenarWigets();
     }
 
-    ArrayList<String> listaEspecies;
+    public ArrayList<String> listaEspecies;
 
     public void spinnersqlite() {
 
@@ -142,64 +148,18 @@ public class VistaTransecto extends AppCompatActivity {
 
         ValidarEditText validarEditText = new ValidarEditText(this);
         if (validarEditText.compararEditText(especieString, cantidadString)) {
-            enviarInformacion();
+            latitudString = tv_lat.getText().toString();
+            longitudString = tv_long.getText().toString();
+            alturaString = tv_msnm.getText().toString();
+            latitudString = tv_lat.getText().toString();
+            longitudString = tv_long.getText().toString();
+            cantidadInt = Integer.parseInt(cantidadString);
+            msnmString = tv_msnm.getText().toString();
+
+            daoTespecie.createDatoEspecie(especieString, cantidadInt, idTransectoString, nombreProyectoString);
+            daoTtrack.createDatoTrack(idTransectoString, "fecha", "hora", longitudString, latitudString, msnmString, nombreProyectoString);
+
         }
-    }
-
-    private void enviarInformacion() {
-
-
-       latitudString = tv_lat.getText().toString();
-       longitudString = tv_long.getText().toString();
-       alturaString = tv_msnm.getText().toString();
-
-        Entidad_Tespecies entidadTespecies = null;
-        Entidad_Ttrack entidadTtrack = null;
-
-        if(et_especie.getText().toString() != null){
-
-            try {
-
-            entidadTespecies = new Entidad_Tespecies(1, especieString, Integer.parseInt(cantidadString), idTransectoString, nombreProyectoString);
-            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", longitudString, latitudString, alturaString, nombreProyectoString);
-
-
-            } catch (NumberFormatException e) {
-
-             entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
-             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", "1", " ");
-
-            }
-
-        } // Cierre if(not null)
-
-
-
-        Entidad_Tproyecto entidadTproyecto = null;
-
-        try {
-            entidadTespecies = new Entidad_Tespecies(1, et_especie.getText().toString().trim(), Integer.parseInt(et_cantidad.getText().toString()), idTransectoString, nombreProyectoString);
-
-        } catch (NumberFormatException e) {
-            entidadTespecies = new Entidad_Tespecies(-1, "error", 0, "error", "error");
-        }
-         // cierre if - not null
-        try {
-            entidadTtrack = new Entidad_Ttrack(idTransectoString, "fecha", "hora", tv_long.getText().toString(), tv_lat.getText().toString(), tv_msnm.getText().toString(), nombreProyectoString);
-            Toast.makeText(this, entidadTtrack.toString(), Toast.LENGTH_LONG).show();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-             entidadTtrack = new Entidad_Ttrack(" ", " ", " ", "0.0f", "0.0f", " ", " ");
-             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        }
-
-
-        Dao_Tespecie daoTespecie = new Dao_Tespecies_Imp(this);
-        Dao_Ttrack daoTtrack = new Dao_Ttrack_Imp(this);
-
-        daoTespecie.addDatoEspecie(entidadTespecies);
-        daoTtrack.addDatoTtrack(entidadTtrack);
-
         listaEspecies.add(especieString);
         Set<String> hashSet = new HashSet<String>(listaEspecies);
         listaEspecies.clear();
@@ -208,21 +168,18 @@ public class VistaTransecto extends AppCompatActivity {
         et_especie.setText("");
         et_cantidad.setText("");
 
-        latitudString = tv_lat.getText().toString();
-        longitudString = tv_long.getText().toString();
+
         sendLocationToMap();
     }
 
     //  This method send the Data To the Fragment
 
-    public void sendLocationToMap(){
+    public void sendLocationToMap() {
 
 
         MapsFragment mapsFragment = new MapsFragment();
-        /******************************/
 
         fragment_mapa.setArguments(bundleLocationData);
-        /******************************/
 
         mapsFragment.getlocationData();
 
@@ -234,25 +191,25 @@ public class VistaTransecto extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 tv_lat.setText(intent.getStringExtra(DATO_LATITUD));
-                
+
                 tv_long.setText(intent.getStringExtra(DATO_LONGITUD));
                 msnmString = intent.getStringExtra(DATO_ALTURA);
                 tv_msnm.setText(msnmString);
 
-                System.out.println("XXX11: "+ tv_lat.getText().toString().isEmpty());
+                System.out.println("XXX11: " + tv_lat.getText().toString().isEmpty());
             }
         };
         tv_chronometer = fechayCronometro.iniciarCronometro(tv_chronometer);
- /**     // // / // / /      ***/
+        /**     // // / // / /      ***/
 
-    // OJO: LO traje de sendLocationToMap(), para establecer el bundle antes del fragment
-        Bundle bundleLocationData  = new Bundle();
+        // OJO: LO traje de sendLocationToMap(), para establecer el bundle antes del fragment
+        Bundle bundleLocationData = new Bundle();
         bundleLocationData.putString("latitudKey", latitudString);
         bundleLocationData.putString("longitudKey", longitudString);
 
-        System.out.println(TAG +":  " +  latitudString + ", "+ latitudString);
+        System.out.println(TAG + ":  " + latitudString + ", " + latitudString);
 
-  /***     / / // / / // /      ***/
+        /***     / / // / / // /      ***/
 
         getSupportFragmentManager().beginTransaction().replace(R.id.marco_fragment, fragment_mapa).commit();
     }
@@ -272,7 +229,7 @@ public class VistaTransecto extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        
+
     }
 
     @Override
@@ -290,8 +247,6 @@ public class VistaTransecto extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         Toast.makeText(getApplicationContext(), "BBDD cerrada", Toast.LENGTH_LONG).show();
         startActivity(intent);
-
-
 
 
     }
